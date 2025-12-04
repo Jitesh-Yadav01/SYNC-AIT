@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import Loader from '../components/Loader/Loader'
 
 export default function Home() {
+
+	/* 
+	Dont set the loader before final deployment. It wastes time and annoys me
 	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
@@ -12,6 +15,7 @@ export default function Home() {
 	if (loading) {
 		return <Loader />
 	}
+	*/
 
 	return (
 		<section id="home" className="home-hero">
