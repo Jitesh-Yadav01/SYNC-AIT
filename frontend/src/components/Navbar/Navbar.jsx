@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './NavBar.css'
-import logo from '../../assets/clblogos/google-developers.svg'
+import logo from '../../assets/clublogos/google-developers.svg'
 import Hamburger from '../Hamburger'
 import SideBar from '../SideBar'
 
