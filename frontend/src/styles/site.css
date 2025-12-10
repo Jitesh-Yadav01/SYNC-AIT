@@ -1,37 +1,40 @@
 @import url('https://fonts.googleapis.com/css2?family=BBH+Sans+Bartle&family=BBH+Sans+Hegarty&family=Boldonse&family=Science+Gothic:wght@100..900&family=Stack+Sans+Notch:wght@200..700&display=swap');
 
-.main{
+.main {
   padding-top: 20px;
 }
-.page-head{
+
+.page-head {
   text-align: center;
   /* padding: 40px 0 10px; */
 }
-.section-title{
+
+.section-title {
   margin: 0;
   font-weight: 900;
   text-transform: uppercase;
 }
-.title-dark{
+
+.title-dark {
   color: #0f3b86;
   font-size: 56px;
   line-height: 0.9;
 }
 
-.home-hero .section-title{
+.home-hero .section-title {
   font-family: 'Science Gothic', 'BBH Sans Hegarty', Inter, system-ui, -apple-system, sans-serif;
   font-size: 100px;
   letter-spacing: 1px;
 }
 
-.home-hero .lead{
+.home-hero .lead {
   font-family: Inter, system-ui, -apple-system, Arial, sans-serif;
   font-size: 18px;
   color: #5b6a7a;
   margin-top: 12px;
 }
 
-.home-hero{
+.home-hero {
   position: relative;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
@@ -43,33 +46,105 @@
   background: transparent;
   z-index: 20;
 }
-.title-violet{
+
+.title-violet {
   color: #1e3a8a;
   font-size: 20px;
 }
-.lead{
+
+.lead {
   color: #6b7280;
   margin-top: 8px;
 }
 
 
-html{ scroll-behavior: smooth; }
-
-@keyframes fadeUp{
-  from{ opacity:0; transform: translateY(16px); }
-  to{ opacity:1; transform: translateY(0); }
+html {
+  scroll-behavior: smooth;
 }
 
-.application-container{ animation: fadeUp .35s ease both; }
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
 
-.logo{ transition: transform .25s ease; }
-.logo:hover{ transform: scale(1.06); }
-
-@media (max-width: 1000px){
-  .cards{ grid-template-columns: repeat(2, 1fr); }
-  .title-dark{ font-size: 44px; }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-@media (max-width: 720px){
-  .cards{ grid-template-columns: 1fr; }
-  .title-dark{ font-size: 36px; }
+
+.application-container {
+  animation: fadeUp .35s ease both;
+}
+
+.logo {
+  transition: transform .25s ease;
+}
+
+.logo:hover {
+  transform: scale(1.06);
+}
+
+@media (max-width: 1000px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .title-dark {
+    font-size: 44px;
+  }
+}
+
+@media (max-width: 720px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .title-dark {
+    font-size: 36px;
+  }
+}
+
+/* Responsive Panel Styles for FePanel and SePanel */
+@media (max-width: 768px) {
+
+  /* Mobile hamburger button */
+  button[class*="md:hidden"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 40;
+  }
+
+
+
+  /* Overlay styling */
+  [class*="bg-black/50"] {
+    backdrop-filter: blur(2px);
+  }
+}
+
+/* Panel responsive typography */
+@media (max-width: 640px) {
+  h1[class*="text-xl"] {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  p[class*="text-sm"] {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+}
+
+/* Smooth sidebar animations */
+[class*="transition-transform"] {
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Improved scrolling on mobile */
+.overflow-y-auto {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
 }
