@@ -6,6 +6,7 @@ export default function ApplicationForm({ clubName, abbr, onClose }) {
     fullName: '',
     email: '',
     branch: '',
+    division: '',
     registrationNumber: '',
     phoneNumber: '',
     priority: '',
@@ -132,13 +133,13 @@ export default function ApplicationForm({ clubName, abbr, onClose }) {
               </div>
 
               <div className="form-group">
-                <label>Priority (1-5) <span className="required">*</span></label>
+                <label>Priority (1-15) <span className="required">*</span></label>
                 <input
                   type="number"
                   name="priority"
-                  placeholder="Rate GDSC priority (1-5)"
+                  placeholder={`Rate ${clubName} priority (1-15)`}
                   min="1"
-                  max="5"
+                  max="15"
                   value={formData.priority}
                   onChange={handleChange}
                   required
@@ -173,11 +174,13 @@ export default function ApplicationForm({ clubName, abbr, onClose }) {
                   <option value="frontend">Frontend Development</option>
                   <option value="backend">Backend Development</option>
                   <option value="fullstack">Full Stack Development</option>
-                  <option value="mobile">Mobile Development</option>
-                  <option value="ml">Machine Learning / AI</option>
+                  <option value="app">App Dev</option>
+                  <option value="ml">AI/ML</option>
                   <option value="cloud">Cloud / DevOps</option>
                   <option value="design">UI/UX Design</option>
-                  <option value="other">Other</option>
+                  <option value="blockchain">Blockchain</option>
+                  <option value="flutter">Flutter</option>
+                  <option value="outreach">Outreach</option>
                 </select>
               </div>
 
