@@ -11,7 +11,7 @@ const Login = () => {
   }
 
 
-  // This is just for demo purpose..Please replace this shitty ai-code with your creativity. Best Wishes from @Mytricks-Code
+
   return (
     <div className="md:h-auto my-18 mx-3 md:my-8 md:mx-0 flex items-center justify-center">
       <div className="w-full max-w-md bg-transparent md:backdrop-blur-xl border border-slate-700/70 rounded-2xl shadow-2xl px-8 py-10">

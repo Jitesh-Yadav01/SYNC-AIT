@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import '../pages/Home/Clubs/form.css'
+import './form.css'
 
 export default function ApplicationForm({ clubName, abbr, onClose }) {
   const [formData, setFormData] = useState({

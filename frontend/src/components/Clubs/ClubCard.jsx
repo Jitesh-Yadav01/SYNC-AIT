@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import '../pages/Home/Clubs/club.css'
+import './club.css'
 import KnowMore from './KnowMore'
 
 export default function ClubCard({ abbr, name, fullForm, img, desc, focusAreas = [], activities = [], who, keywords = [], events = [], media = [],onApply }) {

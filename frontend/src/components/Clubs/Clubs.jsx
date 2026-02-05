@@ -1,14 +1,15 @@
-
 import React, { useState, useEffect } from 'react'
-import ClubCard from '../../../components/ClubCard'
-import ApplicationForm from '../../../components/ApplicationForm'
+import ClubCard from './ClubCard'
+import ApplicationForm from '../ApplicationForm'
 import './club.css'
+import { useView } from '../../context/ViewContext';
 
 export default function MainContent(){
-  const [selectedClub, setSelectedClub] = useState(null)
+  const { setCurrentView, setApplicationData } = useView();
   
   const handleApply = (abbr, name) => {
-    setSelectedClub({ abbr, name })
+    setApplicationData({ abbr, name });
+    setCurrentView('form');
   }
   const [clubs, setClubs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -41,16 +42,6 @@ export default function MainContent(){
       controller.abort()
     }
   }, [])
-  
-  if (selectedClub) {
-    return (
-      <ApplicationForm
-        clubName={selectedClub.name}
-        abbr={selectedClub.abbr}
-        onClose={() => setSelectedClub(null)}
-      />
-    )
-  }
 
   if(loading){
     return(

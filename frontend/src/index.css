@@ -1,21 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=BBH+Sans+Bartle&family=BBH+Sans+Hegarty&family=Boldonse&family=Science+Gothic:wght@100..900&family=Stack+Sans+Notch:wght@200..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=BBH+Sans+Bartle&family=BBH+Sans+Hegarty&family=Boldonse&family=Science+Gothic:wght@100..900&family=Stack+Sans+Notch:wght@200..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Jersey+20&display=swap");
 @plugin 'tailwindcss-animate';
 @import "tailwindcss";
 
-/* Prevent unwanted horizontal scroll and make media responsive */
-*, *::before, *::after {
+@theme {
+  --font-jersey-20: "Jersey 20", sans-serif;
+}
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   overflow-x: hidden;
   width: 100%;
 }
 
-img, video, iframe, svg {
+img,
+video,
+iframe,
+svg {
   max-width: 100%;
   height: auto;
   display: block;
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
 :root {
@@ -41,7 +53,13 @@ img, video, iframe, svg {
 body {
   background: var(--bg) url("/background.svg") no-repeat center top fixed;
   background-size: cover;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial;
   color: var(--text);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -68,5 +86,6 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--gap);
-  flex: 1 1 auto; 
+  flex: 1 1 auto;
+  padding-top: 140px;
 }

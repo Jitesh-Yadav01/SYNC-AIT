@@ -1,14 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './ContactUs.css'
 import collabBg from '../../assets/CollabBG.png'
-import ApplicationForm from '../../components/ApplicationForm'
+import { useView } from '../../context/ViewContext';
 
 export default function ContactUs() {
-  const [showForm, setShowForm] = useState(false)
-
-  if (showForm) {
-    return <ApplicationForm clubName="SYNC AIT Pune" abbr="SYNC" onClose={() => setShowForm(false)} />
-  }
+  const { setCurrentView } = useView();
 
   return (
     <section id="contact" className="contact-section" style={{ backgroundImage: `url(${collabBg})` }}>
@@ -18,7 +14,7 @@ export default function ContactUs() {
           <h1 className="contact-subtitle">Just Fill Out The Form</h1>
         </div>
         <div className="contact-button-wrapper">
-          <button onClick={() => setShowForm(true)} className="fill-form-btn">
+          <button onClick={() => setCurrentView('form')} className="fill-form-btn">
             FILL THE FORM
             <span className="arrow-icon">→</span>
           </button>

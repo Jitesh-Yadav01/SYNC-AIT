@@ -1,6 +1,6 @@
 import React from 'react'
 import '../styles/site.css'
-import Home from '../pages/Home/Home'
+import Home from './Home/Home'
 import ContactUs from '../sections/ContactUs/ContactUs'
 import AboutUs from '../sections/Aboutus/Aboutus'
 

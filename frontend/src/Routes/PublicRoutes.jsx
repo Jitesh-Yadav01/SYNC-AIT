@@ -1,7 +1,8 @@
 import React from "react";
 import MainContent from "../components/MainContent";
 import Login from "../pages/Auth/Login";
-import Clubs from "../pages/Home/Clubs/Clubs";
+import Clubs from "../components/Clubs/Clubs";
+
 
 export const publicRoutes = [
   { path: "/", element: <MainContent /> },
