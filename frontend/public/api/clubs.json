@@ -3,7 +3,7 @@
     "abbr": "OSS",
     "name": "OSS Club",
     "fullForm": "Open Source Software Club",
-    "img": "/clublogos/oss.svg?url",
+    "img": "/clublogos/oss.svg",
     "desc": "Encouraging students to contribute to open source projects and learn collaborative software development.",
     "focusAreas": [
       "Open source contribution workflows",
@@ -28,7 +28,7 @@
     "abbr": "GDG",
     "name": "GDG AIT Pune",
     "fullForm": "Google Developer Group",
-    "img": "/clublogos/google-developers.svg?url",
+    "img": "/clublogos/google-developers.svg",
     "desc": "Community-driven developer group focused on practical developer skills and technology learning.",
     "focusAreas": [
       "Web & mobile development",
@@ -54,7 +54,7 @@
     "abbr": "CP",
     "name": "CP Club",
     "fullForm": "Competitive Programming",
-    "img": "/clublogos/cp.svg?url",
+    "img": "/clublogos/cp.svg",
     "desc": "Focused training and practice for programming contests and technical interviews.",
     "focusAreas": [
       "Data structures & algorithms",
@@ -79,7 +79,7 @@
     "abbr": "PR",
     "name": "PR Cell",
     "fullForm": "Public Relations Cell",
-    "img": "/clublogos/pr.svg?url",
+    "img": "/clublogos/pr.svg",
     "desc": "Handles campus branding, outreach, media communication, and event promotions.",
     "focusAreas": [
       "Branding & communication",
@@ -98,7 +98,7 @@
     "abbr": "ECELL",
     "name": "E-Cell",
     "fullForm": "Entrepreneurship Cell",
-    "img": "/clublogos/ecell.svg?url",
+    "img": "/clublogos/ecell.svg",
     "desc": "Promotes entrepreneurship, innovation, and startup culture among students.",
     "focusAreas": [
       "Startup fundamentals",
@@ -117,7 +117,7 @@
     "abbr": "GDXR",
     "name": "GDXR",
     "fullForm": "Game Dev & Extended Reality Club",
-    "img": "/clublogos/gdxr.svg?url",
+    "img": "/clublogos/gdxr.svg",
     "desc": "Dedicated to game development, AR/VR technologies, and immersive experiences.",
     "focusAreas": [
       "Game engines (Unity/Unreal)",
@@ -132,7 +132,7 @@
     "abbr": "ISDF",
     "name": "ISDF",
     "fullForm": "Information Security & Digital Forensics Club",
-    "img": "/clublogos/isdf.svg?url",
+    "img": "/clublogos/isdf.svg",
     "desc": "Focuses on cybersecurity, ethical hacking, and digital forensics skills.",
     "focusAreas": [
       "Ethical hacking",
@@ -151,7 +151,7 @@
     "abbr": "RND",
     "name": "RnD Cell",
     "fullForm": "Research & Development Cell",
-    "img": "/clublogos/rnd.svg?url",
+    "img": "/clublogos/rnd.svg",
     "desc": "Encourages research-thinking, publications, and innovation-driven projects.",
     "focusAreas": [
       "Research methodology",
@@ -169,7 +169,7 @@
   {
     "abbr": "CYCLE",
     "name": "Cycling Club",
-    "img": "/clublogos/cycling.svg?url",
+    "img": "/clublogos/cycling.svg",
     "desc": "Promotes fitness and community through regular cycling meetups and long rides.",
     "focusAreas": [
       "Fitness & endurance",
@@ -188,7 +188,7 @@
     "abbr": "NSS",
     "name": "NSS",
     "fullForm": "National Service Scheme",
-    "img": "/clublogos/oss.svg?url",
+    "img": "/clublogos/oss.svg",
     "desc": "A volunteer organisation dedicated to social service and community development.",
     "focusAreas": [
       "Community service",
@@ -206,7 +206,7 @@
   {
     "abbr": "NATURE",
     "name": "Nature’s Club",
-    "img": "/clublogos/oss.svg?url",
+    "img": "/clublogos/oss.svg",
     "desc": "Encourages environmental conservation, sustainability, and nature awareness.",
     "focusAreas": [
       "Environmental protection",
@@ -225,7 +225,7 @@
     "abbr": "MAG",
     "name": "Magboard",
     "fullForm": "Magazine & Editorial Board",
-    "img": "/clublogos/magboard.svg?url",
+    "img": "/clublogos/magboard.svg",
     "desc": "Manages college magazine, newsletter writing, and creative editorial work.",
     "focusAreas": [
       "Creative writing",
@@ -242,7 +242,7 @@
   {
     "abbr": "TECH",
     "name": "Technical Board",
-    "img": "/clublogos/oss.svg?url",
+    "img": "/clublogos/oss.svg",
     "desc": "Central body managing all technical clubs and driving innovation, tech events, and project-based learning across the institute.",
     "focusAreas": [
       "Coordination of technical clubs",
@@ -260,7 +260,7 @@
   {
     "abbr": "CUL",
     "name": "Cultural Board",
-    "img": "/clublogos/oss.svg?url",
+    "img": "/clublogos/oss.svg",
     "desc": "Oversees cultural clubs and promotes art, creativity, and cultural expression through events and performances.",
     "focusAreas": [
       "Literary & creative arts",
