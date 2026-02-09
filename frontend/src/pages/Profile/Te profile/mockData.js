@@ -7,7 +7,7 @@ export const profileData = {
   role: 'Male Secretary',
   domains: ['Full Stack', 'Cloud Computing', 'AI/ML'],
   connectedClubs: ['Google Developer Groups (GDG)', 'Open Source Software (OSS)', 'Entrepreneurship Cell (E-Cell)'],
-  avatar: '../public/clubprofiles/ns.png',
+  avatar: '/clubprofiles/ns.png',
   bio: 'AIT CSE 27`/Open Source Contributor / GDG Lead@AIT Pune',
   clubs: [
     {
