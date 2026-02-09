@@ -4,13 +4,19 @@ import { useLocation } from 'react-router-dom';
 const ViewContext = createContext();
 
 export function ViewProvider({ children }) {
-  const [currentView, setCurrentView] = useState('default'); // 'default', 'login', 'form'
+  // Initialize from localStorage if available
+  const [currentView, setCurrentView] = useState(() => {
+    return localStorage.getItem('te_dashboard_active') === 'true' ? 'te-dashboard' : 'default';
+  }); 
   const [applicationData, setApplicationData] = useState(null);
   const location = useLocation();
 
   useEffect(() => {
-    setCurrentView('default');
-    setApplicationData(null);
+    // Only reset if we are NOT in persistent dashboard mode
+    if (localStorage.getItem('te_dashboard_active') !== 'true') {
+        setCurrentView('default');
+        setApplicationData(null);
+    }
   }, [location]);
 
   return (

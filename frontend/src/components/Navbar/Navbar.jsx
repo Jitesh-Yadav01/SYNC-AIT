@@ -54,15 +54,25 @@ export function Navbar({ onOpenLogin}) {
                             <NavigationMenuList className="gap-1">
                                 <NavigationMenuItem>
                                     <NavigationMenuLink asChild>
-                                        <Link to="/" className={cn("group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors focus:bg-transparent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-transparent data-[state=open]:bg-transparent", isActive("/") && !location.hash ? "text-blue-500" : "text-muted-foreground")}>
+                                        <Link to="/" className={cn("group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors focus:bg-transparent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-active:bg-transparent data-[state=open]:bg-transparent", isActive("/") && !location.hash ? "text-blue-500" : "text-muted-foreground")}>
                                             Home
                                         </Link>
                                     </NavigationMenuLink>
                                 </NavigationMenuItem>
 
+                                {profile?.role === 'Technical Executive' && (
+                                    <NavigationMenuItem>
+                                        <NavigationMenuLink asChild>
+                                            <Link to="/profile/Te" className={cn("group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors focus:bg-transparent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-active:bg-transparent data-[state=open]:bg-transparent", isActive("/profile/Te") ? "text-blue-500" : "text-muted-foreground")}>
+                                                Dashboard
+                                            </Link>
+                                        </NavigationMenuLink>
+                                    </NavigationMenuItem>
+                                )}
+
                                 <NavigationMenuItem>
                                     <NavigationMenuLink asChild>
-                                        <a href="/#about" className={cn("group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors focus:bg-transparent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-transparent data-[state=open]:bg-transparent", isActiveHash("#about") ? "text-blue-500" : "text-muted-foreground")}>
+                                        <a href="/#about" className={cn("group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors focus:bg-transparent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-active:bg-transparent data-[state=open]:bg-transparent", isActiveHash("#about") ? "text-blue-500" : "text-muted-foreground")}>
                                             About Us
                                         </a>
                                     </NavigationMenuLink>
@@ -71,7 +81,7 @@ export function Navbar({ onOpenLogin}) {
 
                                 <NavigationMenuItem>
                                     <NavigationMenuLink asChild>
-                                        <Link to="/clubs" className={cn("group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors focus:bg-transparent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-transparent data-[state=open]:bg-transparent", isActive("/clubs") ? "text-blue-500" : "text-muted-foreground")}>
+                                        <Link to="/clubs" className={cn("group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors focus:bg-transparent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-active:bg-transparent data-[state=open]:bg-transparent", isActive("/clubs") ? "text-blue-500" : "text-muted-foreground")}>
                                             Clubs
                                         </Link>
                                     </NavigationMenuLink>
@@ -79,7 +89,7 @@ export function Navbar({ onOpenLogin}) {
 
                                 <NavigationMenuItem>
                                     <NavigationMenuLink asChild>
-                                        <Link to="https://www.gdgaitpune.me/" className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium text-muted-foreground transition-colors focus:bg-transparent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-transparent data-[state=open]:bg-transparent">
+                                        <Link to="https://www.gdgaitpune.me/" className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium text-muted-foreground transition-colors focus:bg-transparent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-active:bg-transparent data-[state=open]:bg-transparent">
                                             Team
                                         </Link>
                                     </NavigationMenuLink>
@@ -87,7 +97,7 @@ export function Navbar({ onOpenLogin}) {
 
                                 <NavigationMenuItem>
                                     <NavigationMenuLink asChild>
-                                        <Link to="/developers" className={cn("group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors focus:bg-transparent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-transparent data-[state=open]:bg-transparent", isActive("/developers") ? "text-blue-500" : "text-muted-foreground")}>
+                                        <Link to="/developers" className={cn("group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors focus:bg-transparent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-active:bg-transparent data-[state=open]:bg-transparent", isActive("/developers") ? "text-blue-500" : "text-muted-foreground")}>
                                             Developers
                                         </Link>
                                     </NavigationMenuLink>
