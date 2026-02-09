@@ -1,7 +1,7 @@
 import React from 'react'
 import './Footer.css'
 import bgImage from '../../assets/bg-image.png'
-import clubLogos from '../../assets/clublogos'
+import clubLogos from '../../../public/clublogos'
 
 export default function Footer() {
   return (
