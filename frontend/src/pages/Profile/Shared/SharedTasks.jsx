@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { useTe } from './TeContext';
+import { useProfile } from './ProfileContext';
 import { Plus, Trash2, Calendar, User, CheckCircle2, Pencil } from 'lucide-react';
 
-export default function TeTasks() {
-    const { tasks, members, addTask, deleteTask, updateTaskStatus, editTask } = useTe();
+export default function SharedTasks() {
+    const { tasks, members, addTask, deleteTask, updateTaskStatus, editTask, role } = useProfile();
     const [showAddForm, setShowAddForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [currentTaskId, setCurrentTaskId] = useState(null);
     const [newTask, setNewTask] = useState({ title: '', description: '', assignedTo: '', deadline: '', priority: 'Medium' });
+
+    const assignableMembers = role === 'TE' 
+        ? members 
+        : members.filter(m => m.role === 'FE');
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -76,7 +80,7 @@ export default function TeTasks() {
                             required
                         >
                             <option value="">Assign To...</option>
-                            {members.map(m => (
+                            {assignableMembers.map(m => (
                                 <option key={m.id} value={m.id}>{m.name} ({m.role})</option>
                             ))}
                         </select>
@@ -133,7 +137,14 @@ export default function TeTasks() {
                         </h3>
 
                         <div className="space-y-3 flex-1">
-                            {tasks.filter(t => t.status === status).map(task => (
+                            {tasks
+                                .filter(t => t.status === status)
+                                .filter(t => {
+                                    if (role === 'TE') return true;
+                                    const assignedMember = members.find(m => m.id === t.assignedTo);
+                                    return assignedMember?.role === 'FE' || t.assignedTo === 'Unassigned';
+                                })
+                                .map(task => (
                                 <div key={task.id} className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 group hover:border-blue-400 transition-colors">
                                     <div className="flex justify-between items-start mb-2">
                                         <h4 className="font-medium text-sm text-gray-900">{task.title}</h4>
@@ -157,7 +168,7 @@ export default function TeTasks() {
                                             {task.priority}
                                         </span>
                                         <div className="flex items-center gap-1 text-xs text-gray-500">
-                                            <User className="h-3 w-3" /> {task.assignedToName.split(' ')[0]}
+                                            <User className="h-3 w-3" /> {task.assignedToName?.split(' ')[0]}
                                         </div>
                                     </div>
 
@@ -176,7 +187,11 @@ export default function TeTasks() {
                                     </div>
                                 </div>
                             ))}
-                            {tasks.filter(t => t.status === status).length === 0 && (
+                            {tasks.filter(t => t.status === status).filter(t => {
+                                 if (role === 'TE') return true;
+                                 const assignedMember = members.find(m => m.id === t.assignedTo);
+                                 return assignedMember?.role === 'FE';
+                            }).length === 0 && (
                                 <div className="text-center py-12 text-gray-400 text-sm border-2 border-dashed border-gray-200 rounded-lg">
                                     Empty
                                 </div>

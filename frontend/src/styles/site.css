@@ -21,6 +21,10 @@
   line-height: 0.9;
 }
 
+.dark .title-dark {
+  color: #60a5fa;
+}
+
 .home-hero .section-title {
   font-family: 'Science Gothic', 'BBH Sans Hegarty', Inter, system-ui, -apple-system, sans-serif;
   font-size: 100px;
@@ -30,7 +34,7 @@
 .home-hero .lead {
   font-family: Inter, system-ui, -apple-system, Arial, sans-serif;
   font-size: 18px;
-  color: #5b6a7a;
+  color: var(--muted);
   margin-top: 12px;
 }
 
@@ -47,13 +51,17 @@
   z-index: 20;
 }
 
+.dark .home-hero {
+  border-bottom-color: #1e40af;
+}
+
 .title-violet {
   color: #1e3a8a;
   font-size: 20px;
 }
 
 .lead {
-  color: #6b7280;
+  color: var(--muted);
   margin-top: 8px;
 }
 
@@ -75,11 +83,11 @@ html {
 }
 
 .application-container {
-  animation: fadeUp .35s ease both;
+  animation: fadeUp 0.35s ease both;
 }
 
 .logo {
-  transition: transform .25s ease;
+  transition: transform 0.25s ease;
 }
 
 .logo:hover {

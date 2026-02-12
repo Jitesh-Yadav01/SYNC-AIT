@@ -21,7 +21,15 @@ const FePanel = () => {
         ☰
       </button>
 
-      <div className="flex flex-col md:flex-row w-full min-h-[calc(100vh-var(--navbar-height))] gap-[var(--gap)] p-4 md:p-6">
+      <div 
+        className="flex flex-col md:flex-row w-full min-h-[calc(100vh-var(--navbar-height))] gap-[var(--gap)] p-4 md:p-6 bg-gray-50 text-gray-900"
+        style={{ 
+            backgroundImage: "url('/back.svg')", 
+            backgroundSize: 'cover', 
+            backgroundAttachment: 'fixed',
+            backgroundPosition: 'center'
+        }}
+      >
         {/* Sidebar - Hidden on mobile, visible on md and up */}
         <div
           className={`

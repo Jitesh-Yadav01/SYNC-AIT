@@ -54,11 +54,19 @@
   font-weight: 800;
   color: #0f2a70;
 }
+
+.dark .brand-title {
+  color: #60a5fa;
+}
 .brand-desc {
   margin-top: 6px;
   font-size: 14px;
   color: #0b1220;
   max-width: 520px;
+}
+
+.dark .brand-desc {
+  color: #cbd5e1;
 }
 .footer-actions {
   margin-top: 12px;
@@ -94,14 +102,30 @@
   text-decoration: none;
   transition: background 0.2s;
 }
+
 .btn-secondary:hover {
   background: #ffffff;
+}
+
+.dark .btn-secondary {
+  background: #1e293b;
+  border-color: #334155;
+  color: #f8fafc;
+}
+
+.dark .btn-secondary:hover {
+  background: #334155;
 }
 .col-title {
   font-size: 18px;
   font-weight: 800;
   color: #0f2a70;
 }
+
+.dark .col-title {
+  color: #60a5fa;
+}
+
 .link-grid {
   margin-top: 12px;
   display: grid;
@@ -113,9 +137,19 @@
   text-decoration: none;
   font-size: 14px;
 }
+
+.dark .link-grid a {
+  color: #cbd5e1;
+}
+
 .link-grid a:hover {
   color: #0f2a70;
 }
+
+.dark .link-grid a:hover {
+  color: #60a5fa;
+}
+
 .contact-list {
   margin-top: 10px;
   color: #0b1220;
@@ -123,12 +157,22 @@
   display: grid;
   gap: 6px;
 }
+
+.dark .contact-list {
+  color: #cbd5e1;
+}
+
 .help-text {
   margin-top: 10px;
   color: #0b1220;
   font-size: 13px;
   text-align: center;
 }
+
+.dark .help-text {
+  color: #94a3b8;
+}
+
 @media (min-width: 768px) {
   .help-text {
     text-align: right;
@@ -139,6 +183,10 @@
   color: #0b1220;
   font-size: 13px;
   text-align: center;
+}
+
+.dark .copyright {
+  color: #94a3b8;
 }
 .footer-skyline {
   position: absolute;

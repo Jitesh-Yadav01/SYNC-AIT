@@ -13,6 +13,12 @@
   background: #fff;
   padding: 28px;
   border-radius: 8px;
+  color: #0b1220;
+}
+
+.dark .application-container {
+  background: #fff;
+  color: #0b1220;
 }
 .form-title {
   text-align: center;
@@ -37,6 +43,8 @@
   padding: 10px 12px;
   border: 1px solid #e6e9ef;
   border-radius: 8px;
+  background: #fff;
+  color: #0b1220;
 }
 .submit-btn {
   width: 100%;

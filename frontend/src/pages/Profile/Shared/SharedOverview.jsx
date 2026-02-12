@@ -1,9 +1,9 @@
 import React from 'react';
-import { useTe } from './TeContext';
+import { useProfile } from './ProfileContext';
 import { Users, CheckSquare, MessageSquare, Bell, Calendar, TrendingUp } from 'lucide-react';
 
-export default function TeOverview() {
-    const { members, tasks, notifications, profile, unreadMessagesCount, pendingTasksCount } = useTe();
+export default function SharedOverview() {
+    const { members, pendingTasksCount, notifications, profile, unreadMessagesCount } = useProfile();
 
     const stats = [
         { title: "Active Members", value: members.filter(m => m.status === 'Active').length, icon: Users, color: "text-blue-600", bg: "bg-blue-50" },

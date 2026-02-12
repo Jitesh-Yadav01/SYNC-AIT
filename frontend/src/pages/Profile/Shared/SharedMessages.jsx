@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useTe } from './TeContext';
+import { useProfile } from './ProfileContext';
 import { Send, User, MessageSquare } from 'lucide-react';
 
-export default function TeMessages() {
-  const { messages, members, profile, sendMessage } = useTe();
+export default function SharedMessages() {
+  const { messages, members, profile, sendMessage } = useProfile();
   const [activeChat, setActiveChat] = useState(null);
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef(null);

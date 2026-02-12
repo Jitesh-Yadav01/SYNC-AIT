@@ -1,20 +1,20 @@
 export const profileData = {
-  id: 'te-1',
-  name: 'Nishant Singh',
-  email: 'nishantsingh_230137@aitpune.edu.in',
-  phone: '+91 96499 59730',
+  id: 'se-1',
+  name: 'APS_X',
+  email: 'aryanpratapsingh_240114@aitpune.edu.in',
+  phone: '+91 97172 09328',
   gender: 'Male',
-  role: 'Secretary',
+  role: 'Future Secretary',
   domains: ['Full Stack', 'Cloud Computing', 'AI/ML'],
   connectedClubs: ['Google Developer Groups (GDG)', 'Open Source Software (OSS)', 'Entrepreneurship Cell (E-Cell)'],
-  avatar: '/clubprofiles/ns.png',
-  bannerText: 'HACKATHON RAT',
-  bio: 'AIT CSE 27`/Open Source Contributor / GDG Lead@AIT Pune',
+  avatar: '/clubprofiles/aps.png',
+  bannerText: 'Chaos to Code',
+  bio: 'Full Stack Developer | Go | Web3 | Blockchain | IEEE Student Member | Army Institute of technology',
   clubs: [
     {
       id: 'c1',
       name: 'Google Developer Groups (GDG)',
-      role: 'Secretary',
+      role: 'Joint Secretary',
       logo: '/clublogos/google-developers.svg',
       description: 'To create a strong community of student developers and connect them across the globe.',
       whatsapp: 'https://chat.whatsapp.com/gdg',
@@ -23,21 +23,12 @@ export const profileData = {
     {
       id: 'c2',
       name: 'Open Source Software (OSS)',
-      role: 'Technical Head',
+      role: '.../',
       logo: '/clublogos/oss.svg',
       description: 'An open-source organization aiming to promote open source culture in India and spread knowledge nationwide.',
       whatsapp: 'https://chat.whatsapp.com/oss',
       telegram: 'https://t.me/oss'
     },
-    {
-      id: 'c3',
-      name: 'Entrepreneurship Cell (E-Cell)',
-      role: 'Sponsorship Head',
-      logo: '/clublogos/ecell.svg',
-      description: 'Driving the Innovations and Entrepreneurship culture in AIT.',
-      whatsapp: 'https://chat.whatsapp.com/ecell',
-      telegram: 'https://t.me/ecell'
-    }
   ]
 };
 
@@ -49,7 +40,6 @@ export const membersData = [
   { id: 'm5', clubId: 'c1', name: 'Sajal Rawat', email: 'sajalrawat_250309@aitpune.edu.in', role: 'FE', domain: 'Design', status: 'Active', avatar: '' },
   { id: 'm6', clubId: 'c2', name: 'Harshwardhan', email: 'harshwardhan_250452@aitpune.edu.in', role: 'FE', domain: 'Design', status: 'Active', avatar: '' },
 ];
-
 
 export const tasksData = [
   { id: 't1', clubId: 'c1', title: 'Update Landing Page', description: 'Use react libraries and animate the hero page.', assignedTo: 'm1', assignedToName: 'Peush Yadav', status: 'In Progress', priority: 'High', deadline: '2026-02-22', createdAt: '2026-02-01' },

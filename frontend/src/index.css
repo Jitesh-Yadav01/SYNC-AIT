@@ -50,6 +50,23 @@ svg {
   --title-h4: #00c29a;
 }
 
+.dark {
+  --bg: #020617;
+  --panel: #0f172a;
+  --muted: #94a3b8;
+  --text: #f8fafc;
+  --accent: #3b82f6;
+  --accent-2: #60a5fa;
+  --border: #1e293b;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --glass: rgba(15, 23, 42, 0.6);
+  --title-h1: #f87171;
+  --title-h2: #60a5fa;
+  --title-h3: #93c5fd;
+  --title-h4: #34d399;
+  color-scheme: dark;
+}
+
 body {
   background: var(--bg) url("/background.svg") no-repeat center top fixed;
   background-size: cover;

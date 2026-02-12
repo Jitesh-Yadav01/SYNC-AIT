@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { useTe } from './TeContext';
+import { useProfile } from './ProfileContext';
 import { Plus, Trash2, Search, Pencil } from 'lucide-react';
 
-export default function TeMembers() {
-    const { members, addMember, removeMember, editMember } = useTe();
+export default function SharedMembers() {
+    const { members, addMember, removeMember, editMember, role } = useProfile();
     const [searchTerm, setSearchTerm] = useState('');
     const [showAddForm, setShowAddForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [currentMemberId, setCurrentMemberId] = useState(null);
     const [newMember, setNewMember] = useState({ name: '', email: '', role: 'FE', domain: '', status: 'Active' });
+
+    const canManageMembers = role === 'TE' || role === 'SE';
 
     const filteredMembers = members.filter(m =>
         m.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -49,21 +51,25 @@ export default function TeMembers() {
             <div className="flex justify-between items-center">
                 <div>
                     <h2 className="text-2xl font-bold tracking-tight text-gray-900">Team Members</h2>
-                    <p className="text-gray-500">Manage your FE and SE team members.</p>
+                    <p className="text-gray-500">
+                        {canManageMembers ? "Manage your team members." : "View team members."}
+                    </p>
                 </div>
-                <button
-                    onClick={() => {
-                        setShowAddForm(!showAddForm);
-                        setIsEditing(false);
-                        setNewMember({ name: '', email: '', role: 'FE', domain: '', status: 'Active' });
-                    }}
-                    className="flex items-center gap-2 bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-colors"
-                >
-                    <Plus className="h-4 w-4" /> {showAddForm && !isEditing ? 'Close' : 'Add Member'}
-                </button>
+                {canManageMembers && (
+                    <button
+                        onClick={() => {
+                            setShowAddForm(!showAddForm);
+                            setIsEditing(false);
+                            setNewMember({ name: '', email: '', role: 'FE', domain: '', status: 'Active' });
+                        }}
+                        className="flex items-center gap-2 bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-colors"
+                    >
+                        <Plus className="h-4 w-4" /> {showAddForm && !isEditing ? 'Close' : 'Add Member'}
+                    </button>
+                )}
             </div>
 
-            {showAddForm && (
+            {showAddForm && canManageMembers && (
                 <form onSubmit={handleSubmit} className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm space-y-4 animate-in fade-in slide-in-from-top-2">
                     <h3 className="font-semibold text-lg text-gray-900">{isEditing ? 'Edit Member' : 'Add New Member'}</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -87,7 +93,7 @@ export default function TeMembers() {
                             onChange={(e) => setNewMember({ ...newMember, role: e.target.value })}
                         >
                             <option value="FE">FE</option>
-                            <option value="SE">SE</option>
+                            {role === 'TE' && <option value="SE">SE</option>}
                         </select>
                         <input
                             className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -116,7 +122,6 @@ export default function TeMembers() {
                 </form>
             )}
 
-            {/* List */}
             <div className="bg-white border border-gray-200 rounded-xl shadow-sm">
                 <div className="p-4 border-b border-gray-200 flex items-center justify-between">
                     <h3 className="font-semibold text-gray-900">All Members</h3>
@@ -151,18 +156,26 @@ export default function TeMembers() {
                                     }`}>
                                     {member.status}
                                 </span>
-                                <button
-                                    onClick={() => openEditModal(member)}
-                                    className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors"
-                                >
-                                    <Pencil className="h-4 w-4" />
-                                </button>
-                                <button
-                                    onClick={() => removeMember(member.id)}
-                                    className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
-                                >
-                                    <Trash2 className="h-4 w-4" />
-                                </button>
+                                {canManageMembers && (
+                                    <>
+                                        <button
+                                            onClick={() => openEditModal(member)}
+                                            className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors"
+                                            disabled={role === 'SE' && member.role !== 'FE'}
+                                            title={role === 'SE' && member.role !== 'FE' ? "You can only edit FE members" : "Edit Member"}
+                                        >
+                                            <Pencil className={`h-4 w-4 ${role === 'SE' && member.role !== 'FE' ? 'opacity-50 cursor-not-allowed' : ''}`} />
+                                        </button>
+                                        <button
+                                            onClick={() => removeMember(member.id)}
+                                            className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
+                                            disabled={role === 'SE' && member.role !== 'FE'}
+                                            title={role === 'SE' && member.role !== 'FE' ? "You can only remove FE members" : "Remove Member"}
+                                        >
+                                            <Trash2 className={`h-4 w-4 ${role === 'SE' && member.role !== 'FE' ? 'opacity-50 cursor-not-allowed' : ''}`} />
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     ))}

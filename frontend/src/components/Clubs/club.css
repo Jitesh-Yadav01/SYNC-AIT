@@ -1,16 +1,22 @@
-
 .club {
-  background: transparent !important;
-  border: none !important;
+  background: #fff !important;
+  border: 1px solid var(--border) !important;
+  color: #0b1220 !important;
   padding: 12px;
   border-radius: 12px;
   box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
-  gap: 8px; 
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  gap: 8px;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
   width: 100%;
   height: 100%;
+}
+
+.dark .club h3 {
+  color: #000;
 }
 
 .club .top {
@@ -39,9 +45,11 @@
 }
 .lead {
   margin: 0;
-  color: var(--muted);
+  color: #4b5563;
 }
-.lead:hover { color: var(--text); }
+.lead:hover {
+  color: #111827;
+}
 .keywords {
   display: flex;
   flex-wrap: wrap;
@@ -79,20 +87,24 @@
   background: transparent;
   padding: 6px 8px;
   border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 .info-title {
   font-size: 12px;
   color: var(--muted);
   font-weight: 700;
 }
-.info-title:hover { color: var(--accent-2); }
+.info-title:hover {
+  color: var(--accent-2);
+}
 .info-body {
   font-size: 13px;
   margin-top: 6px;
   color: var(--text);
 }
-.info-body:hover { color: var(--accent-2); }
+.info-body:hover {
+  color: var(--accent-2);
+}
 .events-section {
   margin-top: 12px;
 }
@@ -106,7 +118,9 @@
   font-weight: 600;
   font-size: 13px;
 }
-.events-list li:hover { color: var(--accent-2); }
+.events-list li:hover {
+  color: var(--accent-2);
+}
 .main-activities {
   margin: 6px 0 0;
   padding-left: 18px;
@@ -119,7 +133,9 @@
   font-weight: 600;
   display: list-item;
 }
-.main-activities li:hover { color: var(--accent-2); }
+.main-activities li:hover {
+  color: var(--accent-2);
+}
 .apply-btn {
   margin-top: auto;
   padding: 12px 18px;
@@ -130,7 +146,11 @@
   font-weight: 700;
   font-size: 15px;
   cursor: pointer;
-  transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
   height: 56px;
   display: flex;
   align-items: center;
@@ -154,7 +174,11 @@
   font-weight: 700;
   font-size: 15px;
   cursor: pointer;
-  transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
   height: 56px;
   display: flex;
   align-items: center;
@@ -179,7 +203,7 @@
   border-bottom: 10px solid #0f2a70;
   padding-bottom: 48px;
   background: transparent;
-  animation: fadeUp .35s ease both;
+  animation: fadeUp 0.35s ease both;
   margin-top: 0;
   margin-bottom: 0;
 }

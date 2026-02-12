@@ -17,6 +17,11 @@
   margin-bottom: 80px;
 }
 
+.dark .contact-section {
+  background: rgba(2, 6, 23, 0.95);
+  border-color: #1e40af;
+}
+
 .contact-container {
   max-width: 1400px;
   margin: 0 auto;
@@ -31,8 +36,13 @@
 }
 
 .contact-title {
-  font-family: "Science Gothic", "BBH Sans Hegarty", Inter, system-ui,
-    -apple-system, sans-serif;
+  font-family:
+    "Science Gothic",
+    "BBH Sans Hegarty",
+    Inter,
+    system-ui,
+    -apple-system,
+    sans-serif;
   font-size: 64px;
   font-weight: 700;
   line-height: 1.1;
@@ -41,13 +51,24 @@
 }
 
 .contact-subtitle {
-  font-family: "Science Gothic", "BBH Sans Hegarty", Inter, system-ui,
-    -apple-system, sans-serif;
+  font-family:
+    "Science Gothic",
+    "BBH Sans Hegarty",
+    Inter,
+    system-ui,
+    -apple-system,
+    sans-serif;
   font-size: 64px;
   font-weight: 700;
   line-height: 1.1;
   margin: 0;
+  margin: 0;
   color: #0f2a70;
+}
+
+.dark .contact-title,
+.dark .contact-subtitle {
+  color: #60a5fa;
 }
 
 .contact-button-wrapper {
@@ -63,7 +84,11 @@
   background: #fff;
   border: 3px solid #0f2a70;
   border-radius: 50px;
-  font-family: Inter, system-ui, -apple-system, sans-serif;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    sans-serif;
   font-size: 16px;
   font-weight: 700;
   color: #0f2a70;
@@ -73,10 +98,22 @@
   cursor: pointer;
 }
 
+.dark .fill-form-btn {
+  background: #0f172a;
+  border-color: #60a5fa;
+  color: #60a5fa;
+  box-shadow: 4px 4px 0 #1e40af;
+}
+
 .fill-form-btn:hover {
   transform: translate(2px, 2px);
   box-shadow: 2px 2px 0 #0f2a70;
   background: #f9f9f9;
+}
+
+.dark .fill-form-btn:hover {
+  background: #1e293b;
+  box-shadow: 2px 2px 0 #1e40af;
 }
 
 .fill-form-btn:active {

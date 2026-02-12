@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Github } from "lucide-react";
+import { Github, Menu } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,7 +15,7 @@ import React from "react";
 
 
 
-export function Navbar({ onOpenLogin}) {
+export function Navbar({ onOpenLogin, onOpenSidebar }) {
     const [profile, setProfile] = React.useState(null);
     const location = useLocation();
 
@@ -41,12 +41,12 @@ export function Navbar({ onOpenLogin}) {
     }, []);
 
     return (
-        <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-7xl rounded-xl border border-white/20 bg-white/10 backdrop-blur-md shadow-2xl supports-backdrop-filter:bg-white/30">
+        <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-7xl rounded-xl border border-white/20 bg-white/10 dark:bg-black/40 dark:border-white/10 backdrop-blur-md shadow-2xl supports-backdrop-filter:bg-white/30">
             <div className="flex h-18 items-center justify-between px-6">
                 <div className="flex items-center gap-6">
                     <Link to="/" className="flex items-center gap-2">
                         <img src="#" alt="SYNC-AIT Logo" width={18} height={18} className="h-6 w-auto" />
-                        <span className="font-jersey-20 text-4xl font-bold text-black/82">SYNC-AIT</span>
+                        <span className="font-jersey-20 text-4xl font-bold text-black/82 dark:text-white/90">SYNC-AIT</span>
                     </Link>
 
                     <div className="hidden md:flex items-center gap-1">
@@ -115,20 +115,29 @@ export function Navbar({ onOpenLogin}) {
                             <Button 
                                 variant="ghost" 
                                 size="sm" 
-                                className="hidden sm:inline-flex text-muted-foreground cursor-pointer"
+                                className="hidden sm:inline-flex text-muted-foreground dark:text-gray-300 cursor-pointer"
                                 onClick={onOpenLogin}
                             >
                                 Login
                             </Button>
                            
 
-                        <Button asChild className="rounded-lg bg-black/20 text-black font-medium px-6 h-9 gap-2 text-sm">
+                        <Button asChild className="rounded-lg bg-black/20 text-black dark:bg-white/10 dark:text-white font-medium px-6 h-9 gap-2 text-sm">
                             <a href="https://github.com/Jitesh-Yadav01/SYNC-AIT" target="_blank">
                                 <Github className="w-4 h-4" />
                                 Star on GitHub
                             </a>
                         </Button>
                     </div>
+
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="md:hidden text-black dark:text-white"
+                        onClick={onOpenSidebar}
+                    >
+                        <Menu className="h-6 w-6" />
+                    </Button>
                 </div>
             </div>
         </nav>

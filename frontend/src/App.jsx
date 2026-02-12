@@ -11,8 +11,11 @@ import { ViewProvider, useView } from "./context/ViewContext";
 import { publicRoutes } from "./Routes/PublicRoutes.jsx";
 import { protectedRoutes } from "./Routes/ProtectedRoutes.jsx";
 import TePanel from "./pages/Profile/Te profile/TePanel";
+import SePanel from "./pages/Profile/SE profile/SePanel";
 
-function AppContent() {
+import SideBar from "./components/Navbar/SideBar";
+
+function AppContent({ isSidebarOpen, setIsSidebarOpen }) {
   const routing = useRoutes([...publicRoutes, ...protectedRoutes]);
   const { currentView, setCurrentView } = useView();
 
@@ -28,13 +31,31 @@ function AppContent() {
      return <TePanel />;
   }
 
-  // Removed URL based check as per user request
-  // const location = useLocation();
-  // const isTeDashboard = location.pathname.startsWith('/profile/Te');
+  if (currentView === 'se-dashboard') {
+     return <SePanel />;
+  }
+
+
 
   return (
     <div className="app">
-      {currentView !== 'fullscreen' && <Navbar onOpenLogin={() => setCurrentView('login')} onOpenForm={() => setCurrentView('form')} />}
+      {currentView !== 'fullscreen' && (
+        <>
+          <Navbar 
+            onOpenLogin={() => setCurrentView('login')} 
+            onOpenForm={() => setCurrentView('form')} 
+            onOpenSidebar={() => setIsSidebarOpen(true)}
+          />
+          <SideBar 
+            open={isSidebarOpen} 
+            onClose={() => setIsSidebarOpen(false)} 
+            onOpenLogin={() => {
+              setIsSidebarOpen(false);
+              setCurrentView('login');
+            }}
+          />
+        </>
+      )}
 
       <div className={currentView !== 'fullscreen' ? "site-container" : ""}>
         <main className="main">
@@ -48,9 +69,13 @@ function AppContent() {
 }
 
 export default function App() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   return (
     <ViewProvider>
-      <AppContent />
+      <div className={`app ${isSidebarOpen ? 'overflow-hidden' : ''}`}> 
+        <AppContent isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+      </div>
     </ViewProvider>
   );
 }

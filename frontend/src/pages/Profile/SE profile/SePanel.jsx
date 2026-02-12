@@ -5,14 +5,14 @@ import { ProfileProvider } from '../Shared/ProfileContext';
 import SharedDashboardLayout from '../Shared/DashboardLayout';
 import { profileData, membersData, tasksData, messagesData, notificationsData } from './mockData';
 
-const TePanel = () => {
+const SePanel = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { setCurrentView } = useView();
 
     useEffect(() => {
-        setCurrentView('te-dashboard');
-        localStorage.setItem('te_dashboard_active', 'true');
+        setCurrentView('se-dashboard');
+        localStorage.setItem('se_dashboard_active', 'true');
     }, [setCurrentView]);
 
     const initialData = {
@@ -24,10 +24,10 @@ const TePanel = () => {
     };
 
     return (
-        <ProfileProvider initialData={initialData} role="TE">
+        <ProfileProvider initialData={initialData} role="SE">
             <SharedDashboardLayout />
         </ProfileProvider>
     );
 };
 
-export default TePanel;
+export default SePanel;
