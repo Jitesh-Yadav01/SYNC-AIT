@@ -8,7 +8,7 @@ export const profileData = {
   domains: ['Full Stack', 'Cloud Computing', 'AI/ML'],
   connectedClubs: ['Google Developer Groups (GDG)', 'Open Source Software (OSS)', 'Entrepreneurship Cell (E-Cell)'],
   avatar: '/clubprofiles/aps.png',
-  bannerText: 'Chaos to Code',
+  bannerText: 'Unstoppable!!',
   bio: 'Full Stack Developer | Go | Web3 | Blockchain | IEEE Student Member | Army Institute of technology',
   clubs: [
     {

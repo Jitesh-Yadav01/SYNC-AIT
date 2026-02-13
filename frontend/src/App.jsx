@@ -68,14 +68,24 @@ function AppContent({ isSidebarOpen, setIsSidebarOpen }) {
   );
 }
 
+import ClickSpark from "./styles/ClickSpark";
+
 export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <ViewProvider>
-      <div className={`app ${isSidebarOpen ? 'overflow-hidden' : ''}`}> 
-        <AppContent isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
-      </div>
+      <ClickSpark
+        sparkColor='#fff'
+        sparkSize={10}
+        sparkRadius={15}
+        sparkCount={8}
+        duration={400}
+      >
+        <div className={`app ${isSidebarOpen ? 'overflow-hidden' : ''}`}> 
+          <AppContent isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+        </div>
+      </ClickSpark>
     </ViewProvider>
   );
 }
