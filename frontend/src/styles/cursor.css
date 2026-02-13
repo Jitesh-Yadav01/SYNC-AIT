@@ -1,0 +1,24 @@
+/* Light Mode (Default) */
+:root {
+  --cursor-color: #000;
+}
+
+/* Dark Mode */
+.dark {
+  --cursor-color: #fff;
+}
+
+/* For specificity if needed */
+html.dark {
+  --cursor-color: #fff;
+}
+
+/* Apply to TargetCursor elements */
+.target-cursor-dot {
+  background-color: var(--cursor-color) !important;
+}
+
+.target-cursor-corner {
+  border-color: var(--cursor-color) !important;
+  border-style: solid;
+}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useRoutes, useLocation } from "react-router-dom";
+import { useRoutes } from "react-router-dom";
 
 import { Navbar } from "./components/Navbar/Navbar";
 import Footer from "./sections/Footer/Footer";
@@ -18,7 +18,7 @@ import SideBar from "./components/Navbar/SideBar";
 function AppContent({ isSidebarOpen, setIsSidebarOpen }) {
   const routing = useRoutes([...publicRoutes, ...protectedRoutes]);
   const { currentView, setCurrentView } = useView();
-
+  
   if (currentView === 'login') {
     return <Login />;
   }
@@ -69,6 +69,7 @@ function AppContent({ isSidebarOpen, setIsSidebarOpen }) {
 }
 
 import ClickSpark from "./styles/ClickSpark";
+import TargetCursor from "./styles/TargetCursor";
 
 export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -82,6 +83,13 @@ export default function App() {
         sparkCount={8}
         duration={400}
       >
+        <TargetCursor 
+          targetSelector="button, a, .cursor-target, .hover-circle, input, label"
+          spinDuration={2}
+          hideDefaultCursor
+          parallaxOn
+          hoverDuration={0.2}
+        />
         <div className={`app ${isSidebarOpen ? 'overflow-hidden' : ''}`}> 
           <AppContent isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
         </div>

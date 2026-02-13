@@ -17,6 +17,15 @@ export default function ApplicationForm({ clubName, abbr, onClose }) {
   })
   const [loading, setLoading] = useState(false)
 
+  React.useEffect(() => {
+     // Switch to light mode for form
+     document.documentElement.classList.remove('dark');
+     return () => {
+         // Switch back to dark mode when leaving form
+         document.documentElement.classList.add('dark');
+     };
+  }, []);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }

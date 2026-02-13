@@ -72,7 +72,7 @@ export default function Footer() {
               <a href="#home">Home</a>
               <a href="#about">About</a>
               <a href="#clubs">Clubs</a>
-              <a href="/developers">Developers</a>
+              <a href="https://www.gdgaitpune.me/" target='_blank'>Team</a>
             </div>
           </div>
 

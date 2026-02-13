@@ -14,6 +14,15 @@ export default function SharedDashboardLayout() {
     const navigate = useNavigate();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+    React.useEffect(() => {
+        // Switch to light mode for dashboard
+        document.documentElement.classList.remove('dark');
+        return () => {
+            // Switch back to dark mode when leaving dashboard
+            document.documentElement.classList.add('dark');
+        };
+    }, []);
+
     const handleLogout = () => {
         logout();
         navigate('/');
@@ -84,7 +93,7 @@ export default function SharedDashboardLayout() {
                                     key={club.id}
                                     onClick={() => switchClub(club.id)}
                                     className={cn(
-                                        "h-10 w-10 min-w-[2.5rem] rounded-full border-2 flex items-center justify-center transition-all bg-white relative group",
+                                        "h-10 w-10 min-w-10 rounded-full border-2 flex items-center justify-center transition-all bg-white relative group",
                                         activeClub?.id === club.id
                                             ? "border-blue-600 ring-2 ring-blue-100"
                                             : "border-gray-200 hover:border-gray-300"

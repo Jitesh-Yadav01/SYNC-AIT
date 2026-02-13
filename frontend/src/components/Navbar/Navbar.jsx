@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import React from "react";
+import PillNav from "./PillNav";
 
 
 
@@ -40,7 +41,46 @@ export function Navbar({ onOpenLogin, onOpenSidebar }) {
         };
     }, []);
 
+    const navItems = React.useMemo(() => [
+        { label: 'Home', href: '/' },
+        ...(profile?.role === 'Technical Executive' ? [{ label: 'Dashboard', href: '/profile/Te' }] : []),
+        { label: 'About Us', href: '#about' },
+        { label: 'Clubs', href: '/clubs' },
+        { label: 'Team', href: 'https://www.gdgaitpune.me/',target:'_blank' },
+        { label: 'Developers', href: '/developers' },
+        { label: 'Login', onClick: onOpenLogin },
+        { 
+            label: (
+                <span className="flex items-center gap-2">
+                    <Github className="w-4 h-4" />
+                    Star on GitHub
+                </span>
+            ), 
+            href: 'https://github.com/Jitesh-Yadav01/SYNC-AIT',
+            target: '_blank'
+        }
+    ], [profile, onOpenLogin]);
+
     return (
+        <>
+            <PillNav
+                logo="/synclogo.svg"
+                logoAlt="SYNC-AIT Logo"
+                items={navItems}
+                activeHref={location.pathname}
+                className="md:mx-auto"
+                baseColor="#000"
+                pillColor="#fff"
+                hoveredPillTextColor="#fff"
+                pillTextColor="#000"
+                initialLoadAnimation
+                mobileMenuTrigger={
+                    <Button variant="ghost" size="icon" className="md:hidden text-black dark:text-white" onClick={onOpenSidebar}>
+                        <Menu className="h-6 w-6" />
+                    </Button>
+                }
+            />
+            {/*
         <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-7xl rounded-xl border border-white/20 bg-white/10 dark:bg-black/40 dark:border-white/10 backdrop-blur-md shadow-2xl supports-backdrop-filter:bg-white/30">
             <div className="flex h-18 items-center justify-between px-6">
                 <div className="flex items-center gap-6">
@@ -140,7 +180,10 @@ export function Navbar({ onOpenLogin, onOpenSidebar }) {
                     </Button>
                 </div>
             </div>
+            </div>
         </nav>
+        */}
+        </>
     );
 }
 
