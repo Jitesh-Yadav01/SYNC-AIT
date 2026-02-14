@@ -68,8 +68,7 @@ svg {
 }
 
 body {
-  background: var(--bg) url("/background.svg") no-repeat center top fixed;
-  background-size: cover;
+  background: #000000;
   font-family:
     Inter,
     system-ui,

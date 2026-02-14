@@ -20,7 +20,12 @@ const ContentBlock = ({ title, content, alignment = "left" }) => {
 
 const AboutUs = () => {
   return (
-    <section id="about" className="aboutus-section">
+    <section id="about" className="aboutus-section" style={{ 
+      backgroundImage: `url("/background.svg")`,
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center top',
+      backgroundSize: 'cover'
+    }}>
       <div className="content-wrapper">
         <h1 className="aboutus-title">ABOUT US</h1>
 
