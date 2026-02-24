@@ -10,7 +10,7 @@ const SharedProfile = () => {
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden">
-                <div className="h-28 bg-gray-900 text-white flex items-center justify-center font-black text-8xl uppercase">
+                <div className="h-24 md:h-28 bg-gray-900 text-white flex items-center justify-center font-black text-4xl md:text-6xl lg:text-8xl uppercase px-4 text-center">
                     {profile.bannerText || 'SYNC'}
                 </div>
                 <div className="px-8 pb-8">

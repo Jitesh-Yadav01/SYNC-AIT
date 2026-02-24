@@ -30,7 +30,7 @@ const Login = () => {
             variant="ghost" 
             size="icon" 
             className="absolute top-4 left-4 text-slate-400 hover:text-slate-900 dark:hover:text-white"
-            onClick={() => setCurrentView('default')}
+            onClick={() => navigate(-1)}
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>

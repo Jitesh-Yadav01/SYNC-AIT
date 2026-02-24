@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Github, Menu } from "lucide-react";
+import { Github, Menu, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,7 +16,7 @@ import PillNav from "./PillNav";
 
 
 
-export function Navbar({ onOpenLogin, onOpenSidebar }) {
+export function Navbar({ onOpenLogin, onOpenSidebar, isSidebarOpen }) {
     const [profile, setProfile] = React.useState(null);
     const location = useLocation();
 
@@ -76,7 +76,7 @@ export function Navbar({ onOpenLogin, onOpenSidebar }) {
                 initialLoadAnimation
                 mobileMenuTrigger={
                     <Button variant="ghost" size="icon" className="md:hidden text-black dark:text-white" onClick={onOpenSidebar}>
-                        <Menu className="h-6 w-6" />
+                        {isSidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                     </Button>
                 }
             />

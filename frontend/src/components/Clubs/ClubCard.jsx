@@ -47,13 +47,6 @@ export default function ClubCard({ abbr, name, fullForm, img, desc, focusAreas =
             </div>
           </div>
         )}
-
-        {who && (
-          <div className="info-item">
-            <div className="info-title">Who</div>
-            <div className="info-body">{who}</div>
-          </div>
-        )}
       </div>
       {events && events.length > 0 && (
         <div className="events-section" aria-label={`${abbr} activities`}>

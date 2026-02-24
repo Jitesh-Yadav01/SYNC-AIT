@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { X, Github, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -27,6 +27,7 @@ const NAV_ITEMS = [
  * @param {function} props.onOpenLogin - function to trigger the login view.
  */
 export default function SideBar({ open, onClose, onOpenLogin }) {
+  const navigate = useNavigate();
   // Lock body scroll when sidebar is active to prevent background scrolling
   useEffect(() => {
     if (open) {
@@ -61,18 +62,10 @@ export default function SideBar({ open, onClose, onOpenLogin }) {
       >
         <div className="flex flex-col h-full p-6">
           
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center mb-8">
             <span className="font-jersey-20 text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
               Menu
             </span>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onClose}
-              className="rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-            >
-              <X className="h-5 w-5 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50" />
-            </Button>
           </div>
 
             <nav className="flex-1">
@@ -113,7 +106,7 @@ export default function SideBar({ open, onClose, onOpenLogin }) {
 
           <div className="mt-auto pt-8 border-t border-zinc-200 dark:border-zinc-800 space-y-3">
             <Button
-              onClick={onOpenLogin}
+              onClick={() => { onClose(); navigate('/login'); }}
               variant="outline"
               className="w-full h-11 rounded-xl border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900 text-zinc-900 dark:text-zinc-50 font-medium justify-center gap-2 transition-all duration-200"
             >

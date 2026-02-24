@@ -48,26 +48,26 @@ export default function SharedMembers() {
 
     return (
         <div className="space-y-6">
-            <div className="flex justify-between items-center">
-                <div>
-                    <h2 className="text-2xl font-bold tracking-tight text-gray-900">Team Members</h2>
-                    <p className="text-gray-500">
-                        {canManageMembers ? "Manage your team members." : "View team members."}
-                    </p>
-                </div>
-                {canManageMembers && (
-                    <button
-                        onClick={() => {
-                            setShowAddForm(!showAddForm);
-                            setIsEditing(false);
-                            setNewMember({ name: '', email: '', role: 'FE', domain: '', status: 'Active' });
-                        }}
-                        className="flex items-center gap-2 bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-colors"
-                    >
-                        <Plus className="h-4 w-4" /> {showAddForm && !isEditing ? 'Close' : 'Add Member'}
-                    </button>
-                )}
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+            <div>
+                <h2 className="text-2xl font-bold tracking-tight text-gray-900">Team Members</h2>
+                <p className="text-gray-500">
+                    {canManageMembers ? 'Manage your team members.' : 'View team members.'}
+                </p>
             </div>
+            {canManageMembers && (
+                <button
+                    onClick={() => {
+                        setShowAddForm(!showAddForm);
+                        setIsEditing(false);
+                        setNewMember({ name: '', email: '', role: 'FE', domain: '', status: 'Active' });
+                    }}
+                    className="flex items-center gap-2 bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-colors self-start sm:self-auto"
+                >
+                    <Plus className="h-4 w-4" /> {showAddForm && !isEditing ? 'Close' : 'Add Member'}
+                </button>
+            )}
+        </div>
 
             {showAddForm && canManageMembers && (
                 <form onSubmit={handleSubmit} className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm space-y-4 animate-in fade-in slide-in-from-top-2">
@@ -123,9 +123,9 @@ export default function SharedMembers() {
             )}
 
             <div className="bg-white border border-gray-200 rounded-xl shadow-sm">
-                <div className="p-4 border-b border-gray-200 flex items-center justify-between">
+                <div className="p-4 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                     <h3 className="font-semibold text-gray-900">All Members</h3>
-                    <div className="relative w-64">
+                    <div className="relative w-full sm:w-64">
                         <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-400" />
                         <input
                             className="pl-8 flex h-9 w-full rounded-md border border-gray-300 bg-transparent px-3 py-1 text-sm text-gray-900 shadow-sm transition-colors focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -137,17 +137,17 @@ export default function SharedMembers() {
                 </div>
                 <div className="divide-y divide-gray-100">
                     {filteredMembers.map((member) => (
-                        <div key={member.id} className="flex items-center justify-between p-4 hover:bg-gray-50 transition-colors">
+                        <div key={member.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 hover:bg-gray-50 transition-colors gap-3">
                             <div className="flex items-center gap-4">
-                                <div className="h-10 w-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 font-medium border border-blue-100">
+                                <div className="h-10 w-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 font-medium border border-blue-100 shrink-0">
                                     {member.name.charAt(0)}
                                 </div>
-                                <div>
-                                    <p className="font-medium text-gray-900">{member.name}</p>
-                                    <p className="text-sm text-gray-500">{member.email}</p>
+                                <div className="min-w-0">
+                                    <p className="font-medium text-gray-900 truncate">{member.name}</p>
+                                    <p className="text-sm text-gray-500 truncate">{member.email}</p>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-2 flex-wrap pl-14 sm:pl-0">
                                 <span className="px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200">{member.role}</span>
                                 <span className="px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">{member.domain}</span>
                                 <span className={`px-2 py-0.5 rounded text-xs font-medium border ${member.status === 'Active'
@@ -162,7 +162,7 @@ export default function SharedMembers() {
                                             onClick={() => openEditModal(member)}
                                             className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors"
                                             disabled={role === 'SE' && member.role !== 'FE'}
-                                            title={role === 'SE' && member.role !== 'FE' ? "You can only edit FE members" : "Edit Member"}
+                                            title={role === 'SE' && member.role !== 'FE' ? 'You can only edit FE members' : 'Edit Member'}
                                         >
                                             <Pencil className={`h-4 w-4 ${role === 'SE' && member.role !== 'FE' ? 'opacity-50 cursor-not-allowed' : ''}`} />
                                         </button>
@@ -170,7 +170,7 @@ export default function SharedMembers() {
                                             onClick={() => removeMember(member.id)}
                                             className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
                                             disabled={role === 'SE' && member.role !== 'FE'}
-                                            title={role === 'SE' && member.role !== 'FE' ? "You can only remove FE members" : "Remove Member"}
+                                            title={role === 'SE' && member.role !== 'FE' ? 'You can only remove FE members' : 'Remove Member'}
                                         >
                                             <Trash2 className={`h-4 w-4 ${role === 'SE' && member.role !== 'FE' ? 'opacity-50 cursor-not-allowed' : ''}`} />
                                         </button>

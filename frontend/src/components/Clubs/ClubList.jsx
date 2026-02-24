@@ -32,7 +32,6 @@ export default function ClubList({ onApply }) {
             focusAreas={club.focusAreas}
             media={club.media}
             activities={club.activities}
-            who={club.who}
             onApply={onApply}
           />
         ))}

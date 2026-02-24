@@ -48,7 +48,7 @@ export default function SharedDashboardLayout() {
 
     return (
         <div 
-            className="flex min-h-screen bg-gray-50 text-gray-900 font-sans selection:bg-blue-500/30 mt-[-100]"
+            className="flex min-h-screen bg-gray-50 text-gray-900 font-sans selection:bg-blue-500/30"
             style={{ 
                 backgroundImage: "url('/back.svg')", 
                 backgroundSize: 'cover', 
@@ -60,12 +60,12 @@ export default function SharedDashboardLayout() {
                 <div
                     className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"
                     onClick={() => setIsSidebarOpen(false)}
-                    style={{
-                        backgroundImage: "url('/back.svg')",
-                        backgroundSize: 'cover',
-                        backgroundAttachment: 'fixed',
-                        backgroundPosition: 'center'
-                    }}
+                    // style={{
+                    //     backgroundImage: "url('/back.svg')",
+                    //     backgroundSize: 'cover',
+                    //     backgroundAttachment: 'fixed',
+                    //     backgroundPosition: 'center'
+                    // }}
                 />
             )}
 

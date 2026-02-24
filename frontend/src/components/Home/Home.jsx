@@ -9,9 +9,9 @@ export default function Home() {
 	const navigate = useNavigate()
 	return (
 
-		<section id="home" className="home-hero" >
+		<section className='mt-[70px]'>
 			
-			<div className="page-head flex  font-[Poppins]">
+			<div className="page-head flex items-center justify-center font-[Poppins]">
 				<div className='hero-div'  >
 					<img src={SyncAIT} alt=""  className='syncAITdesigned'  style={{margin:"40px 0 0 0 "}}/>
 					<h1>A Place where every Club Finds Home</h1>

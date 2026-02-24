@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=BBH+Sans+Bartle&family=BBH+Sans+Hegarty&family=Boldonse&family=Science+Gothic:wght@100..900&family=Stack+Sans+Notch:wght@200..700&display=swap');
 
 .main {
-  padding-top: 20px;
+  margin-top: -20px;
 }
 
 .page-head {

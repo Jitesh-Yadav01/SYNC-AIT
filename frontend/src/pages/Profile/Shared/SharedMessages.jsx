@@ -1,23 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useProfile } from './ProfileContext';
-import { Send, User, MessageSquare } from 'lucide-react';
+import { Send, MessageSquare, ArrowLeft } from 'lucide-react';
 
 export default function SharedMessages() {
   const { messages, members, profile, sendMessage } = useProfile();
   const [activeChat, setActiveChat] = useState(null);
   const [newMessage, setNewMessage] = useState('');
+  const [chatOpen, setChatOpen] = useState(false);
   const messagesEndRef = useRef(null);
 
   const filteredMessages = messages.filter(m =>
     activeChat ? (m.senderId === activeChat || m.receiverId === activeChat) : !m.receiverId
   );
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
   useEffect(() => {
-    scrollToBottom();
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [filteredMessages]);
 
   const handleSend = (e) => {
@@ -28,23 +25,25 @@ export default function SharedMessages() {
     }
   };
 
+
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 h-[600px] bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-      <div className="md:col-span-1 border-r border-gray-200 flex flex-col h-full bg-gray-50">
+    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm flex flex-col md:grid md:grid-cols-4" style={{ height: '600px' }}>
+
+      <div className={`md:col-span-1 border-r border-gray-200 flex flex-col bg-gray-50 ${chatOpen ? 'hidden md:flex' : 'flex'}`}>
         <div className="p-4 border-b border-gray-200 font-semibold text-gray-900">
           Messages
         </div>
         <div className="flex-1 overflow-y-auto p-2 space-y-1">
           <button
-            onClick={() => setActiveChat(null)}
-            className={`w-full flex items-center gap-3 p-3 rounded-lg text-sm font-medium transition-colors ${activeChat === null ? "bg-blue-50 shadow-sm text-blue-700 border border-blue-100" : "hover:bg-gray-100 text-gray-600"
-              }`}
+            onClick={() => { setActiveChat(null); setChatOpen(true); }}
+            className={`w-full flex items-center gap-3 p-3 rounded-lg text-sm font-medium transition-colors ${activeChat === null ? 'bg-blue-50 text-blue-700 border border-blue-100 shadow-sm' : 'hover:bg-gray-100 text-gray-600'}`}
           >
-            <div className={`h-10 w-10 rounded-full flex items-center justify-center ${activeChat === null ? "bg-blue-800 text-white" : "bg-gray-100 text-gray-400"}`}>
+            <div className={`h-10 w-10 rounded-full flex items-center justify-center ${activeChat === null ? 'bg-blue-800 text-white' : 'bg-gray-100 text-gray-400'}`}>
               <MessageSquare className="h-5 w-5" />
             </div>
             <div className="text-left">
-              <p className={activeChat === null ? "text-gray-900" : ""}>Public Channel</p>
+              <p>Public Channel</p>
               <p className="text-xs text-gray-500">General</p>
             </div>
           </button>
@@ -56,15 +55,14 @@ export default function SharedMessages() {
           {members.map(member => (
             <button
               key={member.id}
-              onClick={() => setActiveChat(member.id)}
-              className={`w-full flex items-center gap-3 p-3 rounded-lg text-sm font-medium transition-colors ${activeChat === member.id ? "bg-blue-50 shadow-sm text-blue-900 border border-blue-100" : "hover:bg-gray-100 text-gray-600"
-                }`}
+              onClick={() => { setActiveChat(member.id); setChatOpen(true); }}
+              className={`w-full flex items-center gap-3 p-3 rounded-lg text-sm font-medium transition-colors ${activeChat === member.id ? 'bg-blue-50 text-blue-900 border border-blue-100 shadow-sm' : 'hover:bg-gray-100 text-gray-600'}`}
             >
               <div className="h-10 w-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 font-medium">
                 {member.name.charAt(0)}
               </div>
               <div className="text-left">
-                <p className={activeChat === member.id ? "text-gray-900" : ""}>{member.name}</p>
+                <p>{member.name}</p>
                 <p className="text-xs text-gray-500">{member.role}</p>
               </div>
             </button>
@@ -72,9 +70,14 @@ export default function SharedMessages() {
         </div>
       </div>
 
-      <div className="md:col-span-3 flex flex-col h-full bg-white">
+      <div className={`md:col-span-3 flex flex-col h-full bg-white ${chatOpen ? 'flex' : 'hidden md:flex'}`}>
         <div className="p-4 border-b border-gray-200 flex items-center gap-3 bg-white">
-          <h3 className="font-semibold text-lg text-gray-900">{activeChat ? members.find(m => m.id === activeChat)?.name : "Public Channel"}</h3>
+          <button onClick={() => setChatOpen(false)} className="md:hidden text-gray-500 hover:text-gray-800">
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          <h3 className="font-semibold text-lg text-gray-900">
+            {activeChat ? members.find(m => m.id === activeChat)?.name : 'Public Channel'}
+          </h3>
           {activeChat && <span className="h-2 w-2 bg-green-500 rounded-full" />}
         </div>
 
@@ -88,12 +91,11 @@ export default function SharedMessages() {
             filteredMessages.map((msg) => {
               const isMe = msg.senderName === profile.name;
               return (
-                <div key={msg.id} className={`flex gap-3 max-w-[80%] ${isMe ? "ml-auto flex-row-reverse" : ""}`}>
+                <div key={msg.id} className={`flex gap-3 max-w-[80%] ${isMe ? 'ml-auto flex-row-reverse' : ''}`}>
                   <div className="h-8 w-8 rounded-full bg-gray-200 shrink-0 flex items-center justify-center text-xs font-medium text-gray-500">
                     {msg.senderName.charAt(0)}
                   </div>
-                  <div className={`p-3 rounded-2xl text-sm ${isMe ? "bg-blue-600 text-white rounded-tr-none shadow-sm" : "bg-white text-gray-700 rounded-tl-none border border-gray-200 shadow-sm"
-                    }`}>
+                  <div className={`p-3 rounded-2xl text-sm ${isMe ? 'bg-blue-600 text-white rounded-tr-none shadow-sm' : 'bg-white text-gray-700 rounded-tl-none border border-gray-200 shadow-sm'}`}>
                     <div className="flex items-baseline gap-2 mb-1 opacity-80 text-xs">
                       <span className="font-bold">{msg.senderName}</span>
                       <span>{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
@@ -125,6 +127,7 @@ export default function SharedMessages() {
           </form>
         </div>
       </div>
+
     </div>
   );
 }
