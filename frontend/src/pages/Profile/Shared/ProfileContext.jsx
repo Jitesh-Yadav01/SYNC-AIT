@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useView } from '../../../context/ViewContext';
+// import { useView } from '../../../context/ViewContext';
 
 const ProfileContext = createContext();
 
@@ -19,7 +19,7 @@ export const ProfileProvider = ({ children, initialData, role }) => {
     const [notifications, setNotifications] = useState(initialData.notifications);
     const [activeTab, setActiveTab] = useState('overview');
     const [activeClub, setActiveClub] = useState(profile.clubs?.[0] || null);
-    const { setCurrentView } = useView();
+    // const { setCurrentView } = useView();
 
     const clubTasks = tasks.filter(t => t.clubId === activeClub?.id);
     const clubMembers = members.filter(m => {

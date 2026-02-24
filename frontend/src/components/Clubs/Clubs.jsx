@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import ClubCard from './ClubCard'
 import ApplicationForm from '../ApplicationForm'
 import './club.css'
-import { useView } from '../../context/ViewContext';
+// import { useView } from '../../context/ViewContext';
 
 export default function MainContent(){
-  const { setCurrentView, setApplicationData } = useView();
+  // const { setCurrentView, setApplicationData } = useView();
   
   const handleApply = (abbr, name) => {
     setApplicationData({ abbr, name });

@@ -48,7 +48,7 @@ export function Navbar({ onOpenLogin, onOpenSidebar }) {
         { label: 'Clubs', href: '/clubs' },
         { label: 'Team', href: 'https://www.gdgaitpune.me/',target:'_blank' },
         { label: 'Developers', href: '/developers' },
-        { label: 'Login', onClick: onOpenLogin },
+        { label: 'Login', href:'/login'},
         { 
             label: (
                 <span className="flex items-center gap-2">

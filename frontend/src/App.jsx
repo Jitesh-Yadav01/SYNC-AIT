@@ -5,7 +5,7 @@ import { Navbar } from "./components/Navbar/Navbar";
 import Footer from "./sections/Footer/Footer";
 import Login from "./pages/Auth/Login";
 import ApplicationForm from "./components/ApplicationForm";
-import { ViewProvider, useView } from "./context/ViewContext";
+// import { ViewProvider, useView } from "./context/ViewContext";
 
 
 import { publicRoutes } from "./Routes/PublicRoutes.jsx";
@@ -17,35 +17,29 @@ import SideBar from "./components/Navbar/SideBar";
 
 function AppContent({ isSidebarOpen, setIsSidebarOpen }) {
   const routing = useRoutes([...publicRoutes, ...protectedRoutes]);
-  const { currentView, setCurrentView } = useView();
+  // const { currentView, setCurrentView } = useView();
   
-  if (currentView === 'login') {
-    return <Login />;
-  }
+  // if (currentView === 'login') {
+  //   return <Login />;
+  // }
 
-  if (currentView === 'form') {
-    return <ApplicationForm clubName="SYNC-AIT" abbr="SYNC" onClose={() => setCurrentView('default')} />;
-  }
+  // if (currentView === 'form') {
+  //   return <ApplicationForm clubName="SYNC-AIT" abbr="SYNC" onClose={() => setCurrentView('default')} />;
+  // }
 
-  if (currentView === 'te-dashboard') {
-     return <TePanel />;
-  }
+  // if (currentView === 'te-dashboard') {
+  //    return <TePanel />;
+  // }
 
-  if (currentView === 'se-dashboard') {
-     return <SePanel />;
-  }
+  // if (currentView === 'se-dashboard') {
+  //    return <SePanel />;
+  // }
 
 
 
   return (
     <div className="app">
-      {currentView !== 'fullscreen' && (
         <>
-          <Navbar 
-            onOpenLogin={() => setCurrentView('login')} 
-            onOpenForm={() => setCurrentView('form')} 
-            onOpenSidebar={() => setIsSidebarOpen(true)}
-          />
           <SideBar 
             open={isSidebarOpen} 
             onClose={() => setIsSidebarOpen(false)} 
@@ -55,15 +49,12 @@ function AppContent({ isSidebarOpen, setIsSidebarOpen }) {
             }}
           />
         </>
-      )}
 
-      <div className={currentView !== 'fullscreen' ? "site-container" : ""}>
+      <div>
         <main className="main">
           {routing}
         </main>
       </div>
-
-      {currentView !== 'fullscreen' && <Footer />}
     </div>
   );
 }
@@ -75,7 +66,6 @@ export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <ViewProvider>
       <ClickSpark
         sparkColor='#fff'
         sparkSize={10}
@@ -94,6 +84,5 @@ export default function App() {
           <AppContent isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
         </div>
       </ClickSpark>
-    </ViewProvider>
   );
 }

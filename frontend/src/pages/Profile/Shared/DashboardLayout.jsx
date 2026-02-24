@@ -10,7 +10,7 @@ import { LayoutDashboard, Users, CheckSquare, MessageSquare, LogOut, Menu } from
 import { cn } from '@/lib/utils';
 
 export default function SharedDashboardLayout() {
-    const { activeTab, setActiveTab, logout, profile, activeClub, switchClub, role } = useProfile();
+    const { activeTab, setActiveTab, profile, activeClub, switchClub, role } = useProfile();
     const navigate = useNavigate();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -24,7 +24,6 @@ export default function SharedDashboardLayout() {
     }, []);
 
     const handleLogout = () => {
-        logout();
         navigate('/');
     };
 
@@ -49,7 +48,7 @@ export default function SharedDashboardLayout() {
 
     return (
         <div 
-            className="flex min-h-screen bg-gray-50 text-gray-900 font-sans selection:bg-blue-500/30"
+            className="flex min-h-screen bg-gray-50 text-gray-900 font-sans selection:bg-blue-500/30 mt-[-100]"
             style={{ 
                 backgroundImage: "url('/back.svg')", 
                 backgroundSize: 'cover', 

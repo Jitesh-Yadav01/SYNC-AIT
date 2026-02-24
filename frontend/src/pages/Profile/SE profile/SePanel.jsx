@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useView } from '@/context/ViewContext';
+// import { useView } from '@/context/ViewContext';
 import { ProfileProvider } from '../Shared/ProfileContext';
 import SharedDashboardLayout from '../Shared/DashboardLayout';
 import { profileData, membersData, tasksData, messagesData, notificationsData } from './mockData';
@@ -8,12 +8,12 @@ import { profileData, membersData, tasksData, messagesData, notificationsData } 
 const SePanel = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { setCurrentView } = useView();
+    // const { setCurrentView } = useView();
 
-    useEffect(() => {
-        setCurrentView('se-dashboard');
-        localStorage.setItem('se_dashboard_active', 'true');
-    }, [setCurrentView]);
+    // useEffect(() => {
+    //     setCurrentView('se-dashboard');
+    //     localStorage.setItem('se_dashboard_active', 'true');
+    // }, [setCurrentView]);
 
     const initialData = {
         profile: profileData,

@@ -1,18 +1,18 @@
 import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
-import { useView } from '../../context/ViewContext';
+// import { useView } from '../../context/ViewContext';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 const Login = () => {
 
   const [year, setYear] = useState('')
-  const { setCurrentView } = useView();
+  // const { setCurrentView } = useView();
 
   const navigate = useNavigate()
   const handleSubmit = (e)=>{
     e.preventDefault()
-    setCurrentView('default');
+    // setCurrentView('default');
      navigate(`/profile/${year}`, { state: { fromLogin: true } });
   }
 

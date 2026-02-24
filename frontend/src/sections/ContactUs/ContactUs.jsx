@@ -1,10 +1,10 @@
 import React from 'react'
 import './ContactUs.css'
 import collabBg from '../../assets/CollabBG.png'
-import { useView } from '../../context/ViewContext';
+// import { useView } from '../../context/ViewContext';
 
 export default function ContactUs() {
-  const { setCurrentView } = useView();
+  // const { setCurrentView } = useView();
 
   return (
     <section id="contact" className="contact-section" style={{ backgroundImage: `url(${collabBg})` }}>
