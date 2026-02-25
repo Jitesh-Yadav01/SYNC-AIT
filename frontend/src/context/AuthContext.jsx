@@ -4,7 +4,11 @@ import { useEffect, useState, createContext, useContext } from "react";
 
 
 const AuthContext = createContext();
-const API = import.meta.env.VITE_BACKEND_URL;
+const API = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+if (!import.meta.env.VITE_BACKEND_URL) {
+  console.warn("AuthContext: VITE_BACKEND_URL is not defined in .env. Falling back to default URL.");
+}
+console.log("AuthContext: Backend API URL set to:", API);
 
 
 export const AuthProvider = ({ children }) => {
@@ -95,9 +99,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   // send verify account otp:
-  const sendVerifyOtp = async () => {
+  const sendVerifyOtp = async (email) => {
     try {
-      const res = await axios.post(`${API}/api/auth/verify-otp`, {}, {
+      const res = await axios.post(`${API}/api/auth/verify-otp`, { email }, {
         withCredentials: true
       })
       if (res.data.success) {

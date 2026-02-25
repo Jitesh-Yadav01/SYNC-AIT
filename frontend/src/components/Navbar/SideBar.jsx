@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { X, Github, LogIn } from "lucide-react";
+import { X, Github, LogIn, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/context/AuthContext";
 
 /**
  * Navigation items configuration.
@@ -28,6 +29,7 @@ const NAV_ITEMS = [
  */
 export default function SideBar({ open, onClose, onOpenLogin }) {
   const navigate = useNavigate();
+  const { logout, user } = useAuth();
   // Lock body scroll when sidebar is active to prevent background scrolling
   useEffect(() => {
     if (open) {
@@ -105,14 +107,29 @@ export default function SideBar({ open, onClose, onOpenLogin }) {
           </nav>
 
           <div className="mt-auto pt-8 border-t border-zinc-200 dark:border-zinc-800 space-y-3">
-            <Button
-              onClick={() => { onClose(); navigate('/login'); }}
-              variant="outline"
-              className="w-full h-11 rounded-xl border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900 text-zinc-900 dark:text-zinc-50 font-medium justify-center gap-2 transition-all duration-200"
-            >
-              <LogIn className="w-4 h-4" />
-              Login
-            </Button>
+            {user ? (
+              <Button
+                onClick={() => {
+                  logout();
+                  onClose();
+                  navigate('/');
+                }}
+                variant="outline"
+                className="w-full h-11 rounded-xl border-red-100 dark:border-red-900/30 hover:bg-red-50 dark:hover:bg-red-950/30 text-red-600 font-medium justify-center gap-2 transition-all duration-200"
+              >
+                <LogOut className="w-4 h-4" />
+                Sign Out
+              </Button>
+            ) : (
+              <Button
+                onClick={() => { onClose(); navigate('/login'); }}
+                variant="outline"
+                className="w-full h-11 rounded-xl border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900 text-zinc-900 dark:text-zinc-50 font-medium justify-center gap-2 transition-all duration-200"
+              >
+                <LogIn className="w-4 h-4" />
+                Login
+              </Button>
+            )}
 
             <Button
               asChild

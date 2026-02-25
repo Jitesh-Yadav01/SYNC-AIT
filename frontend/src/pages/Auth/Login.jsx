@@ -25,6 +25,11 @@ const Login = () => {
         pending: "Requesting...",
         success: {
           render({ data }) {
+            if (!data.user || !data.user.year) {
+              console.error("Login: Missing user year in data", data);
+              setTimeout(() => navigate("/"), 2000); // Fallback to home if year is missing
+              return data.message || "Login successfully! (Redirecting to home) 👌";
+            }
             setTimeout(() => navigate(`/profile/${data.user.year}`), 2000);
             return data.message || "Login successfully! 👌";
           },

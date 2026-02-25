@@ -12,7 +12,7 @@ import { useAuth } from '@/context/AuthContext';
 
 export default function SharedDashboardLayout() {
     const { activeTab, setActiveTab, profile, activeClub, switchClub, role } = useProfile();
-    const { logout,  } = useAuth();
+    const { logout, user } = useAuth();
     const navigate = useNavigate();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -25,13 +25,10 @@ export default function SharedDashboardLayout() {
         };
     }, []);
 
-    const handleLogout = async () => {
-        try {
-            await logout();
-            navigate('/');
-        } catch (error) {
-            console.error("Logout failed:", error);
-        }
+    const handleLogout = () => {
+        logout();
+        setIsSidebarOpen(false);
+        navigate('/');
     };
 
     const tabs = [

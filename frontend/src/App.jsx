@@ -36,7 +36,7 @@ function AppContent({ isSidebarOpen, setIsSidebarOpen }) {
 
 export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
+  
   return (
       <ClickSpark
         sparkColor='#fff'
