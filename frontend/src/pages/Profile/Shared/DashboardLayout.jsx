@@ -8,9 +8,11 @@ import SharedMessages from './SharedMessages';
 import SharedProfile from './SharedProfile';
 import { LayoutDashboard, Users, CheckSquare, MessageSquare, LogOut, Menu } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/context/AuthContext';
 
 export default function SharedDashboardLayout() {
     const { activeTab, setActiveTab, profile, activeClub, switchClub, role } = useProfile();
+    const { logout,  } = useAuth();
     const navigate = useNavigate();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -23,8 +25,13 @@ export default function SharedDashboardLayout() {
         };
     }, []);
 
-    const handleLogout = () => {
-        navigate('/');
+    const handleLogout = async () => {
+        try {
+            await logout();
+            navigate('/');
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
     };
 
     const tabs = [

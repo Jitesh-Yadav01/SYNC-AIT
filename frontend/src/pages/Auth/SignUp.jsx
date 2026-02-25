@@ -5,38 +5,42 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "react-toastify";
 
-const Login = () => {
+const SignUp = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, user } = useAuth();
-  const navigate = useNavigate();
+  const [year, setYear] = useState("");
 
+  const navigate = useNavigate();
+  const { signUp } = useAuth();
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     await toast.promise(
       async () => {
-        const res = await login(email, password);
+        const res = await signUp(name, email, password, year);
         if (!res.success) {
-          throw new Error(res.message || "Login failed");
+          throw new Error(res.message || "Registration failed");
         }
         return res;
       },
       {
-        pending: "Requesting...",
+        pending: "Registering...",
         success: {
           render({ data }) {
-            setTimeout(() => navigate(`/profile/${data.user.year}`), 2000);
-            return data.message || "Login successfully! 👌";
+            setTimeout(() => navigate("/verify-account", { state: { email, year } }), 2000);
+            return data.message || "Registered successfully! 👌";
           },
         },
         error: {
           render({ data }) {
-            return data.message || "Login failed 🤯";
+            return data.message || "Registration failed 🤯";
           },
         },
-      },
+      }
     );
   };
+
   return (
     <div
       className="min-h-screen w-full flex items-center justify-center p-4"
@@ -60,15 +64,34 @@ const Login = () => {
         {/* Header */}
         <div className="mb-8 text-center pt-2">
           <h1 className="text-2xl font-semibold tracking-tight">
-            Welcome back
+            Create an account
           </h1>
           <p className="mt-2 text-sm text-slate-400">
-            Login with your college credentials
+            Sign up with your college credentials
           </p>
         </div>
 
         {/* Form */}
-        <form className="space-y-5" onSubmit={(e) => handleSubmit(e)}>
+        <form className="space-y-5" onSubmit={handleSubmit}>
+          {/* Full Name */}
+          <div className="space-y-1">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-slate-900 dark:text-gray-200"
+            >
+              Full Name
+            </label>
+            <input
+              id="name"
+              type="text"
+              required
+              className="w-full mt-1 px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-sm placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+              placeholder="John Doe"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+
           {/* Email */}
           <div className="space-y-1">
             <label
@@ -107,29 +130,53 @@ const Login = () => {
             />
           </div>
 
+          {/* Year dropdown */}
+          <div className="space-y-1">
+            <label
+              htmlFor="year"
+              className="block text-sm font-medium text-slate-900 dark:text-gray-200"
+            >
+              Year
+            </label>
+            <select
+              id="year"
+              required
+              className="w-full mt-1 px-3 py-2 rounded-xl bg-slate-100 border border-slate-300 dark:bg-slate-800 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-sm outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+            >
+              <option value="" disabled>
+                Select year
+              </option>
+              <option value="FE">FE</option>
+              <option value="SE">SE</option>
+              <option value="TE">TE</option>
+              <option value="BE">BE</option>
+            </select>
+          </div>
+
           {/* Submit */}
           <button
             type="submit"
-            className="w-full mt-2 py-2.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 active:bg-indigo-600  text-sm font-medium shadow-lg shadow-indigo-500/30 transition-transform transform hover:-translate-y-0.5"
+            className="w-full mt-2 py-2.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 active:bg-indigo-600  text-sm font-medium shadow-lg shadow-indigo-500/30 transition-transform transform hover:-translate-y-0.5 text-white"
           >
-            Login
+            Sign Up
           </button>
         </form>
 
         {/* Extra */}
         <div className="mt-6 text-center">
           <p className="text-sm text-slate-400">
-            Don't have an account?{" "}
+            Already have an account?{" "}
             <button
-              onClick={() => navigate("/signup")}
+              onClick={() => navigate("/login")}
               className="text-indigo-500 hover:text-indigo-400 font-medium transition"
             >
-              Register
+              Login
             </button>
           </p>
         </div>
 
-        {/* Extra */}
         <p className="mt-6 text-[11px] text-center text-slate-500 dark:text-slate-400">
           By continuing, you agree to our{" "}
           <span className="text-slate-900 dark:text-white underline underline-offset-2 cursor-pointer">
@@ -146,4 +193,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

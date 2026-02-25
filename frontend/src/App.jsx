@@ -1,42 +1,15 @@
 import React, { useState } from "react";
 import { useRoutes } from "react-router-dom";
-
-import { Navbar } from "./components/Navbar/Navbar";
-import Footer from "./sections/Footer/Footer";
-import Login from "./pages/Auth/Login";
-import ApplicationForm from "./components/ApplicationForm";
-// import { ViewProvider, useView } from "./context/ViewContext";
-
-
+import ClickSpark from "./styles/ClickSpark";
+import TargetCursor from "./styles/TargetCursor";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { publicRoutes } from "./Routes/PublicRoutes.jsx";
 import { protectedRoutes } from "./Routes/ProtectedRoutes.jsx";
-import TePanel from "./pages/Profile/Te profile/TePanel";
-import SePanel from "./pages/Profile/SE profile/SePanel";
-
 import SideBar from "./components/Navbar/SideBar";
 
 function AppContent({ isSidebarOpen, setIsSidebarOpen }) {
   const routing = useRoutes([...publicRoutes, ...protectedRoutes]);
-  // const { currentView, setCurrentView } = useView();
-  
-  // if (currentView === 'login') {
-  //   return <Login />;
-  // }
-
-  // if (currentView === 'form') {
-  //   return <ApplicationForm clubName="SYNC-AIT" abbr="SYNC" onClose={() => setCurrentView('default')} />;
-  // }
-
-  // if (currentView === 'te-dashboard') {
-  //    return <TePanel />;
-  // }
-
-  // if (currentView === 'se-dashboard') {
-  //    return <SePanel />;
-  // }
-
-
-
   return (
     <div className="app">
         <>
@@ -59,8 +32,7 @@ function AppContent({ isSidebarOpen, setIsSidebarOpen }) {
   );
 }
 
-import ClickSpark from "./styles/ClickSpark";
-import TargetCursor from "./styles/TargetCursor";
+
 
 export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -73,6 +45,7 @@ export default function App() {
         sparkCount={8}
         duration={400}
       >
+        <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop />
         <TargetCursor 
           targetSelector="button, a, .cursor-target, .hover-circle, input, label"
           spinDuration={2}

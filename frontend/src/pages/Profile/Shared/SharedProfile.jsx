@@ -1,10 +1,11 @@
 import React from 'react';
 import { useProfile } from './ProfileContext';
 import { Mail, Phone, Award, MessageCircle, Send } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
 
 const SharedProfile = () => {
     const { profile } = useProfile();
-
+    const {user} = useAuth()
     if (!profile) return <div>Loading Profile...</div>;
 
     return (
@@ -21,8 +22,9 @@ const SharedProfile = () => {
                             className="h-24 w-24 rounded-full border-4 border-white bg-white object-cover shadow-sm"
                         />
                         <div className="ml-6 mt-12">
-                            <h1 className="text-2xl font-bold text-gray-900">{profile.name}</h1>
-                            <p className="text-gray-500 text-sm">{profile.role}</p>
+                            <h1 className="text-2xl font-bold text-gray-900">{user.name}</h1>
+                            <p className="text-gray-500 text-sm">{user.role}</p>
+                            <p className="text-gray-500 text-sm">{user.year}</p>
                         </div>
                     </div>
 
@@ -32,7 +34,7 @@ const SharedProfile = () => {
                             <div className="space-y-3">
                                 <div className="flex items-center gap-3 text-sm text-gray-600">
                                     <Mail className="h-4 w-4 text-gray-400" />
-                                    {profile.email}
+                                    {user.email}
                                 </div>
                                 <div className="flex items-center gap-3 text-sm text-gray-600">
                                     <Phone className="h-4 w-4 text-gray-400" />
@@ -44,7 +46,7 @@ const SharedProfile = () => {
                         <div className="space-y-4">
                             <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">Bio</h3>
                             <p className="text-sm text-gray-600 leading-relaxed">
-                                {profile.bio}
+                                {user.bio}
                             </p>
                         </div>
                     </div>

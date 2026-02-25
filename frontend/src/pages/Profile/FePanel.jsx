@@ -7,9 +7,6 @@ const FePanel = () => {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
 
-  if (!location.state?.fromLogin) {
-    return <Navigate to="/login" replace />;
-  }
 
   return (
     <>
