@@ -237,50 +237,25 @@
   .clubs-page {
     padding-bottom: 18px;
     margin-top: 0px;
-    border-width: 6px;
-    border-radius: 16px;
   }
   .cards {
     grid-template-columns: 1fr;
     gap: 18px;
     padding: 0 8px;
   }
-  .info-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 @media (max-width: 600px) {
   .clubs-page {
     padding-bottom: 8px;
     margin-top: 0px;
-    border-width: 4px;
-    border-radius: 10px;
   }
   .cards {
     grid-template-columns: 1fr;
     gap: 10px;
-    padding: 0 6px;
+    padding: 0 2px;
   }
   .club {
-    padding: 12px;
-  }
-  .info-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-  .apply-btn,
-  .know-btn {
-    height: 48px;
-    font-size: 14px;
-  }
-  .club h3 {
-    font-size: 15px;
-  }
-}
-@media (max-width: 400px) {
-  .info-grid {
-    grid-template-columns: 1fr;
-  }
-  .club .top {
-    flex-wrap: wrap;
+    padding: 10px 4px;
+    min-height: 220px;
   }
 }
