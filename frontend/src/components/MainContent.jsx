@@ -19,7 +19,8 @@ export default function MainContent(){
       <Navbar
         onOpenLogin={() => setCurrentView('login')} 
         onOpenForm={() => setCurrentView('form')} 
-        onOpenSidebar={() => setIsSidebarOpen(true)}
+        onOpenSidebar={() => setIsSidebarOpen(prev => !prev)}
+        isSidebarOpen={isSidebarOpen}
       />
       <Home />
       <AboutUs />

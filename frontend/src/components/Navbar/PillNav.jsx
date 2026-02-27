@@ -221,14 +221,14 @@ const PillNav = ({
     ['--pill-bg']: pillColor,
     ['--hover-text']: hoveredPillTextColor,
     ['--pill-text']: resolvedPillTextColor,
-    ['--nav-h']: '42px',
-    ['--logo']: '36px',
-    ['--pill-pad-x']: '18px',
-    ['--pill-gap']: '3px'
+    ['--nav-h']: '44px',
+    ['--logo']: '44px',
+    ['--pill-pad-x']: '24px',
+    ['--pill-gap']: '6px'
   };
 
   return (
-    <div className="fixed top-[1em] z-1000 w-full left-0 md:w-auto md:left-1/2 md:-translate-x-1/2">
+    <div className="fixed top-[2em] z-1000 w-full left-0 md:w-auto md:left-1/2 md:-translate-x-1/2">
       <nav
         className={`w-full md:w-max flex items-center justify-between md:justify-start box-border px-4 md:px-0 ${className}`}
         aria-label="Primary"
@@ -285,6 +285,23 @@ const PillNav = ({
             style={{ gap: 'var(--pill-gap)' }}
           >
             {items.map((item, i) => {
+              if (item.type === 'search') {
+                return (
+                  <li key={`search-${i}`} role="none" className="flex h-full items-center justify-center px-2">
+                    <div className="relative flex items-center h-[calc(100%-12px)] my-auto rounded-full overflow-hidden bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/10 px-3 hover:bg-black/10 dark:hover:bg-white/20 focus-within:w-90 w-65 transition-all duration-300">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 mr-2 shrink-0"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                      <input 
+                        type="search" 
+                        placeholder={item.placeholder || "Search..."}
+                        className="w-full bg-transparent text-sm text-black dark:text-white focus:outline-none placeholder:text-gray-500"
+                        onChange={item.onChange}
+                        value={item.value}
+                      />
+                    </div>
+                  </li>
+                );
+              }
+
               const isActive = activeHref === item.href;
 
               const pillStyle = {
@@ -422,7 +439,25 @@ const PillNav = ({
           }}
         >
           <ul className="list-none m-0 p-[3px] flex flex-col gap-[3px]">
-            {items.map(item => {
+            {items.map((item, i) => {
+              if (item.type === 'search') {
+                return (
+                  <li key={`mobile-search-${i}`} className="py-2 px-4">
+                    <div className="flex items-center w-full h-12 rounded-[50px] px-4" style={{ background: 'var(--pill-bg, #fff)', color: 'var(--pill-text, #fff)' }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-50 mr-2 shrink-0"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                      <input 
+                        type="search" 
+                        placeholder={item.placeholder || "Search..."}
+                        className="w-full bg-transparent text-[16px] focus:outline-none placeholder:opacity-50"
+                        style={{ color: 'inherit' }}
+                        onChange={item.onChange}
+                        value={item.value}
+                      />
+                    </div>
+                  </li>
+                );
+              }
+
               const defaultStyle = {
                 background: 'var(--pill-bg, #fff)',
                 color: 'var(--pill-text, #fff)'
@@ -440,7 +475,7 @@ const PillNav = ({
                 'block py-3 px-4 text-[16px] font-medium rounded-[50px] transition-all duration-200 ease-[cubic-bezier(0.25,0.1,0.25,1)]';
 
               return (
-                <li key={item.href}>
+                <li key={item.href || i}>
                   {isRouterLink(item.href) ? (
                     <Link
                       to={item.href}

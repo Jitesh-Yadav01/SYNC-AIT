@@ -46,19 +46,21 @@ export function Navbar({ onOpenLogin, onOpenSidebar, isSidebarOpen }) {
         ...(profile?.role === 'Technical Executive' ? [{ label: 'Dashboard', href: '/profile/Te' }] : []),
         { label: 'About Us', href: '#about' },
         { label: 'Clubs', href: '/clubs' },
-        { label: 'Team', href: 'https://www.gdgaitpune.me/',target:'_blank' },
+        // { label: 'Team', href: 'https://www.gdgaitpune.me/',target:'_blank' },
         { label: 'Developers', href: '/developers' },
+        { type: 'search', placeholder: 'Search...' },
         { label: 'Login', href:'/login'},
-        { 
-            label: (
-                <span className="flex items-center gap-2">
-                    <Github className="w-4 h-4" />
-                    Star on GitHub
-                </span>
-            ), 
-            href: 'https://github.com/Jitesh-Yadav01/SYNC-AIT',
-            target: '_blank'
-        }
+        { label: 'Connect', href:'/connect'}
+        // { 
+        //     label: (
+        //         <span className="flex items-center gap-2">
+        //             <Github className="w-4 h-4" />
+        //             Star on GitHub
+        //         </span>
+        //     ), 
+        //     href: 'https://github.com/Jitesh-Yadav01/SYNC-AIT',
+        //     target: '_blank'
+        // }
     ], [profile, onOpenLogin]);
 
     return (
