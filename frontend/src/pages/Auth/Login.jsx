@@ -4,11 +4,12 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "react-toastify";
+import GoogleAuthButton from "@/components/GoogleAuthButton";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, user } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -27,7 +28,7 @@ const Login = () => {
           render({ data }) {
             if (!data.user || !data.user.year) {
               console.error("Login: Missing user year in data", data);
-              setTimeout(() => navigate("/"), 2000); // Fallback to home if year is missing
+              setTimeout(() => navigate("/"), 2000);
               return data.message || "Login successfully! (Redirecting to home) 👌";
             }
             setTimeout(() => navigate(`/profile/${data.user.year}`), 2000);
@@ -42,6 +43,23 @@ const Login = () => {
       },
     );
   };
+
+  const handleGoogleSuccess = (result) => {
+    const user = result.user;
+    toast.success("Logged in with Google! 👌");
+    setTimeout(() => {
+      if (user?.year) {
+        navigate(`/profile/${user.year}`);
+      } else {
+        navigate("/");
+      }
+    }, 1500);
+  };
+
+  const handleGoogleError = (msg) => {
+    toast.error(msg || "Google login failed 🤯");
+  };
+
   return (
     <div
       className="min-h-screen w-full flex items-center justify-center p-4"
@@ -120,6 +138,19 @@ const Login = () => {
             Login
           </button>
         </form>
+
+        {/* Divider */}
+        <div className="flex items-center gap-3 my-5">
+          <div className="flex-1 h-px bg-slate-700/60" />
+          <span className="text-xs text-slate-500 select-none">or</span>
+          <div className="flex-1 h-px bg-slate-700/60" />
+        </div>
+
+        {/* Google Auth */}
+        <GoogleAuthButton
+          onSuccess={handleGoogleSuccess}
+          onError={handleGoogleError}
+        />
 
         {/* Extra */}
         <div className="mt-6 text-center">

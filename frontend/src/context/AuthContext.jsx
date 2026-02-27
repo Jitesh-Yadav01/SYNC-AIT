@@ -85,6 +85,46 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Google Auth
+  const googleAuth = async (token) => {
+    try {
+      const res = await fetch(`${API}/api/auth/google-auth`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ token }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        const userInfo = await checkAuth();
+        return { success: true, message: data.message || "Google login successful", user: userInfo };
+      }
+      return { success: false, message: data.message || "Google auth failed" };
+    } catch (err) {
+      return { success: false, message: err.message || "Google auth failed" };
+    }
+  };
+
+  // Update User Info
+  const updateUserInfo = async (data) => {
+    try {
+      const res = await fetch(`${API}/api/auth/update-user-info`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(data),
+      });
+      const json = await res.json();
+      if (json.success) {
+        const userInfo = await checkAuth();
+        return { success: true, message: json.message || "Updated successfully", user: userInfo };
+      }
+      return { success: false, message: json.message || "Update failed" };
+    } catch (err) {
+      return { success: false, message: err.message || "Update failed" };
+    }
+  };
+
   //   logout
   const logout = async () => {
     await axios.post(
@@ -142,6 +182,8 @@ export const AuthProvider = ({ children }) => {
         login,
         signUp,
         logout,
+        googleAuth,
+        updateUserInfo,
         sendVerifyOtp,
         verifyAccount,
       }}
