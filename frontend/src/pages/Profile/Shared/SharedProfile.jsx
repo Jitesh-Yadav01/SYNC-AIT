@@ -1,19 +1,206 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { useProfile } from './ProfileContext';
-import { Mail, Phone, Award, MessageCircle, Send } from 'lucide-react';
+import { Mail, Phone, Award, MessageCircle, Send, Edit2, Check, X, Camera, Save } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
 const SharedProfile = () => {
     const { profile } = useProfile();
-    const {user} = useAuth()
+    const { user } = useAuth();
+    
+    const [isEditing, setIsEditing] = useState(false);
+    const [editForm, setEditForm] = useState({});
+    const fileInputRef = useRef(null);
+    const coverInputRef = useRef(null);
+
     if (!profile) return <div>Loading Profile...</div>;
+
+    const startEditing = () => {
+        setEditForm({
+            name: user?.name || '',
+            bio: user?.bio || '',
+            role: user?.role || '',
+            bannerText: profile?.bannerText || 'SYNC',
+            avatar: profile?.avatar || '/clubprofiles/ns.png',
+            phone: profile?.phone || '',
+            email: user?.email || '',
+        });
+        setIsEditing(true);
+    };
+
+    const handleSave = () => {
+        if(user) {
+            user.name = editForm.name;
+            user.bio = editForm.bio;
+            user.role = editForm.role;
+            user.email = editForm.email;
+        }
+        if(profile) {
+            profile.bannerText = editForm.bannerText;
+            profile.avatar = editForm.avatar;
+            profile.phone = editForm.phone;
+        }
+        setIsEditing(false);
+    };
+
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const imageUrl = URL.createObjectURL(file);
+            setEditForm({ ...editForm, avatar: imageUrl });
+        }
+    };
+
+    if (isEditing) {
+        return (
+            <div className="max-w-3xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500 bg-gray-50/50 p-4 md:p-8 rounded-2xl min-h-screen">
+                <div className="flex items-center justify-between mb-8">
+                    <h1 className="text-2xl font-bold text-gray-900">Edit Profile</h1>
+                    <div className="flex gap-3">
+                        <button onClick={() => setIsEditing(false)} className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
+                            Cancel
+                        </button>
+                        <button onClick={handleSave} className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+                            <Save className="h-4 w-4" /> Save
+                        </button>
+                    </div>
+                </div>
+
+                <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div className="p-6 md:p-8 space-y-8">
+                        {/* Avatar Section */}
+                        <div className="flex flex-col sm:flex-row items-center gap-6 pb-8 border-b border-gray-100">
+                            <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+                                <img
+                                    src={editForm.avatar}
+                                    alt="Profile"
+                                    className="h-32 w-32 rounded-full object-cover border-4 border-white shadow-md group-hover:opacity-75 transition-opacity"
+                                />
+                                <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <Camera className="h-8 w-8 text-white" />
+                                </div>
+                                <div className="absolute bottom-0 right-0 bg-blue-600 p-2 rounded-full text-white shadow-lg shadow-blue-600/20 border-2 border-white">
+                                    <Camera className="h-4 w-4" />
+                                </div>
+                                <input 
+                                    type="file" 
+                                    ref={fileInputRef} 
+                                    onChange={handleImageUpload} 
+                                    className="hidden" 
+                                    accept="image/*"
+                                />
+                            </div>
+                            <div className="text-center sm:text-left space-y-1">
+                                <h3 className="font-semibold text-gray-900 text-lg">Profile Photo</h3>
+                                <p className="text-sm text-gray-500">Click the image to upload a new profile photo.</p>
+                                <p className="text-xs text-gray-400 mt-2">Recommended: 1:1 ratio, max 5MB.</p>
+                            </div>
+                        </div>
+
+                        {/* General Info */}
+                        <div className="space-y-6">
+                            <h3 className="font-semibold text-gray-900 text-lg">General Information</h3>
+                            
+                            <div className="grid sm:grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-gray-700">Full Name</label>
+                                    <input 
+                                        type="text" 
+                                        className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors"
+                                        value={editForm.name}
+                                        onChange={e => setEditForm({...editForm, name: e.target.value})}
+                                        placeholder="e.g. John Doe"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-gray-700">Role</label>
+                                    <input 
+                                        type="text" 
+                                        className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors"
+                                        value={editForm.role}
+                                        onChange={e => setEditForm({...editForm, role: e.target.value})}
+                                        placeholder="e.g. Frontend Developer"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium text-gray-700">Banner Text</label>
+                                <input 
+                                    type="text" 
+                                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors"
+                                    value={editForm.bannerText}
+                                    onChange={e => setEditForm({...editForm, bannerText: e.target.value})}
+                                    placeholder="e.g. SYNC"
+                                />
+                                <p className="text-xs text-gray-500">This text appears large at the top of your profile.</p>
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium text-gray-700">Bio</label>
+                                <textarea 
+                                    rows="4"
+                                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors resize-y"
+                                    value={editForm.bio}
+                                    onChange={e => setEditForm({...editForm, bio: e.target.value})}
+                                    placeholder="Tell others a bit about yourself..."
+                                />
+                            </div>
+                        </div>
+
+                        <hr className="border-gray-100" />
+
+                        {/* Contact Info */}
+                        <div className="space-y-6 pb-4">
+                            <h3 className="font-semibold text-gray-900 text-lg">Contact Details</h3>
+                            
+                            <div className="grid sm:grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-gray-700">Email Address</label>
+                                    <div className="relative">
+                                        <Mail className="absolute left-3.5 top-3 h-5 w-5 text-gray-400" />
+                                        <input 
+                                            type="email" 
+                                            className="w-full pl-11 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors"
+                                            value={editForm.email}
+                                            onChange={e => setEditForm({...editForm, email: e.target.value})}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-gray-700">Phone Number</label>
+                                    <div className="relative">
+                                        <Phone className="absolute left-3.5 top-3 h-5 w-5 text-gray-400" />
+                                        <input 
+                                            type="tel" 
+                                            className="w-full pl-11 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors"
+                                            value={editForm.phone}
+                                            onChange={e => setEditForm({...editForm, phone: e.target.value})}
+                                            placeholder="+1 (555) 000-0000"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            {/* View Mode Actions */}
+            <div className="flex justify-end pr-4 pt-4">
+                <button onClick={startEditing} className="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100 text-sm font-semibold transition-colors">
+                    <Edit2 className="h-4 w-4" /> Edit Profile
+                </button>
+            </div>
+
             <div className="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden">
                 <div className="h-24 md:h-28 bg-gray-900 text-white flex items-center justify-center font-black text-4xl md:text-6xl lg:text-8xl uppercase px-4 text-center">
                     {profile.bannerText || 'SYNC'}
                 </div>
+                
                 <div className="px-8 pb-8">
                     <div className="relative flex items-end -mt-12 mb-6">
                         <img
@@ -21,7 +208,7 @@ const SharedProfile = () => {
                             alt={profile.name}
                             className="h-24 w-24 rounded-full border-4 border-white bg-white object-cover shadow-sm"
                         />
-                        <div className="ml-6 mt-12">
+                        <div className="ml-6 mt-12 flex-1">
                             <h1 className="text-2xl font-bold text-gray-900">{user.name}</h1>
                             <p className="text-gray-500 text-sm">{user.role}</p>
                             <p className="text-gray-500 text-sm">{user.year}</p>
@@ -33,11 +220,11 @@ const SharedProfile = () => {
                             <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">Contact Info</h3>
                             <div className="space-y-3">
                                 <div className="flex items-center gap-3 text-sm text-gray-600">
-                                    <Mail className="h-4 w-4 text-gray-400" />
+                                    <Mail className="h-4 w-4 text-gray-400 shrink-0" />
                                     {user.email}
                                 </div>
                                 <div className="flex items-center gap-3 text-sm text-gray-600">
-                                    <Phone className="h-4 w-4 text-gray-400" />
+                                    <Phone className="h-4 w-4 text-gray-400 shrink-0" />
                                     {profile.phone}
                                 </div>
                             </div>

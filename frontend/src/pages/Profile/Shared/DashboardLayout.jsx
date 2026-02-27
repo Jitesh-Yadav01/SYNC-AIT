@@ -74,7 +74,7 @@ export default function SharedDashboardLayout() {
             )}
 
             <aside className={cn(
-                "fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out md:translate-x-0 md:static",
+                "fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out md:translate-x-0",
                 isSidebarOpen ? "translate-x-0" : "-translate-x-full"
             )}>
                 <div className="flex flex-col h-full p-6">
@@ -145,7 +145,7 @@ export default function SharedDashboardLayout() {
                         ))}
                     </nav>
 
-                    <div className="pt-6 border-t border-gray-200 space-y-4">
+                    <div className="pt-6 border-t border-gray-200 mt-auto space-y-4">
                         <div
                             className="flex items-center gap-3 px-2 cursor-pointer hover:bg-gray-50 rounded-lg p-2 transition-colors"
                             onClick={() => {
@@ -153,10 +153,10 @@ export default function SharedDashboardLayout() {
                                 setIsSidebarOpen(false);
                             }}
                         >
-                            <img src={profile.avatar} alt="Profile" className="h-9 w-9 rounded-full border border-gray-200 bg-gray-100 object-cover" />
+                            <img src={profile?.avatar || "/clubprofiles/ns.png"} alt="Profile" className="h-9 w-9 rounded-full border border-gray-200 bg-gray-100 object-cover" />
                             <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium truncate text-gray-900">{profile.name}</p>
-                                <p className="text-xs text-gray-500 truncate">{profile.email}</p>
+                                <p className="text-sm font-medium truncate text-gray-900">{user?.name}</p>
+                                <p className="text-xs text-gray-500 truncate">{user?.email}</p>
                             </div>
                         </div>
                         <button
@@ -170,7 +170,7 @@ export default function SharedDashboardLayout() {
                 </div>
             </aside>
 
-            <main className="flex-1 flex flex-col min-w-0 bg-transparent relative">
+            <main className="flex-1 flex flex-col min-w-0 bg-transparent md:ml-64 relative">
                 <header className="md:hidden flex items-center justify-between p-4 border-b border-gray-200 bg-white/80 backdrop-blur-md sticky top-0 z-30">
                     <div className="flex items-center gap-2">
                         <div className="h-8 w-8 rounded-lg bg-gray-900 flex items-center justify-center shadow-sm">
@@ -183,8 +183,8 @@ export default function SharedDashboardLayout() {
                     </button>
                 </header>
 
-                <div className="flex-1 overflow-y-auto p-4 md:p-8 scrollbar-hide">
-                    <div className="max-w-6xl mx-auto w-full space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <div className="flex-1 overflow-y-auto p-4 md:p-8">
+                    <div className="max-w-6xl mx-auto w-full space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-12">
                         {renderContent()}
                     </div>
                 </div>

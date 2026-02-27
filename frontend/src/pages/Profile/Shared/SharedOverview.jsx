@@ -1,9 +1,10 @@
 import React from 'react';
 import { useProfile } from './ProfileContext';
 import { Users, CheckSquare, MessageSquare, Bell, Calendar, TrendingUp } from 'lucide-react';
-
+import { useAuth } from '@/context/AuthContext';
 export default function SharedOverview() {
     const { members, pendingTasksCount, notifications, profile, unreadMessagesCount } = useProfile();
+    const { user } = useAuth();
 
     const stats = [
         { title: "Active Members", value: members.filter(m => m.status === 'Active').length, icon: Users, color: "text-blue-600", bg: "bg-blue-50" },
@@ -16,7 +17,7 @@ export default function SharedOverview() {
         <div className="space-y-6 animate-in fade-in duration-500">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h2 className="text-2xl font-bold tracking-tight text-gray-900">Welcome back, {profile.name.split(' ')[0]}</h2>
+                    <h2 className="text-2xl font-bold tracking-tight text-gray-900">Welcome back, {user?.name.split(' ')[0]}</h2>
                     <p className="text-gray-500">Here's what's happening with your team today.</p>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-500 bg-white border border-gray-200 px-3 py-1 rounded-full shadow-sm">
