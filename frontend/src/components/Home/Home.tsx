@@ -6,14 +6,22 @@ import { motion } from "framer-motion";
 import Shuffle from "./Shuffle";
 import TextType from './TextType';
 import CurvedLoop from './CurvedLoop';
+import Beams from './Beams';
 
 export default function Home() {
   return (
     <section className="relative px-6 pt-32 pb-32 md:pt-48 md:pb-40 text-center overflow-hidden max-w-[100vw]">
         <div className="absolute inset-0 -z-10 h-full w-full bg-black">
-             <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
-             <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[1200px] h-[600px] bg-gradient-to-g from-blue-900/30 to-slate-900/0 blur-[120px] rounded-full opacity-60 pointer-events-none" />
-             <div className="absolute bottom-[-10%] left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-indigo-500/10 blur-[100px] rounded-full opacity-40 pointer-events-none" />
+             <Beams
+               beamWidth={3}
+               beamHeight={30}
+               beamNumber={20}
+               lightColor="#ffffff"
+               speed={2}
+               noiseIntensity={1.75}
+               scale={0.2}
+               rotation={30}
+             />
         </div>
 
       <div className="mx-auto max-w-5xl space-y-8 relative z-10">
@@ -82,10 +90,10 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.8 }}
-            className="w-full mt-20 mb-[-200px] md:-mt-4"
+            className="w-full mt-20 ml-[-60px] mb-[-200px] font-mono md:-mt-4"
         >
             <CurvedLoop 
-              marqueeText="OSS ⚙️ GDG ⚙️ CP  ⚙️ PR_Cell  ⚙️ Radio_Raga ⚙️ E_Cell ⚙️ EV_Club ⚙️ GDXR ⚙️ ISDF ⚙️ Sports_Club ⚙️ Cultural_Board  ⚙️ Technical_Board  ⚙️ RnD_Cell  ⚙️ Cycling_club ⚙️ NSS ⚙️ Nature_Club  ⚙️ MAGBOARD ⚙️ MINERVA ⚙️ FEET_TAPPERS ⚙️"
+              marqueeText="OSS⚙️GDG⚙️CP⚙️PR_Cell⚙️Radio_Raga⚙️E_Cell⚙️EV_Club⚙️GDXR⚙️ISDF⚙️Sports_Club⚙️Cultural_Board⚙️Technical_Board⚙️RnD_Cell⚙️Cycling_club⚙️NSS⚙️Nature_Club⚙️MAGBOARD⚙️MINERVA⚙️FEET_TAPPERS⚙️"
               speed={2}
               curveAmount={0}
               interactive
