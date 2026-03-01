@@ -5,7 +5,9 @@ import { useAuth } from '@/context/AuthContext';
 
 const SharedProfile = () => {
     const { profile } = useProfile();
-    const { user } = useAuth();
+    const { user, updateUserInfo } = useAuth();
+    const [saveStatus, setSaveStatus] = useState(null); // null | 'saving' | 'success' | 'error'
+    const [saveError, setSaveError] = useState('');
     
     const [isEditing, setIsEditing] = useState(false);
     const [editForm, setEditForm] = useState({});
@@ -18,28 +20,34 @@ const SharedProfile = () => {
         setEditForm({
             name: user?.name || '',
             bio: user?.bio || '',
-            role: user?.role || '',
+            year: user?.year || '',
+            callSign: user?.callSign || '',
             bannerText: profile?.bannerText || 'SYNC',
             avatar: profile?.avatar || '/clubprofiles/ns.png',
             phone: profile?.phone || '',
             email: user?.email || '',
         });
+        setSaveStatus(null);
+        setSaveError('');
         setIsEditing(true);
     };
 
-    const handleSave = () => {
-        if(user) {
-            user.name = editForm.name;
-            user.bio = editForm.bio;
-            user.role = editForm.role;
-            user.email = editForm.email;
+    const handleSave = async () => {
+        setSaveStatus('saving');
+        setSaveError('');
+        const result = await updateUserInfo({
+            name: editForm.name,
+            bio: editForm.bio,
+            year: editForm.year,
+            callSign: editForm.callSign,
+        });
+        if (result.success) {
+            setSaveStatus('success');
+            setTimeout(() => setIsEditing(false), 800);
+        } else {
+            setSaveStatus('error');
+            setSaveError(result.message || 'Failed to save profile.');
         }
-        if(profile) {
-            profile.bannerText = editForm.bannerText;
-            profile.avatar = editForm.avatar;
-            profile.phone = editForm.phone;
-        }
-        setIsEditing(false);
     };
 
     const handleImageUpload = (e) => {
@@ -59,8 +67,13 @@ const SharedProfile = () => {
                         <button onClick={() => setIsEditing(false)} className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
                             Cancel
                         </button>
-                        <button onClick={handleSave} className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
-                            <Save className="h-4 w-4" /> Save
+                        <button
+                            onClick={handleSave}
+                            disabled={saveStatus === 'saving'}
+                            className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed transition-colors shadow-sm"
+                        >
+                            <Save className="h-4 w-4" />
+                            {saveStatus === 'saving' ? 'Saving...' : saveStatus === 'success' ? 'Saved!' : 'Save'}
                         </button>
                     </div>
                 </div>
@@ -112,28 +125,22 @@ const SharedProfile = () => {
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-700">Role</label>
-                                    <input 
-                                        type="text" 
+                                    <label className="text-sm font-medium text-gray-700">Year</label>
+                                    <select
                                         className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors"
-                                        value={editForm.role}
-                                        onChange={e => setEditForm({...editForm, role: e.target.value})}
-                                        placeholder="e.g. Frontend Developer"
-                                    />
+                                        value={editForm.year}
+                                        onChange={e => setEditForm({...editForm, year: e.target.value})}
+                                    >
+                                        <option value="">Select Year</option>
+                                        <option value="FE">FE</option>
+                                        <option value="SE">SE</option>
+                                        <option value="TE">TE</option>
+                                        <option value="BE">BE</option>
+                                    </select>
                                 </div>
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium text-gray-700">Banner Text</label>
-                                <input 
-                                    type="text" 
-                                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors"
-                                    value={editForm.bannerText}
-                                    onChange={e => setEditForm({...editForm, bannerText: e.target.value})}
-                                    placeholder="e.g. SYNC"
-                                />
-                                <p className="text-xs text-gray-500">This text appears large at the top of your profile.</p>
-                            </div>
+
 
                             <div className="space-y-2">
                                 <label className="text-sm font-medium text-gray-700">Bio</label>
@@ -155,16 +162,16 @@ const SharedProfile = () => {
                             
                             <div className="grid sm:grid-cols-2 gap-6">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-700">Email Address</label>
-                                    <div className="relative">
-                                        <Mail className="absolute left-3.5 top-3 h-5 w-5 text-gray-400" />
-                                        <input 
-                                            type="email" 
-                                            className="w-full pl-11 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors"
-                                            value={editForm.email}
-                                            onChange={e => setEditForm({...editForm, email: e.target.value})}
-                                        />
-                                    </div>
+                                    <label className="text-sm font-medium text-gray-700">Call Sign</label>
+                                    <input 
+                                        type="text"
+                                        maxLength={10}
+                                        className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors"
+                                        value={editForm.callSign}
+                                        onChange={e => setEditForm({...editForm, callSign: e.target.value})}
+                                        placeholder="e.g. SYNC"
+                                    />
+                                    <p className="text-xs text-gray-400 text-right">{(editForm.callSign || '').length}/10 — shown as your profile banner</p>
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-gray-700">Phone Number</label>
@@ -181,6 +188,11 @@ const SharedProfile = () => {
                                 </div>
                             </div>
                         </div>
+
+                        {/* Save Error */}
+                        {saveStatus === 'error' && (
+                            <p className="text-sm text-red-600 font-medium text-center">{saveError}</p>
+                        )}
                     </div>
                 </div>
             </div>
@@ -198,14 +210,14 @@ const SharedProfile = () => {
 
             <div className="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden">
                 <div className="h-24 md:h-28 bg-gray-900 text-white flex items-center justify-center font-black text-4xl md:text-6xl lg:text-8xl uppercase px-4 text-center">
-                    {profile.bannerText || 'SYNC'}
+                    {user.callSign || 'SYNC'}
                 </div>
                 
                 <div className="px-8 pb-8">
                     <div className="relative flex items-end -mt-12 mb-6">
                         <img
                             src={profile.avatar || "/clubprofiles/ns.png"}
-                            alt={profile.name}
+                            alt={user.name}
                             className="h-24 w-24 rounded-full border-4 border-white bg-white object-cover shadow-sm"
                         />
                         <div className="ml-6 mt-12 flex-1">

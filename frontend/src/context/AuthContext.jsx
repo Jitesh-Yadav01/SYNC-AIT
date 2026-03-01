@@ -1,4 +1,3 @@
-import { messagesData } from "@/pages/Profile/SE profile/mockData";
 import axios from "axios";
 import { useEffect, useState, createContext, useContext } from "react";
 
@@ -13,6 +12,7 @@ console.log("AuthContext: Backend API URL set to:", API);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
 
   const checkAuth = async () => {
     try {
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    checkAuth();
+    checkAuth().finally(() => setAuthLoading(false));
   }, []);
 
   // Login
@@ -117,6 +117,7 @@ export const AuthProvider = ({ children }) => {
       const json = await res.json();
       if (json.success) {
         const userInfo = await checkAuth();
+        setUser(userInfo);
         return { success: true, message: json.message || "Updated successfully", user: userInfo };
       }
       return { success: false, message: json.message || "Update failed" };
@@ -178,7 +179,9 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
     value={{
         user,
+        authLoading,
         isAuthenticated: !!user,
+        checkAuth,
         login,
         signUp,
         logout,

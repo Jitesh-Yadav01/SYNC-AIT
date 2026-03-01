@@ -12,7 +12,7 @@ import { useAuth } from '@/context/AuthContext';
 
 export default function SharedDashboardLayout() {
     const { activeTab, setActiveTab, profile, activeClub, switchClub, role } = useProfile();
-    const { logout, user } = useAuth();
+    const { logout, user, authLoading } = useAuth();
     const navigate = useNavigate();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -50,6 +50,18 @@ export default function SharedDashboardLayout() {
         }
     };
 
+    // Guard: while auth is being verified on reload, show a spinner
+    if (authLoading || !user) {
+        return (
+            <div className="flex min-h-screen items-center justify-center bg-gray-50">
+                <div className="flex flex-col items-center gap-3">
+                    <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-blue-600" />
+                    <p className="text-sm text-gray-500">Loading dashboard…</p>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div 
             className="flex min-h-screen bg-gray-50 text-gray-900 font-sans selection:bg-blue-500/30"
@@ -80,10 +92,10 @@ export default function SharedDashboardLayout() {
                 <div className="flex flex-col h-full p-6">
                     <div className="flex items-center gap-3 mb-8">
                         <div className="h-10 w-10 rounded-lg bg-gray-900 flex items-center justify-center shadow-sm">
-                            <span className="font-bold text-white text-lg">{role}</span>
+                            <span className="font-bold text-white text-lg">{user?.year}</span>
                         </div>
                         <div>
-                            <h1 className="font-bold text-lg tracking-tight text-gray-900">{role} Panel</h1>
+                            <h1 className="font-bold text-lg tracking-tight text-gray-900">{user?.year} Panel</h1>
                             <p className="text-xs text-gray-500">Workspace</p>
                         </div>
                     </div>
@@ -155,6 +167,7 @@ export default function SharedDashboardLayout() {
                         >
                             <img src={profile?.avatar || "/clubprofiles/ns.png"} alt="Profile" className="h-9 w-9 rounded-full border border-gray-200 bg-gray-100 object-cover" />
                             <div className="flex-1 min-w-0">
+
                                 <p className="text-sm font-medium truncate text-gray-900">{user?.name}</p>
                                 <p className="text-xs text-gray-500 truncate">{user?.email}</p>
                             </div>
