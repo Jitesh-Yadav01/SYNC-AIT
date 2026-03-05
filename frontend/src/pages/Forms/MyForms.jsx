@@ -10,6 +10,28 @@ export default function MyForms() {
     const { user, authLoading } = useAuth();
     const navigate = useNavigate();
 
+    if (authLoading) {
+        return (
+            <div className="flex min-h-screen items-center justify-center bg-gray-50">
+                <div className="flex flex-col items-center gap-3">
+                    <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-blue-600" />
+                    <p className="text-sm text-gray-500">Checking authorization...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (!user || user.year?.toLowerCase() !== 'te') {
+        return (
+            <div className="flex min-h-screen items-center justify-center bg-gray-50">
+                <div className="bg-white p-8 rounded-xl shadow-sm border text-center">
+                    <h2 className="text-xl font-bold text-red-600 mb-2">Not Authorized</h2>
+                    <p className="text-gray-600">Only TE Panel members can manage forms.</p>
+                </div>
+            </div>
+        );
+    }
+
     const [forms, setForms] = useState([]);
     const [formsLoading, setFormsLoading] = useState(true);
     const [fetchError, setFetchError] = useState('');
@@ -20,7 +42,11 @@ export default function MyForms() {
     // Remove dark class — keeps cursor and UI in light mode (same as DashboardLayout)
     useEffect(() => {
         document.documentElement.classList.remove('dark');
-        return () => document.documentElement.classList.add('dark');
+        document.body.classList.add('no-custom-cursor');
+        return () => {
+            document.documentElement.classList.add('dark');
+            document.body.classList.remove('no-custom-cursor');
+        };
     }, []);
 
     // Fetch user forms

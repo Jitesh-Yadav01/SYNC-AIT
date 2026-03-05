@@ -6,6 +6,7 @@ import SharedMembers from './SharedMembers';
 import SharedTasks from './SharedTasks';
 import SharedMessages from './SharedMessages';
 import SharedProfile from './SharedProfile';
+import AvailableForms from './AvailableForms';
 import { LayoutDashboard, Users, CheckSquare, MessageSquare, LogOut, Menu, FileText } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/context/AuthContext';
@@ -19,8 +20,10 @@ export default function SharedDashboardLayout() {
 
     React.useEffect(() => {
         document.documentElement.classList.remove('dark');
+        document.body.classList.add('no-custom-cursor');
         return () => {
             document.documentElement.classList.add('dark');
+            document.body.classList.remove('no-custom-cursor');
         };
     }, []);
 
@@ -45,17 +48,35 @@ export default function SharedDashboardLayout() {
             case 'tasks': return <SharedTasks />;
             case 'messages': return <SharedMessages />;
             case 'profile': return <SharedProfile />;
+            case 'forms': return <AvailableForms />;
             default: return <SharedOverview />;
         }
     };
 
     // Guard: while auth is being verified on reload, show a spinner
-    if (authLoading || !user) {
+    if (authLoading) {
         return (
             <div className="flex min-h-screen items-center justify-center bg-gray-50">
                 <div className="flex flex-col items-center gap-3">
                     <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-blue-600" />
                     <p className="text-sm text-gray-500">Loading dashboard…</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (!user) {
+         return (
+            <div className="flex min-h-screen items-center justify-center bg-gray-50">
+                <div className="bg-white p-8 rounded-xl shadow-sm border text-center">
+                    <h2 className="text-xl font-bold text-red-600 mb-2">Authentication Required</h2>
+                    <p className="text-gray-600 mb-4">You need to log in to access this page.</p>
+                     <button
+                        onClick={() => navigate('/login')}
+                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                    >
+                        Go to Login
+                    </button>
                 </div>
             </div>
         );
@@ -85,7 +106,7 @@ export default function SharedDashboardLayout() {
             )}
 
             <aside className={cn(
-                "fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out md:translate-x-0",
+                "fixed inset-y-0 left-0 z-50 w-66 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out md:translate-x-0",
                 isSidebarOpen ? "translate-x-0" : "-translate-x-full"
             )}>
                 <div className="flex flex-col h-full p-6">
@@ -156,17 +177,56 @@ export default function SharedDashboardLayout() {
                             </button>
                         ))}
 
-                        {/* Create Form — navigates to its own page */}
-                        <button
-                            onClick={() => {
-                                setIsSidebarOpen(false);
-                                navigate('/my-forms');
-                            }}
-                            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                        >
-                            <FileText className="h-5 w-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
-                            Create Form
-                        </button>
+                        {/* TE Exclusive Links */}
+                        {role === 'TE' && (
+                            <>
+                                <button
+                                    onClick={() => {
+                                        setIsSidebarOpen(false);
+                                        navigate('/my-forms');
+                                    }}
+                                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                >
+                                    <FileText className="h-5 w-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                                    Manage Forms
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setIsSidebarOpen(false);
+                                        navigate('/response');
+                                    }}
+                                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                >
+                                    <Users className="h-5 w-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                                    Responses
+                                </button>
+                            </>
+                        )}
+
+                        {/* FE / SE can see & fill public forms */}
+                        {role !== 'TE' && (
+                            <button
+                                onClick={() => {
+                                    setActiveTab('forms');
+                                    setIsSidebarOpen(false);
+                                }}
+                                className={cn(
+                                    "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden",
+                                    activeTab === 'forms'
+                                        ? "bg-blue-50 text-blue-700 shadow-sm"
+                                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                )}
+                            >
+                                {activeTab === 'forms' && (
+                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 rounded-r-full" />
+                                )}
+                                <FileText className={cn(
+                                    "h-5 w-5 transition-colors",
+                                    activeTab === 'forms' ? "text-blue-600" : "text-gray-400 group-hover:text-gray-600"
+                                )} />
+                                Forms
+                            </button>
+                        )}
                     </nav>
 
                     <div className="pt-6 border-t border-gray-200 mt-auto space-y-4">

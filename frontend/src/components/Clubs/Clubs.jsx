@@ -22,6 +22,11 @@ export default function MainContent(){
   const [clubs, setClubs] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
+    document.body.classList.add('no-custom-cursor');
+    return () => document.body.classList.remove('no-custom-cursor');
+  }, []);
+
+  useEffect(() => {
     let cancelled = false
     const controller = new AbortController()
 
