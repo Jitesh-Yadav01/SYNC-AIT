@@ -24,7 +24,7 @@ const SharedProfile = () => {
             bio: user?.bio || '',
             year: user?.year || '',
             callSign: user?.callSign || '',
-            bannerText: profile?.bannerText || 'SYNC',
+            bannerText: profile?.bannerText || 'NEXUS',
             avatar: profile?.avatar || '/clubprofiles/ns.png',
             phone: profile?.phone || '',
             email: user?.email || '',
@@ -172,7 +172,7 @@ const SharedProfile = () => {
                                         className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors"
                                         value={editForm.callSign}
                                         onChange={e => setEditForm({...editForm, callSign: e.target.value.replace(/\s/g, '')})}
-                                        placeholder="e.g. SYNC"
+                                        placeholder="e.g. NEXUS"
                                     />
                                     <p className="text-xs text-gray-400 text-right">{(editForm.callSign || '').length}/10 — shown as your profile banner</p>
                                 </div>
@@ -213,10 +213,10 @@ const SharedProfile = () => {
 
             <div className="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden">
                 <div className="relative h-24 md:h-28 bg-gray-900 text-white flex items-center justify-center font-black text-4xl md:text-6xl lg:text-8xl px-4 text-center">
-                    {user.callSign || 'SYNC'}
+                    {user.callSign || 'NEXUS'}
                     <button
                         onClick={() => {
-                            navigator.clipboard.writeText(user.callSign || 'SYNC');
+                            navigator.clipboard.writeText(user.callSign || 'NEXUS');
                             setCopied(true);
                             setTimeout(() => setCopied(false), 2000);
                         }}

@@ -1,18 +1,101 @@
-# React + Vite
+<div align="center">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 🌌 Nexus Dashboard
 
-Currently, two official plugins are available:
+**The Modern Club Management Portal for AIT Pune**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[![React](https://img.shields.io/badge/React-18-blue.svg?style=for-the-badge&logo=react)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-5-646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
-## React Compiler
+A centralized, responsive, and beautifully animated frontend platform to manage, showcase, and track events for all technical clubs at Army Institute of Technology, Pune.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+</div>
 
-Note: This will impact Vite dev & build performances.
+---
 
-## Expanding the ESLint configuration
+## 🔗 Related Repositories
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- ⚙️ **Backend API**: [Nexus Backend Repository](https://github.com/MyTricks-code/sync-backend-api)
+
+---
+
+## ✨ Features
+
+- ⚡️ **Blazing Fast**: Powered by Vite and React 18 for lighting-fast HMR and building.
+- 🎨 **Modern Aesthetics**: Built with Tailwind CSS, delivering a clean, modern, and dark-mode compatible interface.
+- 📱 **Fully Responsive**: Seamless user experience across mobile, tablet, and desktop devices.
+- 🏫 **Interactive Club Hubs**: Dedicated, dynamic pages for clubs like OSS, GDG AIT Pune, and CP Club.
+- 👥 **Role-Based Profiles**: Custom dashboards and profile management for different user designations.
+- 🗓️ **Events Tracking**: Track past and upcoming activities, hackathons, and sessions.
+
+---
+
+## 🚀 Getting Started
+
+Follow these instructions to set up the project on your local machine.
+
+### Prerequisites
+
+- **Node.js**: v20 or higher
+- **npm** or **pnpm** package manager
+
+### Installation
+
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd frontend
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Configure Environment Variables**:
+   Copy `.env.example` to `.env` if available, or just create a `.env` file in the `frontend` root.
+   ```ini
+   VITE_API_URL=http://localhost:4000
+   ```
+
+4. **Start the Development Server**:
+   ```bash
+   npm run dev
+   ```
+
+5. **Open in Browser**:
+   Open [http://localhost:5173](http://localhost:5173) to see the magic! 🪄
+
+---
+
+## 🏗️ Project Architecture
+
+```text
+frontend/
+├── public/           # Static assets, logos, and raw visual media
+└── src/
+    ├── assets/       # Organized images and theme files
+    ├── components/   # Modular, reusable React components
+    ├── pages/        # Route-level views (Forms, Profile, Auth)
+    ├── sections/     # Complex page sections (AboutUs, Hero, Footer)
+    ├── context/      # React contexts for state management (Auth, Theme)
+    ├── App.jsx       # Root router and layout wrapper
+    └── main.jsx      # Application entry point
+```
+
+---
+
+## 🛠️ Commands
+
+| Command | Action |
+| :--- | :--- |
+| `npm run dev` | Spins up the local development server |
+| `npm run build` | Bundles the application for production |
+| `npm run preview` | Serves the production bundle locally for preview |
+
+---
+
+<div align="center">
+  <p>Built with ❤️ by GDG AIT Pune</p>
+</div>

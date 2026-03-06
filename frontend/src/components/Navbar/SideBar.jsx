@@ -147,7 +147,7 @@ export default function SideBar({ open, onClose, onOpenLogin }) {
             </Button>
 
             <p className="text-[11px] text-center text-zinc-400 dark:text-zinc-600 font-medium mt-4">
-              © {new Date().getFullYear()} SYNC-AIT. All rights reserved.
+              © {new Date().getFullYear()} NEXUS. All rights reserved.
             </p>
           </div>
         </div>
