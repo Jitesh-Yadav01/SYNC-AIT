@@ -27,18 +27,18 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer-overlay"></div>
       <div className="footer-inner">
-        <div className="mb-4">
+        <div className="mt-4">
           <CurvedLoop 
-            marqueeText="Made With ❤️ By GDG X ✦ "
+            marqueeText="Made With ❤️ By GDG ✦ Made With ❤️ By GDG ✦  "
             speed={2}
-            curveAmount={5}
-            direction="left"
             interactive
-            className="text-white fill-white font-mono"
+            curveAmount={0}
+            // direction="left"
+            className="text-white  font-mono text-[36px]"
           />
         </div>
         <div className="mb-12">
-          <LogoLoop
+          {/* <LogoLoop
             logos={techLogos}
             speed={60}
             direction="right"
@@ -49,7 +49,7 @@ export default function Footer() {
             scaleOnHover
             fadeOut
             className="opacity-100 bg-black h-16 w-full grayscale hover:grayscale-0 transition-all duration-300"
-          />
+          /> */}
         </div>
         <div className="footer-grid">
           <div className="footer-col">
