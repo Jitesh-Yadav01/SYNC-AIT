@@ -90,14 +90,14 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.8 }}
-            className="w-full mt-20 ml-[-60px] mb-[-200px] font-mono md:-mt-4"
+            className="w-full mt-20 mb-[-200px] font-mono text-[12px] md:-mt-4"
         >
             <CurvedLoop 
-              marqueeText="OSS⚙️GDG⚙️CP⚙️PR_Cell⚙️Radio_Raga⚙️E_Cell⚙️EV_Club⚙️GDXR⚙️ISDF⚙️Sports_Club⚙️Cultural_Board⚙️Technical_Board⚙️RnD_Cell⚙️Cycling_club⚙️NSS⚙️Nature_Club⚙️MAGBOARD⚙️MINERVA⚙️FEET_TAPPERS⚙️"
-              speed={2}
+              marqueeText="OSS ✦ GDG ✦ CP ✦ PR-Cell ✦ RadioRaga ✦ E-Cell ✦ EV ✦ GDXR ✦ ISDF ✦ Sports ✦ CulturalBoard ✦ TechnicalBoard ✦ RnD-Cell ✦ CyclingClub ✦ NSS ✦ NatureClub ✦ MagBoard ✦ Minerva ✦ Feet-Tappers ✦"
+              speed={1}
               curveAmount={0}
               interactive
-              className=""
+              className="text-[36px] text-white"
             />
         </motion.div>
 
