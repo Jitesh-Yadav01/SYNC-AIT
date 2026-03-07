@@ -113,7 +113,7 @@ export default function SharedDashboardLayout({ children }) {
                 <div className="flex flex-col h-full p-6">
                     <div className="flex items-center gap-3 mb-8">
                         <div className="h-10 w-10 rounded-lg bg-gray-900 flex items-center justify-center shadow-sm">
-                            <span className="font-bold text-white text-lg">{user?.year}</span>
+                            <span className="font-bold text-white text-lg">{user?.year[0]}</span>
                         </div>
                         <div>
                             <h1 className="font-bold text-lg tracking-tight text-gray-900">{user?.year} Panel</h1>
@@ -130,7 +130,7 @@ export default function SharedDashboardLayout({ children }) {
                                 key={tab.id}
                                 onClick={() => {
                                     if (isStandalonePage) {
-                                        navigate(`/profile/${role}`);
+                                        navigate(`/profile/${role}`, { state: { activeTab: tab.id } });
                                     } else {
                                         setActiveTab(tab.id);
                                     }
@@ -154,8 +154,8 @@ export default function SharedDashboardLayout({ children }) {
                             </button>
                         ))}
 
-                        {/* TE Exclusive Links */}
-                        {role === 'TE' && (
+                        {/* Admin Exclusive Links */}
+                        {role === 'Admin' && (
                             <>
                                 <button
                                     onClick={() => {
@@ -180,11 +180,15 @@ export default function SharedDashboardLayout({ children }) {
                             </>
                         )}
 
-                        {/* FE / SE can see & fill public forms */}
-                        {role !== 'TE' && (
+                        {/* Applicant / Member can see & fill public forms */}
+                        {role !== 'Admin' && (
                             <button
                                 onClick={() => {
-                                    setActiveTab('forms');
+                                    if (isStandalonePage) {
+                                        navigate(`/profile/${role}`, { state: { activeTab: 'forms' } });
+                                    } else {
+                                        setActiveTab('forms');
+                                    }
                                     setIsSidebarOpen(false);
                                 }}
                                 className={cn(
@@ -210,7 +214,11 @@ export default function SharedDashboardLayout({ children }) {
                         <div
                             className="flex items-center gap-3 px-2 cursor-pointer hover:bg-gray-50 rounded-lg p-2 transition-colors"
                             onClick={() => {
-                                setActiveTab('profile');
+                                if (isStandalonePage) {
+                                    navigate(`/profile/${role}`, { state: { activeTab: 'profile' } });
+                                } else {
+                                    setActiveTab('profile');
+                                }
                                 setIsSidebarOpen(false);
                             }}
                         >

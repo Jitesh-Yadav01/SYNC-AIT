@@ -7,9 +7,9 @@ import { toast } from "react-toastify";
 import GoogleAuthButton from "@/components/GoogleAuthButton";
 
 const YEARS = [
-  { label: "FE", sublabel: "First Year" },
-  { label: "SE", sublabel: "Second Year" },
-  { label: "TE", sublabel: "Third Year" },
+  { label: "Applicant"},
+  { label: "Member" },
+  { label: "Admin" },
 ];
 
 // ─── Google Profile Setup Step ───────────────────────────────────
@@ -312,9 +312,9 @@ const SignUp = () => {
                   <option value="" disabled>
                     Select year
                   </option>
-                  <option value="FE">FE</option>
-                  <option value="SE">SE</option>
-                  <option value="TE">TE</option>
+                  <option value="Applicant">Applicant</option>
+                  <option value="Member">Member</option>
+                  <option value="Admin">Admin</option>
                 </select>
               </div>
 

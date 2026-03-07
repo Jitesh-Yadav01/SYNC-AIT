@@ -8,9 +8,9 @@ export default function SharedMembers() {
     const [showAddForm, setShowAddForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [currentMemberId, setCurrentMemberId] = useState(null);
-    const [newMember, setNewMember] = useState({ name: '', email: '', role: 'FE', domain: '', status: 'Active' });
+    const [newMember, setNewMember] = useState({ name: '', email: '', role: 'Applicant', domain: '', status: 'Active' });
 
-    const canManageMembers = role === 'TE' || role === 'SE';
+    const canManageMembers = role === 'Admin' || role === 'Member';
 
     const filteredMembers = members.filter(m =>
         m.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -29,7 +29,7 @@ export default function SharedMembers() {
                 addMember(newMember);
             }
             setShowAddForm(false);
-            setNewMember({ name: '', email: '', role: 'FE', domain: '', status: 'Active' });
+            setNewMember({ name: '', email: '', role: 'Applicant', domain: '', status: 'Active' });
         }
     };
 
@@ -60,7 +60,7 @@ export default function SharedMembers() {
                     onClick={() => {
                         setShowAddForm(!showAddForm);
                         setIsEditing(false);
-                        setNewMember({ name: '', email: '', role: 'FE', domain: '', status: 'Active' });
+                        setNewMember({ name: '', email: '', role: 'Applicant', domain: '', status: 'Active' });
                     }}
                     className="flex items-center gap-2 bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-colors self-start sm:self-auto"
                 >
@@ -92,8 +92,8 @@ export default function SharedMembers() {
                             value={newMember.role}
                             onChange={(e) => setNewMember({ ...newMember, role: e.target.value })}
                         >
-                            <option value="FE">FE</option>
-                            {role === 'TE' && <option value="SE">SE</option>}
+                            <option value="Applicant">Applicant</option>
+                            {role === 'Admin' && <option value="Member">Member</option>}
                         </select>
                         <input
                             className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -109,7 +109,7 @@ export default function SharedMembers() {
                             onClick={() => {
                                 setShowAddForm(false);
                                 setIsEditing(false);
-                                setNewMember({ name: '', email: '', role: 'FE', domain: '', status: 'Active' });
+                                setNewMember({ name: '', email: '', role: 'Applicant', domain: '', status: 'Active' });
                             }}
                             className="bg-gray-100 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-200 transition-colors"
                         >
@@ -161,18 +161,18 @@ export default function SharedMembers() {
                                         <button
                                             onClick={() => openEditModal(member)}
                                             className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors"
-                                            disabled={role === 'SE' && member.role !== 'FE'}
-                                            title={role === 'SE' && member.role !== 'FE' ? 'You can only edit FE members' : 'Edit Member'}
+                                            disabled={role === 'Member' && member.role !== 'Applicant'}
+                                            title={role === 'Member' && member.role !== 'Applicant' ? 'You can only edit Applicant members' : 'Edit Member'}
                                         >
-                                            <Pencil className={`h-4 w-4 ${role === 'SE' && member.role !== 'FE' ? 'opacity-50 cursor-not-allowed' : ''}`} />
+                                            <Pencil className={`h-4 w-4 ${role === 'Member' && member.role !== 'Applicant' ? 'opacity-50 cursor-not-allowed' : ''}`} />
                                         </button>
                                         <button
                                             onClick={() => removeMember(member.id)}
                                             className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
-                                            disabled={role === 'SE' && member.role !== 'FE'}
-                                            title={role === 'SE' && member.role !== 'FE' ? 'You can only remove FE members' : 'Remove Member'}
+                                            disabled={role === 'Member' && member.role !== 'Applicant'}
+                                            title={role === 'Member' && member.role !== 'Applicant' ? 'You can only remove Applicant members' : 'Remove Member'}
                                         >
-                                            <Trash2 className={`h-4 w-4 ${role === 'SE' && member.role !== 'FE' ? 'opacity-50 cursor-not-allowed' : ''}`} />
+                                            <Trash2 className={`h-4 w-4 ${role === 'Member' && member.role !== 'Applicant' ? 'opacity-50 cursor-not-allowed' : ''}`} />
                                         </button>
                                     </>
                                 )}

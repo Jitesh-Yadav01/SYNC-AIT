@@ -43,7 +43,7 @@ export function Navbar({ onOpenLogin, onOpenSidebar, isSidebarOpen }) {
 
     const navItems = React.useMemo(() => [
         { label: 'Home', href: '/' },
-        ...(profile?.role === 'Technical Executive' ? [{ label: 'Dashboard', href: '/profile/Te' }] : []),
+        ...(profile?.role === 'Admin' ? [{ label: 'Dashboard', href: '/profile/Admin' }] : []),
         { label: 'About Us', href: '#about' },
         { label: 'Clubs', href: '/clubs' },
         // { label: 'Team', href: 'https://www.gdgaitpune.me/',target:'_blank' },

@@ -34,7 +34,7 @@ export default function AvailableForms() {
     <div className="space-y-6 animate-in fade-in duration-500">
       <div>
         <h2 className="text-2xl font-bold tracking-tight text-gray-900">Available Forms</h2>
-        <p className="text-gray-500 mt-1">Fill out these forms created by the TE panel.</p>
+        <p className="text-gray-500 mt-1">Fill out these forms created by the Admins.</p>
       </div>
 
       {forms.length === 0 ? (

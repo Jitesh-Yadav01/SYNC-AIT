@@ -27,7 +27,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (authLoading) return;
-    if (user && user.year?.toLowerCase() === 'te') {
+    if (user && user.year?.toLowerCase() === 'admin') {
       fetchForms();
     } else {
       setLoadingForms(false);
@@ -83,12 +83,12 @@ const Dashboard = () => {
     );
   }
 
-  if (!user || user.year?.toLowerCase() !== 'te') {
+  if (!user || user.year?.toLowerCase() !== 'admin') {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50">
         <div className="bg-white p-8 rounded-xl shadow-sm border text-center">
           <h2 className="text-xl font-bold text-red-600 mb-2">Not Authorized</h2>
-          <p className="text-gray-600">Only TE Panel members can view form responses.</p>
+          <p className="text-gray-600">Only Admin Panel members can view form responses.</p>
         </div>
       </div>
     );

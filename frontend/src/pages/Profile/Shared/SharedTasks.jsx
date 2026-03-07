@@ -10,9 +10,9 @@ export default function SharedTasks() {
     const [newTask, setNewTask] = useState({ title: '', description: '', assignedTo: '', deadline: '', priority: 'Medium' });
     const [submissionLink, setSubmissionLink] = useState({});
 
-    const assignableMembers = role === 'TE' 
+    const assignableMembers = role === 'Admin' 
         ? members 
-        : members.filter(m => m.role === 'FE');
+        : members.filter(m => m.role === 'Applicant');
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -51,7 +51,7 @@ export default function SharedTasks() {
                     <h2 className="text-2xl font-bold tracking-tight text-gray-900">Active Tasks</h2>
                     <p className="text-gray-500">Track project progress.</p>
                 </div>
-                {role !== 'FE' && (
+                {role !== 'Applicant' && (
                     <button
                         onClick={() => {
                             setShowAddForm(!showAddForm);
@@ -143,16 +143,16 @@ export default function SharedTasks() {
                             {tasks
                                 .filter(t => t.status === status)
                                 .filter(t => {
-                                    if (role === 'TE') return true;
+                                    if (role === 'Admin') return true;
                                     const assignedMember = members.find(m => m.id === t.assignedTo);
-                                    return assignedMember?.role === 'FE' || t.assignedTo === 'Unassigned';
+                                    return assignedMember?.role === 'Applicant' || t.assignedTo === 'Unassigned';
                                 })
                                 .map(task => (
                                 <div key={task.id} className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 group hover:border-blue-400 transition-colors">
                                     <div className="flex justify-between items-start mb-2">
                                         <h4 className="font-medium text-sm text-gray-900">{task.title}</h4>
                                         <div className="flex gap-1">
-                                            {role !== 'FE' && (
+                                            {role !== 'Applicant' && (
                                                 <>
                                                     <button onClick={() => openEditModal(task)} className="text-gray-400 hover:text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity">
                                                         <Pencil className="h-3.5 w-3.5" />
@@ -208,9 +208,9 @@ export default function SharedTasks() {
                                 </div>
                             ))}
                             {tasks.filter(t => t.status === status).filter(t => {
-                                 if (role === 'TE') return true;
+                                 if (role === 'Admin') return true;
                                  const assignedMember = members.find(m => m.id === t.assignedTo);
-                                 return assignedMember?.role === 'FE';
+                                 return assignedMember?.role === 'Applicant';
                             }).length === 0 && (
                                 <div className="text-center py-12 text-gray-400 text-sm border-2 border-dashed border-gray-200 rounded-lg">
                                     Empty
