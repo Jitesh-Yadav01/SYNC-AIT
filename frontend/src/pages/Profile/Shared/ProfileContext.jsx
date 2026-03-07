@@ -110,11 +110,7 @@ export const ProfileProvider = ({ children, initialData, role }) => {
         setNotifications([newNotif, ...notifications]);
     };
 
-    const logout = () => {
-        localStorage.removeItem(`${role.toLowerCase()}_dashboard_active`);
-        setCurrentView('default');
-        window.location.href = '/';
-    };
+
 
     const value = {
         role,
@@ -137,7 +133,6 @@ export const ProfileProvider = ({ children, initialData, role }) => {
         editMember,
         markNotificationRead,
         addNotification,
-        logout,
         unreadMessagesCount,
         unreadNotificationsCount,
         pendingTasksCount

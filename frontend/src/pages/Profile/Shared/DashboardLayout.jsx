@@ -11,11 +11,12 @@ import { LayoutDashboard, Users, CheckSquare, MessageSquare, LogOut, Menu, FileT
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/context/AuthContext';
 
-export default function SharedDashboardLayout() {
-    const { activeTab, setActiveTab, profile, activeClub, switchClub, role } = useProfile();
+export default function SharedDashboardLayout({ children }) {
+    const { activeTab, setActiveTab, profile, role } = useProfile();
     const { logout, user, authLoading } = useAuth();
     const navigate = useNavigate();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const isStandalonePage = Boolean(children);
 
 
     React.useEffect(() => {
@@ -121,57 +122,33 @@ export default function SharedDashboardLayout() {
                         </div>
                     </div>
 
-                    <div className="mb-6">
-                        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 block">Switch Club</label>
-                        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-                            {profile.clubs?.map(club => (
-                                <button
-                                    key={club.id}
-                                    onClick={() => switchClub(club.id)}
-                                    className={cn(
-                                        "h-10 w-10 min-w-10 rounded-full border-2 flex items-center justify-center transition-all bg-white relative group",
-                                        activeClub?.id === club.id
-                                            ? "border-blue-600 ring-2 ring-blue-100"
-                                            : "border-gray-200 hover:border-gray-300"
-                                    )}
-                                    title={club.name}
-                                >
-                                    <img src={club.logo} alt={club.name} className="h-6 w-6 object-contain" />
-                                    {activeClub?.id === club.id && (
-                                        <span className="absolute -bottom-1 -right-1 h-3 w-3 bg-blue-600 rounded-full border-2 border-white" />
-                                    )}
-                                </button>
-                            ))}
-                        </div>
-                        <div className="mt-2 text-sm font-medium text-gray-900 truncate">
-                            {activeClub?.name}
-                        </div>
-                        <div className="text-xs text-gray-500 truncate">
-                            {activeClub?.role}
-                        </div>
-                    </div>
+
 
                     <nav className="flex-1 space-y-2">
                         {tabs.filter(t => t.id !== 'profile').map(tab => (
                             <button
                                 key={tab.id}
                                 onClick={() => {
-                                    setActiveTab(tab.id);
+                                    if (isStandalonePage) {
+                                        navigate(`/profile/${role}`);
+                                    } else {
+                                        setActiveTab(tab.id);
+                                    }
                                     setIsSidebarOpen(false);
                                 }}
                                 className={cn(
                                     "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden",
-                                    activeTab === tab.id
+                                    !isStandalonePage && activeTab === tab.id
                                         ? "bg-blue-50 text-blue-700 shadow-sm"
                                         : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                                 )}
                             >
-                                {activeTab === tab.id && (
+                                {!isStandalonePage && activeTab === tab.id && (
                                     <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 rounded-r-full" />
                                 )}
                                 <tab.icon className={cn(
                                     "h-5 w-5 transition-colors",
-                                    activeTab === tab.id ? "text-blue-600" : "text-gray-400 group-hover:text-gray-600"
+                                    !isStandalonePage && activeTab === tab.id ? "text-blue-600" : "text-gray-400 group-hover:text-gray-600"
                                 )} />
                                 {tab.label}
                             </button>
@@ -271,7 +248,7 @@ export default function SharedDashboardLayout() {
 
                 <div className="flex-1 overflow-y-auto p-4 md:p-8">
                     <div className="max-w-6xl mx-auto w-full space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-12">
-                        {renderContent()}
+                        {children ?? renderContent()}
                     </div>
                 </div>
             </main>
