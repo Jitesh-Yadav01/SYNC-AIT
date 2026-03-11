@@ -4,7 +4,7 @@ import Home from './Home/Home'
 import { Navbar } from './Navbar/Navbar'
 import SideBar from './Navbar/SideBar'
 
-export default function MainContent(){
+export default function MainContent() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
@@ -15,8 +15,8 @@ export default function MainContent(){
         onOpenLogin={() => setIsSidebarOpen(false)}
       />
       <Navbar
-        onOpenLogin={() => setCurrentView('login')} 
-        onOpenForm={() => setCurrentView('form')} 
+        onOpenLogin={() => setCurrentView('login')}
+        onOpenForm={() => setCurrentView('form')}
         onOpenSidebar={() => setIsSidebarOpen(prev => !prev)}
         isSidebarOpen={isSidebarOpen}
       />

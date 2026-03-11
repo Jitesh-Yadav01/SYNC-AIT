@@ -38,7 +38,7 @@ export function Navbar({ onOpenLogin, onOpenSidebar, isSidebarOpen }) {
     ], [profile, location.pathname, location.hash]);
 
     return (
-        <nav className="fixed top-0 left-0 w-full z-50 transition-all font-mono duration-300 bg-black/40 dark:bg-[#0d1117]/60 backdrop-blur-md border-b border-white/10 dark:border-white/5">
+        <nav className="fixed top-0 left-0 w-full z-50 transition-all font-mono duration-300 bg-black/40 dark:bg-black/60 backdrop-blur-md border-b border-white/10 dark:border-white/5">
             <div className="mx-auto w-full px-4 sm:px-6 lg:px-8 max-w-[1200px]">
                 <div className="flex items-center justify-between h-[72px]">
 
@@ -98,13 +98,13 @@ export function Navbar({ onOpenLogin, onOpenSidebar, isSidebarOpen }) {
 
                         {/* Desktop Actions */}
                         <div className="hidden md:flex items-center gap-2 lg:gap-3">
-                            <Button
+                            <a href="/get-started"><Button
                                 variant="ghost"
                                 className="text-gray-300 hover:text-white hover:bg-white/10 rounded-full px-4 lg:px-5 font-medium whitespace-nowrap"
                                 onClick={onOpenLogin}
                             >
                                 Login
-                            </Button>
+                            </Button></a>
 
                             <Link to="/connect" className="inline-flex items-center justify-center h-10 px-4 lg:px-5 rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition-colors shadow-lg whitespace-nowrap">
                                 Connect

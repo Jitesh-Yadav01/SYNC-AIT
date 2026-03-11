@@ -63,14 +63,14 @@ export default function SideBar({ open, onClose, onOpenLogin }) {
         )}
       >
         <div className="flex flex-col h-full p-6">
-          
+
           <div className="flex items-center mb-8">
             <span className="font-jersey-20 text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
               Menu
             </span>
           </div>
 
-            <nav className="flex-1">
+          <nav className="flex-1">
             <ul className="space-y-1">
               {NAV_ITEMS.map((item) => (
                 <li key={item.name}>
