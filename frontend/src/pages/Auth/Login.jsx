@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,10 +9,25 @@ import GoogleAuthButton from "@/components/GoogleAuthButton";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAuth();
+  const { login, user, authLoading, isAdmin } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const selectedClub = location.state?.club || null;
+
+  // Auto-redirect if already authenticated
+  useEffect(() => {
+    if (authLoading) return;
+    if (isAdmin) { navigate('/profile/Admin', { replace: true }); return; }
+    if (user?.year) { navigate(`/profile/${user.year}`, { replace: true }); return; }
+  }, [authLoading, user, isAdmin]);
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen w-full flex items-center justify-center" style={{ backgroundImage: `url("/background.svg")`, backgroundRepeat: "no-repeat", backgroundPosition: "center top", backgroundSize: "cover" }}>
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-white/20 border-t-white" />
+      </div>
+    );
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();

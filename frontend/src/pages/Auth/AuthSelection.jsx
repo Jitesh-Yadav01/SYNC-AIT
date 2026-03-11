@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Building, User, ChevronRight, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-toastify";
 import axios from "axios";
 import ClubSelectDropdown from "./ClubSelectDropdown";
+import { useAuth } from "@/context/AuthContext";
 
 const API = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
 
 const AuthSelection = () => {
   const navigate = useNavigate();
+  const { user, authLoading, isAdmin } = useAuth();
   const [selectedClub, setSelectedClub] = useState("");
   const [showClubSelect, setShowClubSelect] = useState(false);
   const [role, setRole] = useState("admin"); // "admin" | "member"
@@ -17,6 +19,21 @@ const AuthSelection = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // Auto-redirect if already authenticated
+  useEffect(() => {
+    if (authLoading) return;
+    if (isAdmin) { navigate('/profile/Admin', { replace: true }); return; }
+    if (user?.year) { navigate(`/profile/${user.year}`, { replace: true }); return; }
+  }, [authLoading, user, isAdmin]);
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen w-full flex items-center justify-center" style={{ backgroundImage: `url("/background.svg")`, backgroundRepeat: "no-repeat", backgroundPosition: "center top", backgroundSize: "cover" }}>
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-white/20 border-t-white" />
+      </div>
+    );
+  }
 
   const handleOrganisationSelect = () => {
     setShowClubSelect(true);

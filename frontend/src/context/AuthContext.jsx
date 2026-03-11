@@ -13,6 +13,7 @@ console.log("AuthContext: Backend API URL set to:", API);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   
   const checkAuth = async () => {
     try {
@@ -30,8 +31,26 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const checkAdminAuth = async () => {
+    try {
+      const res = await fetch(`${API}/api/forms/get-club-forms`, {
+        method: 'GET',
+        credentials: 'include',
+      });
+      const data = await res.json();
+      return data.success === true;
+    } catch {
+      return false;
+    }
+  };
+
   useEffect(() => {
-    checkAuth().finally(() => setAuthLoading(false));
+    const init = async () => {
+      const [userData, adminResult] = await Promise.all([checkAuth(), checkAdminAuth()]);
+      if (adminResult) setIsAdmin(true);
+      setAuthLoading(false);
+    };
+    init();
   }, []);
 
   // Login
@@ -137,6 +156,7 @@ export const AuthProvider = ({ children }) => {
     );
 
     setUser(null);
+    setIsAdmin(false);
   };
 
   // send verify account otp:
@@ -180,6 +200,7 @@ export const AuthProvider = ({ children }) => {
     value={{
         user,
         authLoading,
+        isAdmin,
         isAuthenticated: !!user,
         checkAuth,
         login,

@@ -3,39 +3,24 @@ import { Github, Menu, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import React from "react";
+import { useAuth } from "@/context/AuthContext";
 
-export function Navbar({ onOpenLogin, onOpenSidebar, isSidebarOpen }) {
-    const [profile, setProfile] = React.useState(null);
+export function Navbar({ onOpenSidebar, isSidebarOpen }) {
+    const { user, isAdmin } = useAuth();
     const location = useLocation();
 
     const isActive = (path) => location.pathname === path;
     const isActiveHash = (hash) => location.hash === hash;
 
-    React.useEffect(() => {
-        let mounted = true;
-        fetch('/auth/profile')
-            .then((res) => {
-                if (!res.ok) throw new Error('not-authenticated');
-                return res.json();
-            })
-            .then((data) => {
-                if (mounted) setProfile(data);
-            })
-            .catch(() => {
-                // Not authenticated or error
-            });
-        return () => {
-            mounted = false;
-        };
-    }, []);
+    // Determine dashboard link based on auth state
+    const dashboardHref = isAdmin ? '/profile/Admin' : user?.year ? `/profile/${user.year}` : null;
 
     const navItems = React.useMemo(() => [
         { label: 'Home', href: '/', isActive: () => isActive("/") && !location.hash },
-        ...(profile?.role === 'Admin' ? [{ label: 'Dashboard', href: '/profile/Admin', isActive: () => isActive("/profile/Admin") }] : []),
         { label: 'About Us', href: '#about', isHash: true, isActive: () => isActiveHash("#about") },
         { label: 'Clubs', href: '/clubs', isActive: () => isActive("/clubs") },
         { label: 'Developers', href: '/developers', isActive: () => isActive("/developers") },
-    ], [profile, location.pathname, location.hash]);
+    ], [location.pathname, location.hash]);
 
     return (
         <nav className="fixed top-0 left-0 w-full z-50 transition-all font-mono duration-300 bg-black/40 dark:bg-black/60 backdrop-blur-md border-b border-white/10 dark:border-white/5">
@@ -98,15 +83,25 @@ export function Navbar({ onOpenLogin, onOpenSidebar, isSidebarOpen }) {
 
                         {/* Desktop Actions */}
                         <div className="hidden md:flex items-center gap-2 lg:gap-3">
-                            <Link to="/get-started">
-                                <Button
-                                    variant="ghost"
-                                    className="text-gray-300 hover:text-white hover:bg-white/10 rounded-full px-4 lg:px-5 font-medium whitespace-nowrap"
-                                    onClick={onOpenLogin}
-                                >
-                                    Login
-                                </Button>
-                            </Link>
+                            {dashboardHref ? (
+                                <Link to={dashboardHref}>
+                                    <Button
+                                        variant="ghost"
+                                        className="text-gray-300 hover:text-white hover:bg-white/10 rounded-full px-4 lg:px-5 font-medium whitespace-nowrap"
+                                    >
+                                        Dashboard
+                                    </Button>
+                                </Link>
+                            ) : (
+                                <Link to="/get-started">
+                                    <Button
+                                        variant="ghost"
+                                        className="text-gray-300 hover:text-white hover:bg-white/10 rounded-full px-4 lg:px-5 font-medium whitespace-nowrap"
+                                    >
+                                        Login
+                                    </Button>
+                                </Link>
+                            )}
 
                             <Link to="/connect" className="inline-flex items-center justify-center h-10 px-4 lg:px-5 rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition-colors shadow-lg whitespace-nowrap">
                                 Connect
