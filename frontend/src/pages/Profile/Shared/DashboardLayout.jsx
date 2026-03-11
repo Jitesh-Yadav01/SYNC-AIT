@@ -7,7 +7,7 @@ import SharedTasks from './SharedTasks';
 import SharedMessages from './SharedMessages';
 import SharedProfile from './SharedProfile';
 import AvailableForms from './AvailableForms';
-import { LayoutDashboard, Users, CheckSquare, MessageSquare, LogOut, Menu, FileText } from 'lucide-react';
+import { LayoutDashboard, Users, CheckSquare, MessageSquare, LogOut, Menu, FileText, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/context/AuthContext';
 import axios from 'axios';
@@ -17,8 +17,9 @@ export default function SharedDashboardLayout({ children }) {
     const { activeTab, setActiveTab, profile, role } = useProfile();
     const { logout, user, authLoading } = useAuth();
     const navigate = useNavigate();
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Mobile
     const isStandalonePage = Boolean(children);
+    const [isDesktopCollapsed, setIsDesktopCollapsed] = useState(isStandalonePage);
 
 
     React.useEffect(() => {
@@ -130,19 +131,26 @@ export default function SharedDashboardLayout({ children }) {
             )}
 
             <aside className={cn(
-                "fixed inset-y-0 left-0 z-50 w-66 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out md:translate-x-0",
-                isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+                "fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out",
+                (isSidebarOpen || !isDesktopCollapsed) ? "translate-x-0" : "-translate-x-full"
             )}>
                 <div className="flex flex-col h-full p-6">
-                    <div className="flex items-center gap-3 mb-8">
-                        <div className="h-10 w-10 rounded-lg bg-gray-900 flex items-center justify-center shadow-sm">
-                            <span className="font-bold text-white text-lg">{role === 'Admin' ? 'A' : user?.year?.[0]}</span>
+                    <div className="flex items-center justify-between mb-8">
+                        <div className="flex items-center gap-3">
+                            <div className="h-10 w-10 rounded-lg bg-gray-900 flex items-center justify-center shadow-sm">
+                                <span className="font-bold text-white text-lg">{role === 'Admin' ? 'A' : user?.year?.[0]}</span>
+                            </div>
+                            <div>
+                                <h1 className="font-bold text-lg tracking-tight text-gray-900">{role === 'Admin' ? 'Admin' : user?.year} Panel</h1>
+                            </div>
                         </div>
-                        <div>
-                            <h1 className="font-bold text-lg tracking-tight text-gray-900">{role === 'Admin' ? 'Admin' : user?.year} Panel</h1>
-
-                            {/* <span className="font-bold text-gray-900 text-lg">{user.year}</span> */}
-                        </div>
+                        <button 
+                            onClick={() => setIsDesktopCollapsed(true)} 
+                            className="hidden md:flex p-1.5 text-gray-400 hover:text-gray-700 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-md transition-colors"
+                            title="Collapse Sidebar"
+                        >
+                            <ChevronLeft className="w-4 h-4" />
+                        </button>
                     </div>
 
 
@@ -264,7 +272,21 @@ export default function SharedDashboardLayout({ children }) {
                 </div>
             </aside>
 
-            <main className="flex-1 flex flex-col min-w-0 bg-transparent md:ml-64 relative">
+            <main className={cn(
+                "flex-1 flex flex-col min-w-0 bg-transparent relative transition-all duration-300",
+                !isDesktopCollapsed ? "md:ml-64" : "md:ml-0"
+            )}>
+                {/* Floating expand button when collapsed */}
+                {isDesktopCollapsed && (
+                    <button 
+                        onClick={() => setIsDesktopCollapsed(false)}
+                        className="hidden md:flex absolute top-3 left-4 z-40 items-center justify-center w-8 h-8 bg-white border border-slate-200 rounded-md shadow-sm hover:bg-slate-100 hover:text-slate-900 text-slate-600 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950"
+                        title="Expand Sidebar"
+                    >
+                        <ChevronRight className="w-4 h-4" />
+                    </button>
+                )}
+
                 <header className="md:hidden flex items-center justify-between p-4 border-b border-gray-200 bg-white/80 backdrop-blur-md sticky top-0 z-30">
                     <div className="flex items-center gap-2">
                         <div className="h-8 w-8 rounded-lg bg-gray-900 flex items-center justify-center shadow-sm">
@@ -277,8 +299,8 @@ export default function SharedDashboardLayout({ children }) {
                     </button>
                 </header>
 
-                <div className="flex-1 overflow-y-auto p-4 md:p-8">
-                    <div className="max-w-6xl mx-auto w-full space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-12">
+                <div className={`flex-1 overflow-y-auto ${!isStandalonePage ? 'p-4 md:p-8' : ''}`}>
+                    <div className={`${!isStandalonePage ? 'max-w-6xl mx-auto w-full space-y-8 pb-12' : 'flex flex-col h-full'} animate-in fade-in slide-in-from-bottom-4 duration-500`}>
                         {children ?? (role === 'Applicant' && !['messages', 'forms', 'profile'].includes(activeTab) ? <SharedMessages /> : renderContent())}
                     </div>
                 </div>

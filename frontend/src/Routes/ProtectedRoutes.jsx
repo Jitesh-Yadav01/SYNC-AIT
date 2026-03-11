@@ -5,7 +5,7 @@ import MemberPanel from "@/pages/Profile/organisations/Member/memberPanel";
 import MyForms from "@/pages/Forms/MyForms";
 import FillForm from "@/pages/Forms/FillForm";
 import ResponseDashboard from "@/pages/response/Dashboard";
-import SubmissionDetails from "@/pages/response/SubmissionDetails";
+
 import { ProfileProvider } from "@/pages/Profile/Shared/ProfileContext";
 import SharedDashboardLayout from "@/pages/Profile/Shared/DashboardLayout";
 const adminData = { profile: { clubs: [] }, members: [], tasks: [], messages: [], notifications: [] };
@@ -23,7 +23,7 @@ export const protectedRoutes = [
 
   { path: "/my-forms", element: <AdminRoute><MyForms /></AdminRoute> },
   { path: "/response", element: <AdminRoute><ResponseDashboard /></AdminRoute> },
-  { path: "/response/:id", element: <AdminRoute><SubmissionDetails /></AdminRoute> },
+
 
   { path: "/forms/:formId", element: <FillForm /> },
 ];
