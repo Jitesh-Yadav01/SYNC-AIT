@@ -93,9 +93,14 @@ const Dashboard = () => {
         });
         const data = await res.json();
         if (data.success) {
-           toast.success(`Decision updated to ${newDecision}`);
-           // Optimistically update
-           setResponses(prev => prev.map(r => r._id === responseId ? { ...r, decision: newDecision } : r));
+           toast.success(data.message || `Decision updated to ${newDecision}`);
+           if (newDecision === 'rejected') {
+              setResponses(prev => prev.filter(r => r._id !== responseId));
+              setSelectedResponseId(prevId => prevId === responseId ? null : prevId);
+           } else {
+              // Optimistically update
+              setResponses(prev => prev.map(r => r._id === responseId ? { ...r, decision: newDecision } : r));
+           }
         } else {
            toast.error(data.message || 'Failed to update decision');
         }
