@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Github, Twitter, Linkedin, Instagram } from "lucide-react";
+import { Github, Linkedin, Instagram } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -14,19 +14,25 @@ export function Footer() {
           {/* Brand & Legal Column (Left-most) */}
           <div className="col-span-2 flex flex-col gap-6 lg:pr-8">
             <Link to="/" className="flex items-center gap-3 w-fit group mb-4">
+            <img 
+              src="/clublogos/bwLogos/GDG.svg" 
+              alt="NEXUS Logo" 
+              className="w-[50px] rounded-full" 
+            />
+
+              <span className="text-2xl font-bold text-white tracking-tight">|</span>
               <img 
                 src="/nexus.svg" 
                 alt="NEXUS Logo" 
-                className="h-10 w-auto rounded-full" 
+                className=" relative top-[3px] rounded-full" 
               />
-              <span className="text-2xl font-bold text-white tracking-tight">NEXUS</span>
+
             </Link>
             
             <div className="flex items-center gap-4 text-gray-400">
-              <a href="#" className="hover:text-white transition-colors bg-white/5 hover:bg-white/10 p-2 rounded-full"><Github className="w-4 h-4" /></a>
-              <a href="#" className="hover:text-white transition-colors bg-white/5 hover:bg-white/10 p-2 rounded-full"><Twitter className="w-4 h-4" /></a>
-              <a href="#" className="hover:text-white transition-colors bg-white/5 hover:bg-white/10 p-2 rounded-full"><Linkedin className="w-4 h-4" /></a>
-              <a href="#" className="hover:text-white transition-colors bg-white/5 hover:bg-white/10 p-2 rounded-full"><Instagram className="w-4 h-4" /></a>
+              <a href="https://github.com/Jitesh-Yadav01/SYNC-AIT" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors bg-white/5 hover:bg-white/10 p-2 rounded-full"><Github className="w-4 h-4" /></a>
+              <a href="https://in.linkedin.com/company/gdsc-aitpune" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors bg-white/5 hover:bg-white/10 p-2 rounded-full"><Linkedin className="w-4 h-4" /></a>
+              <a href="https://www.instagram.com/gdsc_aitpune/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors bg-white/5 hover:bg-white/10 p-2 rounded-full"><Instagram className="w-4 h-4" /></a>
             </div>
 
             <div className="flex flex-col gap-4 mt-4 text-[13px] text-gray-400 font-medium tracking-wide">
@@ -48,7 +54,7 @@ export function Footer() {
             </div>
             
             <div className="mt-2">
-               <span className="text-xs text-gray-600">© {currentYear} Nexus.</span>
+               <span className="text-xs text-gray-600">© {currentYear} Nexus</span>
             </div>
           </div>
 

@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { cn } from "@/lib/utils";
-import KnowMore from './KnowMore';
 
 export default function ClubCard({ abbr, name, fullForm, img, desc, activities = [], who, keywords = [], events = [], media = [],onApply }) {
-  const [showKnow, setShowKnow] = useState(false)
-  const knowMore = () => setShowKnow(true)
 
   return (
     <article className="group relative overflow-hidden rounded-xl transition-all duration-300 hover:-translate-y-1 flex flex-col border border-white/5 bg-white/2 h-full w-full">
@@ -71,8 +68,8 @@ export default function ClubCard({ abbr, name, fullForm, img, desc, activities =
               Apply
             </button>
             <button 
-              className="py-2.5 px-4 bg-white/5 hover:bg-white/10 text-white font-semibold text-sm rounded-lg transition-all duration-300 border border-white/10 active:scale-95 flex items-center justify-center tracking-wide"
-              onClick={() => setShowKnow(true)}
+              className="py-2.5 px-4 bg-white/5 text-gray-500 font-semibold text-sm rounded-lg border border-white/5 cursor-not-allowed flex items-center justify-center tracking-wide"
+              disabled
             >
               Details
             </button>
@@ -80,7 +77,6 @@ export default function ClubCard({ abbr, name, fullForm, img, desc, activities =
         </div>
         </div>
         
-        <KnowMore open={showKnow} onClose={() => setShowKnow(false)} club={{abbr, name, fullForm, media}} />
       </div>
     </article>
   );
