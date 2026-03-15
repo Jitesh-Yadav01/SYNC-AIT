@@ -16,7 +16,7 @@ export function EventCodeBlock() {
 
 
   return (
-    <section className="pt-4 pb-44 mb-20 px-6 sm:px-8 max-w-[1200px] mx-auto w-full relative z-10 font-mono">
+    <section id="events" className="pt-4 pb-44 mb-20 px-6 sm:px-8 max-w-[1200px] mx-auto w-full relative z-10 font-mono">
       <div className="mb-12 md:mb-16 mt-8 flex flex-col items-center text-center">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-4">
           Flagship Technical Events

@@ -335,8 +335,8 @@ export default function SharedDashboardLayout({ children }) {
                     </button>
                 </header>
 
-                <div className={`flex-1 overflow-y-auto ${!isStandalonePage && activeTab !== 'responses' ? 'p-4 md:p-8' : ''}`}>
-                    <div className={`${!isStandalonePage && activeTab !== 'responses' ? 'max-w-6xl mx-auto w-full space-y-8 pb-12' : activeTab === 'responses' ? 'flex flex-col h-full' : 'flex flex-col h-full'} animate-in fade-in slide-in-from-bottom-4 duration-500`}>
+                <div className={`flex-1 overflow-y-auto ${!isStandalonePage && activeTab !== 'responses' ? (activeTab === 'overview' ? 'p-4 md:px-8' : 'p-4 md:p-8') : ''}`}>
+                    <div className={`${!isStandalonePage && activeTab !== 'responses' ? (`max-w-6xl mx-auto w-full ${activeTab === 'overview' ? 'space-y-4 pb-2' : 'space-y-8 pb-12'}`) : activeTab === 'responses' ? 'flex flex-col h-full' : 'flex flex-col h-full'} animate-in fade-in slide-in-from-bottom-4 duration-500`}>
                         {children ?? renderContent()}
                     </div>
                 </div>

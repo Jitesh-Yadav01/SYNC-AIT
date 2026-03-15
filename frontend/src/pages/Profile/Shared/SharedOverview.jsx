@@ -26,7 +26,7 @@ export default function SharedOverview() {
     const unreadCount = notifications.filter(n => !n.isRead).length;
     const firstName = user?.name?.split(' ')[0] || 'there';
 
-    const clubImage = '/clubprofiles/ns.png';
+    const founder = '/founder.png';
 
     const currentClubName = activeClub?.name || user?.club?.name || '';
 
@@ -102,7 +102,7 @@ export default function SharedOverview() {
                             lineHeight: 1.02,
                             letterSpacing: '-0.02em',
                             color: '#111827',
-                            marginBottom: '1.25rem',
+                            marginBottom: '1.15rem',
                         }}
                     >
                         {activeClub?.name || 'Your Club'}<br />
@@ -116,7 +116,7 @@ export default function SharedOverview() {
                             color: '#374151',
                             lineHeight: 1.7,
                             maxWidth: '420px',
-                            marginBottom: '2.25rem',
+                            marginBottom: '1.5rem',
                         }}
                     >
                         Manage members, track applications, and oversee your club's progress — all in one place.
@@ -168,7 +168,7 @@ export default function SharedOverview() {
 
                 <div
                     className="relative shrink-0"
-                    style={{ width: '300px', height: '340px', marginTop: '40px' }}
+                    style={{ width: '360px', height: '400px', marginTop: '45px' }}
                 >
                     <div
                         style={{
@@ -187,14 +187,14 @@ export default function SharedOverview() {
                             overflow: 'hidden',
                             width: '100%',
                             height: '100%',
-                            border: '4px solid #fff',
-                            boxShadow: '0 20px 50px rgba(0,0,0,0.12)',
+                            border: '2px solid #fff',
+                            boxShadow: '0 40px 70px rgba(0,0,0,0.12)',
                             zIndex: 1,
                         }}
                     >
                         <img
-                            src={clubImage}
-                            alt="Club"
+                            src={founder}
+                            alt="Founder"
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         />
                     </div>
@@ -225,7 +225,7 @@ export default function SharedOverview() {
 
             <div
                 style={{
-                    marginTop: '40px',
+                    marginTop: '32px',
                     borderRadius: '16px',
                     background: '#f3f4f6',
                     border: '1px solid #e5e7eb',

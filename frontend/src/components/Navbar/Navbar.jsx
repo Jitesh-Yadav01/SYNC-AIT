@@ -17,7 +17,7 @@ export function Navbar({ onOpenSidebar, isSidebarOpen }) {
 
     const navItems = React.useMemo(() => [
         { label: 'Home', href: '/', isActive: () => isActive("/") && !location.hash },
-        { label: 'About Us', href: '#about', isHash: true, isActive: () => isActiveHash("#about") },
+        { label: 'Events', href: '/#events', isHash: true, isActive: () => isActiveHash("#events") },
         { label: 'Clubs', href: '/clubs', isActive: () => isActive("/clubs") },
         { label: 'Developers', href: '/developers', isActive: () => isActive("/developers") },
     ], [location.pathname, location.hash]);
@@ -103,9 +103,9 @@ export function Navbar({ onOpenSidebar, isSidebarOpen }) {
                                 </Link>
                             )}
 
-                            <Link to="/connect" className="inline-flex items-center justify-center h-10 px-4 lg:px-5 rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition-colors shadow-lg whitespace-nowrap">
+                            {/* <Link to="/connect" className="inline-flex items-center justify-center h-10 px-4 lg:px-5 rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition-colors shadow-lg whitespace-nowrap">
                                 Connect
-                            </Link>
+                            </Link> */}
 
                             <Link to="https://github.com/Jitesh-Yadav01/SYNC-AIT" target="_blank" className="hidden lg:inline-flex items-center justify-center h-10 w-10 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-white/20 transition-all flex-shrink-0">
                                 <Github className="w-4 h-4" />
