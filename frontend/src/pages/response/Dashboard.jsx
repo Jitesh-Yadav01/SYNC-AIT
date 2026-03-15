@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 const API = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 import { Search, Star, MessageSquare, Trophy, Plus } from 'lucide-react';
 
-const Dashboard = ({ viewerRole = 'admin' }) => {
+const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
    const location = useLocation();
    const navigate = useNavigate();
    const { formId: routeFormId } = useParams();
@@ -30,11 +30,6 @@ const Dashboard = ({ viewerRole = 'admin' }) => {
   const [updatingDecision, setUpdatingDecision] = useState(false);
    const isAdminView = viewerRole === 'admin';
    const responseBasePath = isAdminView ? '/admin/responses' : '/member/responses';
-
-  useEffect(() => {
-    document.body.classList.add('no-custom-cursor');
-    return () => document.body.classList.remove('no-custom-cursor');
-  }, []);
 
   const selectedForm = useMemo(
     () => forms.find(f => f._id === selectedFormId) || null,
@@ -77,7 +72,7 @@ const Dashboard = ({ viewerRole = 'admin' }) => {
          return;
       }
 
-      if (routeFormId !== selectedFormId) {
+      if (!isEmbedded && routeFormId !== selectedFormId) {
          navigate(`${responseBasePath}/${selectedFormId}`, {
             replace: true,
             state: { club: activeClub || location.state?.club }
@@ -85,7 +80,7 @@ const Dashboard = ({ viewerRole = 'admin' }) => {
       }
 
       fetchResponses(selectedFormId);
-  }, [selectedFormId, activeClub, location.state]);
+  }, [selectedFormId, activeClub, location.state, isEmbedded]);
 
    useEffect(() => {
       if (!routeFormId || routeFormId === selectedFormId) {
@@ -269,7 +264,7 @@ const Dashboard = ({ viewerRole = 'admin' }) => {
   });
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden bg-white text-slate-950 font-sans">
+    <div className="flex flex-col h-screen overflow-hidden bg-white text-slate-950 font-mono">
       <DashboardHeader />
 
       <main className="flex-1 flex overflow-hidden">

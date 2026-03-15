@@ -1,86 +1,261 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useProfile } from './ProfileContext';
-import { Users, CheckSquare, MessageSquare, Bell, Calendar, TrendingUp } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { Users, Trophy, ClipboardList, Code2, Terminal, GitBranch } from 'lucide-react';
+import { toast } from 'react-toastify';
+
+function getGreeting() {
+    const h = new Date().getHours();
+    if (h < 12) return 'Good morning';
+    if (h < 17) return 'Good afternoon';
+    return 'Good evening';
+}
+
+const API = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+
 export default function SharedOverview() {
-    const { members, pendingTasksCount, notifications, profile, unreadMessagesCount } = useProfile();
+    const { members, notifications, activeClub, role } = useProfile();
     const { user } = useAuth();
+    const navigate = useNavigate();
+
+    const [totalResponses, setTotalResponses] = useState(0);
+    const [loadingResponses, setLoadingResponses] = useState(false);
+
+    const activeMembers = members.filter(m => m.status === 'Active').length;
+    const unreadCount = notifications.filter(n => !n.isRead).length;
+    const firstName = user?.name?.split(' ')[0] || 'there';
+
+    const clubImage = '/clubprofiles/ns.png';
+
+    const currentClubName = activeClub?.name || user?.club?.name || '';
+
+    useEffect(() => {
+        if (!currentClubName || role === 'Applicant') return;
+
+        const fetchTotalResponses = async () => {
+            setLoadingResponses(true);
+            try {
+                const formsRes = await fetch(`${API}/api/forms/get-club-forms?club=${encodeURIComponent(currentClubName)}`, { credentials: 'include' });
+                const formsJson = await formsRes.json();
+
+                if (formsJson.success && Array.isArray(formsJson.forms)) {
+                    let count = 0;
+                    await Promise.all(formsJson.forms.map(async (form) => {
+                        try {
+                            const resRes = await fetch(`${API}/api/response/get-form-responses/${form._id}`, { credentials: 'include' });
+                            const resJson = await resRes.json();
+                            if (resJson.success && Array.isArray(resJson.responses)) {
+                                count += resJson.responses.length;
+                            }
+                        } catch (err) {
+                            console.error(`Error fetching responses for form ${form._id}:`, err);
+                        }
+                    }));
+                    setTotalResponses(count);
+                }
+            } catch (err) {
+                console.error('Error fetching forms for responses count:', err);
+            } finally {
+                setLoadingResponses(false);
+            }
+        };
+
+        fetchTotalResponses();
+    }, [currentClubName, role]);
 
     const stats = [
-        { title: "Active Members", value: members.filter(m => m.status === 'Active').length, icon: Users, color: "text-blue-600", bg: "bg-blue-50" },
-        { title: "Pending Tasks", value: pendingTasksCount, icon: CheckSquare, color: "text-amber-600", bg: "bg-amber-50" },
-        { title: "Unread Messages", value: unreadMessagesCount, icon: MessageSquare, color: "text-emerald-600", bg: "bg-emerald-50" },
-        { title: "Notifications", value: notifications.filter(n => !n.isRead).length, icon: Bell, color: "text-purple-600", bg: "bg-purple-50" }
+        { icon: Users, label: 'Active Members', value: activeMembers },
+        { icon: Trophy, label: 'Notifications', value: unreadCount },
+        { icon: ClipboardList, label: 'Total Responses', value: loadingResponses ? '...' : totalResponses },
+    ];
+
+    const floatingIcons = [
+        { icon: Code2, top: '10%', left: '-22px' },
+        { icon: Terminal, bottom: '18%', left: '-18px' },
+        { icon: GitBranch, top: '8%', right: '-22px' },
     ];
 
     return (
-        <div className="space-y-6 animate-in fade-in duration-500">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <h2 className="text-2xl font-bold tracking-tight text-gray-900">Welcome back, {user?.name.split(' ')[0]}</h2>
-                    <p className="text-gray-500">Here's what's happening with your team today.</p>
+        <div style={{ fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace" }}>
+            <div className="flex flex-col lg:flex-row items-start lg:items-center gap-10 lg:gap-20 py-16">
+
+                <div className="flex-1 min-w-0">
+                    <div
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8"
+                        style={{ background: '#f0f0f0', border: '1px solid #e0e0e0' }}
+                    >
+                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                        <span
+                            className="text-sm font-semibold tracking-wide"
+                            style={{ fontFamily: "'JetBrains Mono', monospace", color: '#4b5563' }}
+                        >
+                            {getGreeting()}, {firstName}
+                        </span>
+                    </div>
+
+                    <h1
+                        style={{
+                            fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+                            fontSize: 'clamp(3rem, 7vw, 5.5rem)',
+                            fontWeight: 800,
+                            lineHeight: 1.02,
+                            letterSpacing: '-0.02em',
+                            color: '#111827',
+                            marginBottom: '1.25rem',
+                        }}
+                    >
+                        {activeClub?.name || 'Your Club'}<br />
+                        <span style={{ color: '#1d4ed8' }}>Dashboard.</span>
+                    </h1>
+
+                    <p
+                        style={{
+                            fontFamily: "'JetBrains Mono', monospace",
+                            fontSize: '1rem',
+                            color: '#374151',
+                            lineHeight: 1.7,
+                            maxWidth: '420px',
+                            marginBottom: '2.25rem',
+                        }}
+                    >
+                        Manage members, track applications, and oversee your club's progress — all in one place.
+                    </p>
+
+                    <div className="flex items-center gap-3 flex-wrap">
+                        <button
+                            onClick={() => navigate(role === 'Admin' ? '/admin/responses' : '/member/responses')}
+                            style={{
+                                fontFamily: "'JetBrains Mono', monospace",
+                                padding: '12px 28px',
+                                borderRadius: '8px',
+                                fontSize: '0.95rem',
+                                fontWeight: 700,
+                                background: '#111827',
+                                color: '#fff',
+                                border: 'none',
+                                cursor: 'pointer',
+                                letterSpacing: '0.01em',
+                                transition: 'background 0.15s',
+                            }}
+                            onMouseEnter={e => (e.currentTarget.style.background = '#1f2937')}
+                            onMouseLeave={e => (e.currentTarget.style.background = '#111827')}
+                        >
+                            View Responses
+                        </button>
+                        <button
+                            onClick={() => navigate(role === 'Admin' ? '/my-forms' : '#')}
+                            style={{
+                                fontFamily: "'JetBrains Mono', monospace",
+                                padding: '12px 28px',
+                                borderRadius: '8px',
+                                fontSize: '0.95rem',
+                                fontWeight: 700,
+                                background: '#fff',
+                                color: '#374151',
+                                border: '1.5px solid #d1d5db',
+                                cursor: 'pointer',
+                                letterSpacing: '0.01em',
+                                transition: 'background 0.15s',
+                            }}
+                            onMouseEnter={e => (e.currentTarget.style.background = '#f3f4f6')}
+                            onMouseLeave={e => (e.currentTarget.style.background = '#fff')}
+                        >
+                            {role === 'Admin' ? 'Manage Forms' : 'Members'}
+                        </button>
+                    </div>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-gray-500 bg-white border border-gray-200 px-3 py-1 rounded-full shadow-sm">
-                    <Calendar className="h-4 w-4" />
-                    {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+
+                <div
+                    className="relative shrink-0"
+                    style={{ width: '300px', height: '340px', marginTop: '40px' }}
+                >
+                    <div
+                        style={{
+                            position: 'absolute',
+                            inset: 0,
+                            borderRadius: '24px',
+                            background: 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)',
+                            transform: 'rotate(4deg)',
+                            zIndex: 0,
+                        }}
+                    />
+                    <div
+                        style={{
+                            position: 'relative',
+                            borderRadius: '20px',
+                            overflow: 'hidden',
+                            width: '100%',
+                            height: '100%',
+                            border: '4px solid #fff',
+                            boxShadow: '0 20px 50px rgba(0,0,0,0.12)',
+                            zIndex: 1,
+                        }}
+                    >
+                        <img
+                            src={clubImage}
+                            alt="Club"
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
+                    </div>
+
+                    {floatingIcons.map(({ icon: Icon, ...pos }, i) => (
+                        <div
+                            key={i}
+                            style={{
+                                position: 'absolute',
+                                zIndex: 10,
+                                width: '40px',
+                                height: '40px',
+                                borderRadius: '12px',
+                                background: '#ffffff',
+                                border: '1.5px solid #e5e7eb',
+                                boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                ...pos,
+                            }}
+                        >
+                            <Icon style={{ width: '18px', height: '18px', color: '#1d4ed8' }} />
+                        </div>
+                    ))}
                 </div>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                {stats.map((stat, index) => (
-                    <div key={index} className="p-6 bg-white rounded-lg border border-gray-100 shadow-sm hover:border-gray-300 transition-all">
-                        <div className="flex items-center justify-between pb-2">
-                            <span className="text-sm font-medium text-gray-500">{stat.title}</span>
-                            <stat.icon className="h-5 w-5 text-gray-400" />
+            <div
+                style={{
+                    marginTop: '40px',
+                    borderRadius: '16px',
+                    background: '#f3f4f6',
+                    border: '1px solid #e5e7eb',
+                    padding: '20px 32px',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '0',
+                }}
+            >
+                {stats.map(({ icon: Icon, label, value }, i) => (
+                    <div
+                        key={i}
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '14px',
+                            flex: '1 1 160px',
+                            padding: '8px 24px',
+                            borderRight: i < stats.length - 1 ? '1px solid #e5e7eb' : 'none',
+                        }}
+                    >
+                        <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: '#e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                            <Icon style={{ width: '18px', height: '18px', color: '#111827' }} />
                         </div>
-                        <div className="text-3xl font-bold text-gray-900 mt-2">{stat.value}</div>
+                        <div>
+                            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '1.5rem', fontWeight: 900, color: '#111827', lineHeight: 1 }}>{value}</div>
+                            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: '#4b5563', marginTop: '4px', letterSpacing: '0.05em', textTransform: 'uppercase' }}>{label}</div>
+                        </div>
                     </div>
                 ))}
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
-                <div className="col-span-4 bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-                    <h3 className="text-lg font-semibold mb-1 text-gray-900">Recent Activity</h3>
-                    <p className="text-sm text-gray-500 mb-4">Latest actions from your team members.</p>
-
-                    <div className="space-y-6">
-                        {notifications.slice(0, 5).map((notification) => (
-                            <div key={notification.id} className="flex items-start gap-4">
-                                <span className="flex h-2 w-2 mt-2 rounded-full bg-blue-600" />
-                                <div className="space-y-1">
-                                    <p className="text-sm font-medium leading-none text-gray-900">{notification.title}</p>
-                                    <p className="text-sm text-gray-500">{notification.message}</p>
-                                    <p className="text-xs text-gray-400">{new Date(notification.timestamp).toLocaleTimeString()}</p>
-                                </div>
-                            </div>
-                        ))}
-                        {notifications.length === 0 && (
-                            <p className="text-sm text-gray-500">No recent activity.</p>
-                        )}
-                    </div>
-                </div>
-
-                <div className="col-span-3 bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-                    <h3 className="text-lg font-semibold mb-1 text-gray-900">Team Status</h3>
-                    <p className="text-sm text-gray-500 mb-4">Overview of current sprint.</p>
-
-                    <div className="space-y-4">
-                        <div className="flex items-center gap-4 p-3 rounded-lg border border-gray-200 bg-gray-50">
-                            <TrendingUp className="h-5 w-5 text-gray-400" />
-                            <div>
-                                <p className="text-sm font-medium text-gray-900">Sprint Deadline</p>
-                                <p className="text-sm text-gray-500">Next release in 14 days</p>
-                            </div>
-                        </div>
-                        <div className="flex items-center gap-4 p-3 rounded-lg border border-gray-200 bg-gray-50">
-                            <MessageSquare className="h-5 w-5 text-gray-400" />
-                            <div>
-                                <p className="text-sm font-medium text-gray-900">Daily Standup</p>
-                                <p className="text-sm text-gray-500">Today at 4:00 PM</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     );

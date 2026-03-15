@@ -3,12 +3,12 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import { useProfile } from './ProfileContext';
 import SharedOverview from './SharedOverview';
 import SharedMembers from './SharedMembers';
-import SharedTasks from './SharedTasks';
-import SharedMessages from './SharedMessages';
 import SharedProfile from './SharedProfile';
 import SharedMyClubs from './SharedMyClubs';
 import AvailableForms from './AvailableForms';
-import { LayoutDashboard, Users, CheckSquare, MessageSquare, LogOut, Menu, FileText, ChevronLeft, ChevronRight, Building } from 'lucide-react';
+import MyForms from '@/pages/Forms/MyForms';
+import Dashboard from '@/pages/response/Dashboard';
+import { LayoutDashboard, Users, LogOut, Menu, FileText, ChevronLeft, ChevronRight, Building, ClipboardList } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/context/AuthContext';
 import axios from 'axios';
@@ -50,21 +50,19 @@ export default function SharedDashboardLayout({ children }) {
     const tabs = [
         { id: 'overview', label: 'Overview', icon: LayoutDashboard },
         { id: 'members', label: 'Team Members', icon: Users },
-        { id: 'tasks', label: 'Tasks', icon: CheckSquare },
-        { id: 'messages', label: 'Messages', icon: MessageSquare },
         { id: 'my-clubs', label: 'My Clubs', icon: Building },
         { id: 'profile', label: 'Profile', icon: Users },
     ];
 
     const getVisibleTabs = () => {
         if (role === 'Applicant') {
-            return tabs.filter(t => t.id === 'messages' || t.id === 'my-clubs');
+            return tabs.filter(t => t.id === 'my-clubs');
         }
         if (role === 'Admin') {
             return tabs.filter(t => t.id !== 'profile' && t.id !== 'my-clubs');
         }
         if (role === 'Member') {
-            return tabs.filter(t => ['overview', 'tasks', 'messages', 'my-clubs'].includes(t.id));
+            return tabs.filter(t => ['overview', 'my-clubs'].includes(t.id));
         }
         return tabs.filter(t => t.id !== 'profile');
     };
@@ -73,11 +71,11 @@ export default function SharedDashboardLayout({ children }) {
         switch (activeTab) {
             case 'overview': return <SharedOverview />;
             case 'members': return <SharedMembers />;
-            case 'tasks': return <SharedTasks />;
-            case 'messages': return <SharedMessages />;
             case 'profile': return <SharedProfile />;
             case 'forms': return <AvailableForms />;
             case 'my-clubs': return <SharedMyClubs />;
+            case 'manage-forms': return <MyForms />;
+            case 'responses': return <Dashboard viewerRole={role === 'Admin' ? 'admin' : 'member'} isEmbedded={true} />;
             default: return <SharedOverview />;
         }
     };
@@ -100,12 +98,13 @@ export default function SharedDashboardLayout({ children }) {
 
     return (
         <div 
-            className="flex min-h-screen bg-gray-50 text-gray-900 font-sans selection:bg-blue-500/30"
+            className="flex min-h-screen bg-gray-50 text-gray-900 font-mono selection:bg-blue-500/30"
             style={{ 
                 backgroundImage: "url('/back.svg')", 
                 backgroundSize: 'cover', 
                 backgroundAttachment: 'fixed',
-                backgroundPosition: 'center'
+                backgroundPosition: 'center',
+                fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace"
             }}
         >
             {isSidebarOpen && (
@@ -181,22 +180,44 @@ export default function SharedDashboardLayout({ children }) {
                             <>
                                 <button
                                     onClick={() => {
+                                        setActiveTab('manage-forms');
                                         setIsSidebarOpen(false);
-                                        navigate('/my-forms');
                                     }}
-                                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                    className={cn(
+                                        "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden",
+                                        activeTab === 'manage-forms'
+                                            ? "bg-blue-50 text-blue-700 shadow-sm"
+                                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                    )}
                                 >
-                                    <FileText className="h-5 w-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                                    {activeTab === 'manage-forms' && (
+                                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 rounded-r-full" />
+                                    )}
+                                    <FileText className={cn(
+                                        "h-5 w-5 transition-colors",
+                                        activeTab === 'manage-forms' ? "text-blue-600" : "text-gray-400 group-hover:text-gray-600"
+                                    )} />
                                     Manage Forms
                                 </button>
                                 <button
                                     onClick={() => {
+                                        setActiveTab('responses');
                                         setIsSidebarOpen(false);
-                                        navigate('/admin/responses');
                                     }}
-                                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                    className={cn(
+                                        "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden",
+                                        activeTab === 'responses'
+                                            ? "bg-blue-50 text-blue-700 shadow-sm"
+                                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                    )}
                                 >
-                                    <Users className="h-5 w-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                                    {activeTab === 'responses' && (
+                                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 rounded-r-full" />
+                                    )}
+                                    <ClipboardList className={cn(
+                                        "h-5 w-5 transition-colors",
+                                        activeTab === 'responses' ? "text-blue-600" : "text-gray-400 group-hover:text-gray-600"
+                                    )} />
                                     Responses
                                 </button>
                             </>
@@ -205,12 +226,23 @@ export default function SharedDashboardLayout({ children }) {
                         {role === 'Member' && (
                             <button
                                 onClick={() => {
+                                    setActiveTab('responses');
                                     setIsSidebarOpen(false);
-                                    navigate('/member/responses', { state: { club: activeClub } });
                                 }}
-                                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                className={cn(
+                                    "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden",
+                                    activeTab === 'responses'
+                                        ? "bg-blue-50 text-blue-700 shadow-sm"
+                                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                )}
                             >
-                                <Users className="h-5 w-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                                {activeTab === 'responses' && (
+                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 rounded-r-full" />
+                                )}
+                                <ClipboardList className={cn(
+                                    "h-5 w-5 transition-colors",
+                                    activeTab === 'responses' ? "text-blue-600" : "text-gray-400 group-hover:text-gray-600"
+                                )} />
                                 Responses
                             </button>
                         )}
@@ -303,9 +335,9 @@ export default function SharedDashboardLayout({ children }) {
                     </button>
                 </header>
 
-                <div className={`flex-1 overflow-y-auto ${!isStandalonePage ? 'p-4 md:p-8' : ''}`}>
-                    <div className={`${!isStandalonePage ? 'max-w-6xl mx-auto w-full space-y-8 pb-12' : 'flex flex-col h-full'} animate-in fade-in slide-in-from-bottom-4 duration-500`}>
-                        {children ?? (role === 'Applicant' && !['messages', 'forms', 'profile', 'my-clubs'].includes(activeTab) ? <SharedMessages /> : renderContent())}
+                <div className={`flex-1 overflow-y-auto ${!isStandalonePage && activeTab !== 'responses' ? 'p-4 md:p-8' : ''}`}>
+                    <div className={`${!isStandalonePage && activeTab !== 'responses' ? 'max-w-6xl mx-auto w-full space-y-8 pb-12' : activeTab === 'responses' ? 'flex flex-col h-full' : 'flex flex-col h-full'} animate-in fade-in slide-in-from-bottom-4 duration-500`}>
+                        {children ?? renderContent()}
                     </div>
                 </div>
             </main>

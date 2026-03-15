@@ -32,15 +32,6 @@ export default function MyForms() {
     const [editingForm, setEditingForm] = useState(null); // null = new form, object = editing
     const [deletingId, setDeletingId] = useState(null);
 
-    useEffect(() => {
-        document.documentElement.classList.remove('dark');
-        document.body.classList.add('no-custom-cursor');
-        return () => {
-            document.documentElement.classList.add('dark');
-            document.body.classList.remove('no-custom-cursor');
-        };
-    }, []);
-
     // Fetch user forms
     const fetchForms = async () => {
         setFormsLoading(true);
@@ -116,7 +107,7 @@ export default function MyForms() {
     const isFormOpen = showCreate || editingForm !== null;
 
     return (
-        <div className="font-sans">
+        <div className="font-mono">
             <div className="max-w-5xl mx-auto px-4 py-10 md:px-8 space-y-8">
 
                 {/* Page header */}
